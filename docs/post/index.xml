@@ -22,12 +22,12 @@ Intro to Spring For Apache Kafka Project The Spring for Apache Kafka (spring-kaf
     
     <item>
       <title></title>
-      <link>https://sudoinit5.github.io/post/spring-reactive-kafka/</link>
+      <link>https://sudoinit5.github.io/post/spring-websocket-hot-flux/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://sudoinit5.github.io/post/spring-reactive-kafka/</guid>
-      <description>Spring Kafka Writer and Readers What is Kafka? Apache Kafka is an open-source stream-processing software platform developed by the Apache Software Foundation written in Scala and Java. You&amp;rsquo;ll find more information about Kafka at it http://kafka.apache.org/intro.html[Homepage].
-Intro to Spring For Apache Kafka Project The Spring for Apache Kafka (spring-kafka) project applies core Spring concepts to the development of Kafka-based messaging solutions. It provides a &amp;ldquo;template&amp;rdquo; as a high-level abstraction for sending messages.</description>
+      <guid>https://sudoinit5.github.io/post/spring-websocket-hot-flux/</guid>
+      <description>Table of Contents 1. This Demo 2. WebSocket Server 3. References/Readling List   1. This Demo This is the multi-casting Flux variation of the standard WebSocket Service seen here
+   2. WebSocket Server Spring&amp;#8217;s reactive [WebSocket] API is a part of Spring 5&amp;#8217;s WebFlux API which bring reactive flow control to our projects via project reactor. We will introduce a single WebSocket handler, and show whats needed to get started using Spring&amp;#8217;s WebSocketServer support.</description>
     </item>
     
   </channel>
