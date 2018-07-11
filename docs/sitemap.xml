@@ -3,12 +3,21 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://sudoinit5.github.io/post/spring-kafka/</loc>
+  </url>
+  
+  <url>
     <loc>https://sudoinit5.github.io/</loc>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://sudoinit5.github.io/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://sudoinit5.github.io/post/</loc>
     <priority>0</priority>
   </url>
   
