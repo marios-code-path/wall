@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on #sudo init 5</title>
+    <link>https://sudoinit5.github.io/post/</link>
+    <description>Recent content in Posts on #sudo init 5</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    
+	<atom:link href="https://sudoinit5.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title></title>
+      <link>https://sudoinit5.github.io/post/spring-kafka/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://sudoinit5.github.io/post/spring-kafka/</guid>
+      <description>Spring Kafka Writer and Readers What is Kafka? Apache Kafka is an open-source stream-processing software platform developed by the Apache Software Foundation written in Scala and Java. You&amp;rsquo;ll find more information about Kafka at it http://kafka.apache.org/intro.html[Homepage].
+Intro to Spring For Apache Kafka Project The Spring for Apache Kafka (spring-kafka) project applies core Spring concepts to the development of Kafka-based messaging solutions. It provides a &amp;ldquo;template&amp;rdquo; as a high-level abstraction for sending messages.</description>
+    </item>
+    
+  </channel>
+</rss>
