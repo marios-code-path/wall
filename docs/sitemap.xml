@@ -7,6 +7,10 @@
   </url>
   
   <url>
+    <loc>https://sudoinit5.github.io/post/spring-reactive-kafka/</loc>
+  </url>
+  
+  <url>
     <loc>https://sudoinit5.github.io/</loc>
     <priority>0</priority>
   </url>
