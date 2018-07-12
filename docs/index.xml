@@ -12,6 +12,16 @@
     
     <item>
       <title></title>
+      <link>https://sudoinit5.github.io/post/introtoriffisforfunctions/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://sudoinit5.github.io/post/introtoriffisforfunctions/</guid>
+      <description>Motivation Functions as a Service are a new paradigm for application composition and deployment. Functions are a smaller deployable unit than microservices and especially traditional monoliths. Project Riff is a new Pivotal project that runs functions in a cloud environment like Pivotal Container Services (Kubernetes). Lets get started by setting up a new Riff environment and then creating some functions.
+Preparing the environment minikube is the tool that we’ll use to run Kubernetes locally.</description>
+    </item>
+    
+    <item>
+      <title></title>
       <link>https://sudoinit5.github.io/post/springtestslices/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
@@ -59,6 +69,27 @@ Configure ServerHttpSecurity to use HTTP-BASIC by calling it&amp;rsquo;s httpBas
       <guid>https://sudoinit5.github.io/post/spring-kafka/</guid>
       <description>Spring Kafka Writer and Readers What is Kafka Apache Kafka is an open-source stream-processing software platform developed by the Apache Software Foundation written in Scala and Java. You&amp;rsquo;ll find more information about Kafka at it&amp;rsquo;s Homepage.
 Intro to Spring For Apache Kafka The Spring for Apache Kafka (spring-kafka) project applies core Spring concepts to the development of Kafka-based messaging solutions. It provides a &amp;ldquo;template&amp;rdquo; as a high-level abstraction for sending messages.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://sudoinit5.github.io/post/spring-reactive-authorization/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://sudoinit5.github.io/post/spring-reactive-authorization/</guid>
+      <description>Configuring Reactive Spring Security WebFlux Effective security can insulate our applications from ill effects of malicious, and accidental intent in many aspects of programming. Things like network security can only go so far in isolating harm to distributed computing applications. Prevent malicious hackers from gaining access to your systems by ensuring the tools meet the standards for your appcation.
+Spring Security WebFlux is the framework that lets us declare security constructs to our ordinary WebFluxapplications.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://sudoinit5.github.io/post/spring-reactive-ws-multicast/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://sudoinit5.github.io/post/spring-reactive-ws-multicast/</guid>
+      <description>This Demo This is the multi-casting Flux variation of the standard WebSocket Service seen here
+WebSocket Server Spring’s reactive [WebSocket] API is a part of Spring 5’s WebFlux API which bring reactive flow control to our projects via project reactor. We will introduce a single WebSocket handler, and show whats needed to get started using Spring’s WebSocketServer support.
+You’ll want to start a new Spring project using start.spring.io[this link] to autogenerate a maven based POM.</description>
     </item>
     
   </channel>

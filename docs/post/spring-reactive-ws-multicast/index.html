@@ -4,8 +4,10 @@
     <meta name="generator" content="Hugo 0.43" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>#sudo init 5</title>
-    <meta name="description" content="Mario&#39;s take on distributed computing">
+    <title> | #sudo init 5</title>
+    <meta name="description" content="This Demo This is the multi-casting Flux variation of the standard WebSocket Service seen here
+WebSocket Server Spring’s reactive [WebSocket] API is a part of Spring 5’s WebFlux API which bring reactive flow control to our projects via project reactor. We will introduce a single WebSocket handler, and show whats needed to get started using Spring’s WebSocketServer support.
+You’ll want to start a new Spring project using start.spring.io[this link] to autogenerate a maven based POM.">
     <meta name="keywords" content="">
     
     
@@ -16,10 +18,14 @@
   <meta name="author" content="Mario V. Gray">
 
 
-    <meta property="og:title" content="#sudo init 5" />
-<meta property="og:description" content="Mario&#39;s take on distributed computing" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://sudoinit5.github.io/" />
+    <meta property="og:title" content="" />
+<meta property="og:description" content="This Demo This is the multi-casting Flux variation of the standard WebSocket Service seen here
+WebSocket Server Spring’s reactive [WebSocket] API is a part of Spring 5’s WebFlux API which bring reactive flow control to our projects via project reactor. We will introduce a single WebSocket handler, and show whats needed to get started using Spring’s WebSocketServer support.
+You’ll want to start a new Spring project using start.spring.io[this link] to autogenerate a maven based POM." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sudoinit5.github.io/post/spring-reactive-ws-multicast/" />
+
+
 
 
 
@@ -37,25 +43,21 @@
     <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://source.unsplash.com/category/technology/2000x1322"/>
 
-<meta name="twitter:title" content="#sudo init 5"/>
-<meta name="twitter:description" content="Mario&#39;s take on distributed computing"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="This Demo This is the multi-casting Flux variation of the standard WebSocket Service seen here
+WebSocket Server Spring’s reactive [WebSocket] API is a part of Spring 5’s WebFlux API which bring reactive flow control to our projects via project reactor. We will introduce a single WebSocket handler, and show whats needed to get started using Spring’s WebSocketServer support.
+You’ll want to start a new Spring project using start.spring.io[this link] to autogenerate a maven based POM."/>
 
     
 
+
+
   <meta property="og:image" content="https://source.unsplash.com/category/technology/2000x1322">
-
-
 
 
     
 
     <meta name="theme-color" content="#000">
-
-    
-      
-
-
-
 
     
     
@@ -64,9 +66,7 @@
 
     
     
-      <link href="https://sudoinit5.github.io/index.xml" rel="alternate" type="application/rss+xml" title="#sudo init 5">
-    
-    <link rel="canonical" href="https://sudoinit5.github.io/">
+    <link rel="canonical" href="https://sudoinit5.github.io/post/spring-reactive-ws-multicast/">
     
     
     <link rel="icon" sizes="any" href="data:image/svg+xml,%3Csvg%20viewBox='0%200%2046%2045'%20xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EAfter%20Dark%3C/title%3E%3Cpath%20d='M.708%2045L23%20.416%2045.292%2045H.708zM35%2038L23%2019%2011%2038h24z'%20fill='%23000'/%3E%3C/svg%3E">
@@ -226,198 +226,171 @@ article header img {
 
 </header>
     <main>
-  <header>
-    <h1>#sudo init 5</h1>
-  </header>
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/introtoriffisforfunctions/"></a>
-    </h2>
+  <article itemscope itemtype="http://schema.org/BlogPosting">
     
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+<meta itemprop="name" content="">
+<meta itemprop="description" content="This Demo This is the multi-casting Flux variation of the standard WebSocket Service seen here
+WebSocket Server Spring’s reactive [WebSocket] API is a part of Spring 5’s WebFlux API which bring reactive flow control to our projects via project reactor. We will introduce a single WebSocket handler, and show whats needed to get started using Spring’s WebSocketServer support.
+You’ll want to start a new Spring project using start.spring.io[this link] to autogenerate a maven based POM.">
+
+
+
+<meta itemprop="wordCount" content="318">
+
+
+
+<meta itemprop="keywords" content="" />
+
+    <header>
+      <h1 itemprop="headline"></h1>
+      <p class="muted">
+        <svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
   <circle cx="16" cy="16" r="14" />
   <path d="M16 8 L16 16 20 20" />
 </svg>
-<span>5 minute read</span>
+<span>2 minute read</span>
 <svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
   <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
 </svg>
 
   Published: <time datetime="0001-01-01T00:00:00&#43;00:00">1 Jan, 0001</time>
 
+
+      </p>
+      
+      
+    </header>
+    
+
+    <div itemprop="articleBody">
+      
+
+<h1 id="this-demo">This Demo</h1>
+
+<p>This is the multi-casting Flux variation of the standard WebSocket Service seen <a href="https://github.com/marios-code-path/spring-web-sockets/tree/master/websocket-server">here</a></p>
+
+<h1 id="websocket-server">WebSocket Server</h1>
+
+<p>Spring’s reactive [WebSocket] API is a part of Spring 5’s WebFlux API which bring <a href="https://www.reactivemanifesto.org/">reactive</a> flow control to our projects via <a href="https://projectreactor.io/">project reactor</a>. We will introduce a single WebSocket handler, and show whats needed to get started using Spring’s <code>WebSocketServer</code> support.</p>
+
+<p>You’ll want to start a new Spring project using start.spring.io[this link] to autogenerate a maven based POM. If you go with a different approach, just make sure to have <code>webflux</code>, and <code>lombok</code> projects.</p>
+
+<p>First, wire in a <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/reactive/socket/server/support/WebSocketHandlerAdapter.html"><code>WebSocketHandlerAdapter</code></a> to handle our web socket handshake, upgrade, and other connection details.</p>
+
+<p><strong>socket_handler_adapter.</strong></p>
+
+<pre><code>    @Bean
+    WebSocketHandlerAdapter socketHandlerAdapter() {
+        return new WebSocketHandlerAdapter();
+    }
+</code></pre>
+
+<p>Next, create the WebSocket session handler. The simplest way to do this to use the functional interface for <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/reactive/socket/WebSocketHandler.html"><code>WebSocketHandler</code></a> and implement it’s handle method to manage our stream response. In this, we will use the <a href="https://projectreactor.io/docs/core/release/api/reactor/core/publisher/Flux.html#interval-java.time.Duration-"><code>Flux.interval</code></a> operator and push it’s output back to the session.</p>
+
+<p><strong>socket_session_handler.</strong></p>
+
+<pre><code>    WebSocketHandler webSocketHandler(ConnectableFlux&lt;String&gt; publisher) {
+        return session -&gt;
+                session.send(publisher.map(session::textMessage))
+                        .doOnSubscribe(sub -&gt; log.info(session.getId() + &quot;.CONNECT&quot;))
+                        .doFinally(sig -&gt; log.info(session.getId() + &quot;.DISCONNECT&quot;));
+    }
+</code></pre>
+
+<p>We utilize the <code>ConnectableFlux&lt;String&gt;</code> to <code>hot</code> publish our tick data to websocket clients. That is, in contrast to the last demonstration which produced a <code>cold</code> published flow.</p>
+
+<p>Finally, to map URI’s to our handler we wire in a reactive <code>SimpleUrlHandlerMapping</code> to delegate socket connections on URL <code>/ws/feed</code>.</p>
+
+<p><strong>uri_handler_mapping.</strong></p>
+
+<pre><code>    @Bean
+    HandlerMapping simpleUrlHandlerMapping() {
+        SimpleUrlHandlerMapping simpleUrlHandlerMapping = new SimpleUrlHandlerMapping();
+        RequestMappingHandlerMapping foo = new RequestMappingHandlerMapping();
+        simpleUrlHandlerMapping.setUrlMap(Collections.singletonMap(&quot;/ws/feed&quot;,
+                webSocketHandler()));
+        simpleUrlHandlerMapping.setOrder(10);
+        return simpleUrlHandlerMapping;
+    }
+</code></pre>
+
+<p>Finally, we will execute this server app:</p>
+
+<p><strong>server_app_main.</strong></p>
+
+<pre><code>    public static void main(String[] args) {
+        SpringApplication.run(WebSocketConfiguration.class, args);
+    }
+</code></pre>
+
+<p>Start the application:</p>
+
+<pre><code>$ mvn clean spring-boot:run
+...
+INFO 10671 --- [           main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port(s): 8080
+</code></pre>
+
+<p>Now we are ready to implement the client, and demonstrate the new server we just stood up!</p>
+
+<h1 id="references-readling-list">References/Readling List</h1>
+
+<ul>
+<li><p>Spring WebFlux guide</p>
+
+<ul>
+<li><p><a href="https://docs.spring.io/spring/docs/5.0.0.BUILD-SNAPSHOT/spring-framework-reference/html/web-reactive.html">https://docs.spring.io/spring/docs/5.0.0.BUILD-SNAPSHOT/spring-framework-reference/html/web-reactive.html</a></p></li>
+
+<li><p><a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html">https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html</a></p></li>
+</ul></li>
+
+<li><p>Articles</p>
+
+<ul>
+<li><a href="https://ordina-jworks.github.io/reactive/2016/12/12/Reactive-Programming-Spring-Reactor.html">https://ordina-jworks.github.io/reactive/2016/12/12/Reactive-Programming-Spring-Reactor.html</a></li>
+</ul></li>
+
+<li><p>W3C Proposals</p>
+
+<ul>
+<li><a href="https://tools.ietf.org/html/rfc6455">https://tools.ietf.org/html/rfc6455</a></li>
+</ul></li>
+
+<li><p>Theory</p>
+
+<ul>
+<li><p><a href="http://reactivex.io/documentation/operators.html">http://reactivex.io/documentation/operators.html</a></p></li>
+
+<li><p><a href="https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/core/operators/debounce.md">https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/core/operators/debounce.md</a></p></li>
+</ul></li>
+</ul>
+
+    </div>
+    
+    <footer>
+      <hr>
+      <p>
+  Published
+  
+    
+      by <span itemprop="author">Mario V. Gray</span>
+    
+  
+  <time itemprop="datePublished" datetime="0001-01-01T00:00:00&#43;00:00">
+    1 Jan, 0001
+  </time>
+  
+  
+  using <span itemprop="wordCount">318</span> words.
 </p>
-    
-  </header>
-  
-  <div itemprop="description">
-    Motivation Functions as a Service are a new paradigm for application composition and deployment. Functions are a smaller deployable unit than microservices and especially traditional monoliths. Project Riff is a new Pivotal project that runs functions in a cloud environment like Pivotal Container Services (Kubernetes). Lets get started by setting up a new Riff environment and then creating some functions.
-Preparing the environment minikube is the tool that we’ll use to run Kubernetes locally.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/introtoriffisforfunctions/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="0001-01-01T00:00:00&#43;00:00">
-  <meta itemprop="dateModified" content="0001-01-01T00:00:00&#43;00:00">
-  
-</article>
 
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/springtestslices/"></a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>5 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
+      
 
-  Published: <time datetime="0001-01-01T00:00:00&#43;00:00">1 Jan, 0001</time>
 
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-    Spring Test Slices Simplify testing by isolating the logical layers above and below that thing under test. These are the invariants. In a Spring Boot application, autoconfiguration produces a large monolithic application context.
-Test slices allow us to segment the application context in terms of logical layers. As an example, the @WebMvcTest slice only includes components related to the web tier, like @Controller-annotated components.
-The Basic Test As an example, let&rsquo;s look at the structure of a unit test that looks something like the default unit test generated by the Spring Initializr.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/springtestslices/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="0001-01-01T00:00:00&#43;00:00">
-  <meta itemprop="dateModified" content="0001-01-01T00:00:00&#43;00:00">
-  
-</article>
 
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/springwsclient/"></a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>3 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="0001-01-01T00:00:00&#43;00:00">1 Jan, 0001</time>
-
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-    This Demo This demo client will connect and receive events from any URL that emits an open websocket stream. We have an existing server to stand up that can supply the socket events. A reactive client means that we can respond to backpressure, and weild the Observer pattern to our client connections.
-The Client (SANS web) We can use our favorite Spring Application Initializr start dot spring dot io to generate the application.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/springwsclient/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="0001-01-01T00:00:00&#43;00:00">
-  <meta itemprop="dateModified" content="0001-01-01T00:00:00&#43;00:00">
-  
-</article>
-
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/springwsserver/"></a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>3 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="0001-01-01T00:00:00&#43;00:00">1 Jan, 0001</time>
-
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-    This Demo This demo will stand up Spring application service that exposes a WebSocket service through the Spring 5’s reactive WebSockets API. Typically, for inter-service comms, use a more traditional messaging system to deliver and expect events between services for example - messaging brokers such as Kafka, RabbitMq, etc.. WebSockets is an IETF standard and W3C API that provides a convenient way to issue and consume data streams across the Internet.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/springwsserver/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="0001-01-01T00:00:00&#43;00:00">
-  <meta itemprop="dateModified" content="0001-01-01T00:00:00&#43;00:00">
-  
-</article>
-
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/reactive-authentication/"></a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>4 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="0001-01-01T00:00:00&#43;00:00">1 Jan, 0001</time>
-
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-    Reactive Spring Security Authentication This demonstration examines Spring Security WebFlux&rsquo;s Authentication mechanisms. We will look at Authentication request escalation, as well as user-domain customizations.
-Authentication flow-control How do we determine when a request must provide an authentication context? Spring does this with help from an AuthenticationEntryPoint that identifies un-authenticated requests and returns with a response to the user to perform some authentication action.
-Configure ServerHttpSecurity to use HTTP-BASIC by calling it&rsquo;s httpBasic() method.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/reactive-authentication/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="0001-01-01T00:00:00&#43;00:00">
-  <meta itemprop="dateModified" content="0001-01-01T00:00:00&#43;00:00">
-  
-</article>
-
-  
+    </footer>
+  </article>
 </main>
     <footer>
-  <nav>
-  <p>
-    
-    <span>Page 1 of 2</span>
-    
-      | <a href="/page/2/">Next &raquo;</a>
-    
-  </p>
-</nav>
-
   
   <p class="muted">
     This page was generated using

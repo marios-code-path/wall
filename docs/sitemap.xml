@@ -3,6 +3,10 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://sudoinit5.github.io/post/introtoriffisforfunctions/</loc>
+  </url>
+  
+  <url>
     <loc>https://sudoinit5.github.io/post/springtestslices/</loc>
   </url>
   
@@ -20,6 +24,14 @@
   
   <url>
     <loc>https://sudoinit5.github.io/post/spring-kafka/</loc>
+  </url>
+  
+  <url>
+    <loc>https://sudoinit5.github.io/post/spring-reactive-authorization/</loc>
+  </url>
+  
+  <url>
+    <loc>https://sudoinit5.github.io/post/spring-reactive-ws-multicast/</loc>
   </url>
   
   <url>

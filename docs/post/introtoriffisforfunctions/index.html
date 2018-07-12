@@ -4,8 +4,9 @@
     <meta name="generator" content="Hugo 0.43" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>#sudo init 5</title>
-    <meta name="description" content="Mario&#39;s take on distributed computing">
+    <title> | #sudo init 5</title>
+    <meta name="description" content="Motivation Functions as a Service are a new paradigm for application composition and deployment. Functions are a smaller deployable unit than microservices and especially traditional monoliths. Project Riff is a new Pivotal project that runs functions in a cloud environment like Pivotal Container Services (Kubernetes). Lets get started by setting up a new Riff environment and then creating some functions.
+Preparing the environment minikube is the tool that we’ll use to run Kubernetes locally.">
     <meta name="keywords" content="">
     
     
@@ -16,10 +17,13 @@
   <meta name="author" content="Mario V. Gray">
 
 
-    <meta property="og:title" content="#sudo init 5" />
-<meta property="og:description" content="Mario&#39;s take on distributed computing" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://sudoinit5.github.io/" />
+    <meta property="og:title" content="" />
+<meta property="og:description" content="Motivation Functions as a Service are a new paradigm for application composition and deployment. Functions are a smaller deployable unit than microservices and especially traditional monoliths. Project Riff is a new Pivotal project that runs functions in a cloud environment like Pivotal Container Services (Kubernetes). Lets get started by setting up a new Riff environment and then creating some functions.
+Preparing the environment minikube is the tool that we’ll use to run Kubernetes locally." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sudoinit5.github.io/post/introtoriffisforfunctions/" />
+
+
 
 
 
@@ -37,25 +41,20 @@
     <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://source.unsplash.com/category/technology/2000x1322"/>
 
-<meta name="twitter:title" content="#sudo init 5"/>
-<meta name="twitter:description" content="Mario&#39;s take on distributed computing"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="Motivation Functions as a Service are a new paradigm for application composition and deployment. Functions are a smaller deployable unit than microservices and especially traditional monoliths. Project Riff is a new Pivotal project that runs functions in a cloud environment like Pivotal Container Services (Kubernetes). Lets get started by setting up a new Riff environment and then creating some functions.
+Preparing the environment minikube is the tool that we’ll use to run Kubernetes locally."/>
 
     
 
+
+
   <meta property="og:image" content="https://source.unsplash.com/category/technology/2000x1322">
-
-
 
 
     
 
     <meta name="theme-color" content="#000">
-
-    
-      
-
-
-
 
     
     
@@ -64,9 +63,7 @@
 
     
     
-      <link href="https://sudoinit5.github.io/index.xml" rel="alternate" type="application/rss+xml" title="#sudo init 5">
-    
-    <link rel="canonical" href="https://sudoinit5.github.io/">
+    <link rel="canonical" href="https://sudoinit5.github.io/post/introtoriffisforfunctions/">
     
     
     <link rel="icon" sizes="any" href="data:image/svg+xml,%3Csvg%20viewBox='0%200%2046%2045'%20xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EAfter%20Dark%3C/title%3E%3Cpath%20d='M.708%2045L23%20.416%2045.292%2045H.708zM35%2038L23%2019%2011%2038h24z'%20fill='%23000'/%3E%3C/svg%3E">
@@ -226,17 +223,24 @@ article header img {
 
 </header>
     <main>
-  <header>
-    <h1>#sudo init 5</h1>
-  </header>
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/introtoriffisforfunctions/"></a>
-    </h2>
+  <article itemscope itemtype="http://schema.org/BlogPosting">
     
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+<meta itemprop="name" content="">
+<meta itemprop="description" content="Motivation Functions as a Service are a new paradigm for application composition and deployment. Functions are a smaller deployable unit than microservices and especially traditional monoliths. Project Riff is a new Pivotal project that runs functions in a cloud environment like Pivotal Container Services (Kubernetes). Lets get started by setting up a new Riff environment and then creating some functions.
+Preparing the environment minikube is the tool that we’ll use to run Kubernetes locally.">
+
+
+
+<meta itemprop="wordCount" content="923">
+
+
+
+<meta itemprop="keywords" content="" />
+
+    <header>
+      <h1 itemprop="headline"></h1>
+      <p class="muted">
+        <svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
   <circle cx="16" cy="16" r="14" />
   <path d="M16 8 L16 16 20 20" />
 </svg>
@@ -247,177 +251,166 @@ article header img {
 
   Published: <time datetime="0001-01-01T00:00:00&#43;00:00">1 Jan, 0001</time>
 
+
+      </p>
+      
+      
+    </header>
+    
+
+    <div itemprop="articleBody">
+      
+
+<h1 id="motivation">Motivation</h1>
+
+<p>Functions as a Service are a new paradigm for application composition and deployment. Functions are a smaller deployable unit than microservices and especially traditional monoliths. <a href="https://projectRiff.io/">Project Riff</a> is a new Pivotal project that runs functions in a cloud environment like Pivotal Container Services (Kubernetes). Lets get started by setting up a new Riff environment and then creating some functions.</p>
+
+<h1 id="preparing-the-environment">Preparing the environment</h1>
+
+<p><code>minikube</code> is the tool that we’ll use to run Kubernetes locally. In this demo, we assume a configuration containing Minikube <code>0.25</code> and Helm/tiller <code>2.7.2</code>. Make sure to start Minikube:</p>
+
+<pre><code>  minikube start \
+    --memory=4096 \
+    --cpus=2
+</code></pre>
+
+<h2 id="navigating-uncharted-waters-with-helm">Navigating uncharted waters with Helm</h2>
+
+<p>All of the steps to manually prepare the environment locally are outlined in the <a href="https://github.com/projectRiff/Riff">Riff Github Repo</a>. Helm is a package manager for Kubernetes. Riff provides helm packages ( Helm &ldquo;charts&rdquo; ) to ease installation and migration. For further information on installing Helm, refer to the project’s <a href="https://docs.helm.sh/using_helm/#from-script">Installation guide</a>.</p>
+
+<h2 id="installing-the-riff-environment-with-helm">Installing the Riff Environment with Helm</h2>
+
+<p>Homebrew can be used to install helm in a jiffy:</p>
+
+<pre><code>brew install kubernetes-helm
+</code></pre>
+
+<p>Linux and Windows users may use alternative methods, or your simply want to install things manually on OSX, follow <a href="https://github.com/Kubernetes/helm">the instructions for Helm</a>.</p>
+
+<p>Then, add the Helm chart for Riff:</p>
+
+<pre><code>helm repo add riffrepo https://riff-charts.storage.googleapis.com
+helm repo update
+</code></pre>
+
+<p>Install Riff with the release name <code>demo</code>:</p>
+
+<pre><code>helm install riffrepo/riff --name demo
+</code></pre>
+
+<p>Once this command is complete, you will have a functioning Riff environment. You can enumerate the Riff componenets using this command:</p>
+
+<pre><code>kubectl get pods --show-labels -l app=riff
+</code></pre>
+
+<p>You’ll notice several pods in service. The entry point to your functions is <code>demo-riff-http-gateway</code>. Enter the following command to enumerate Kubernetes services and ensure it is accepting connections from <code>localhost</code>;</p>
+
+<pre><code>kubectl get svc -l app=riff
+</code></pre>
+
+<p>Check that <code>demo-riff-http-gateway</code> has a <code>TYPE</code> of <code>NodePort</code>.</p>
+
+<h3 id="choosing-the-right-service-type-for-your-environment">Choosing the right service type for your environment.</h3>
+
+<p>If your riff-http-gateway says that EXTERNAL-IP is Pending and fails to resolve after several minutes, then you will need to change the service type.</p>
+
+<pre><code>kubectl edit service demo-riff-http-gateway
+</code></pre>
+
+<p>Update the <code>type</code> field from <code>LoadBalancer</code> to <code>NodePort</code>, and save. This will expose your riff-http-gateway to the local network.</p>
+
+<p>Additional networking configuration may be necessary as you might have subnetting/firewalls in place, especailly in a controlled environtment.</p>
+
+<h2 id="installing-the-riff-client">Installing the Riff Client</h2>
+
+<p>In order to use Riff, you’ll need the <code>riff</code> command line client interface (CLI). Clone <a href="https://github.com/projectRiff/Riff">the <code>git</code> repository</a> and add it to your <code>PATH</code>. Now you can use <code>riff</code> in the shell.</p>
+
+<h1 id="writing-the-function">Writing the Function</h1>
+
+<p>Riff maintains a registry of functions. These functions can optionally accept payloads as requests and optionally produce replies. Riff will forward requests to your functions and deliver replies from your functions over message channels. Messages originate from a number of different sources: HTTP, Kafka, RabbitMQ, etc. As of this writing, while message payloads are routed through Kafka topics, communication to the front-end of Riff take HTTP requests only.</p>
+
+<p>At the moment, Riff supports the following languages and runtimes: Python, Node.js, <code>/bin/bash</code>, and Java. We will focus on Java in this example. Riff supports three standard Java 8 functional interfaces:</p>
+
+<ul>
+<li><p><code>java.util.function.Supplier</code>: returns a value but does not accept an argument</p></li>
+
+<li><p><code>java.util.function.Function</code>: returns a value and does accept an argument</p></li>
+
+<li><p><code>java.util.function.Consumer</code>: does not return a value but does accept an argument.</p></li>
+</ul>
+
+<p>Let’s look at a simple <code>Function&lt;String,String&gt;</code>, which both accepts an input argument and produces a reply. This is the only one that we will deploy in this article.</p>
+
+<p><strong><code>DemoFunction.java</code>.</strong></p>
+
+<pre><code>package mcp;
+
+import java.util.function.Function;
+
+public class DemoFunction implements Function&lt;String, String&gt; {
+  public String apply(String s) {
+    return new StringBuilder(s).reverse().toString();
+  }
+}
+</code></pre>
+
+<h1 id="executing-the-function">Executing the function</h1>
+
+<p>We will need to create and deploy our function in a container. We can create our own <code>Dockerfile</code>, service description (<code>.yaml</code>) configuration, and container images manually if we wanted to. There is no need to, though, as Riff 0.0.3 will do all this for us!</p>
+
+<p><strong>Deploy a function.</strong></p>
+
+<pre><code>riff create --name demofn --input reverse-in \
+  --protocol pipes --artifact target/demofn-0.0.1.jar \
+  --handler mcp.DemoFunction
+</code></pre>
+
+<p>This command creates a function. You specify the input and output topics, a fully qualified classname and method, and the artifact (the <code>.jar</code>) that contains the class. Your topics are logical names for pipes that conduct requests and replies between functions.</p>
+
+<p>The following command will locate your <code>riff-http-gateway</code>&rsquo;s IP and port, then create an HTTP request that will be sent to the <code>reverse-in</code> topic. We tell Riff to wait for a response payload from the input topic with the <code>--reply</code> parameter.</p>
+
+<p><strong>Invoke the function using the <code>riff</code> CLI..</strong></p>
+
+<pre><code>riff publish --input reverse-in --data GNIRPS --reply
+</code></pre>
+
+<p>Riff will publish <em>GNIRPS</em> data to the <em>reverse-in</em> topic. By specifying <code>--reply</code> in the riff command, we are requesting that riff await for retured data to print to the console.</p>
+
+<h1 id="scaling-the-function">Scaling the function</h1>
+
+<p>Riff uses the function-controller to replicate (or scale) your functions as request rates increase, and decrease over time. The default behavior implements replication factor equal to the number of partitions of the input topic. You can edit a topic resource by using <code>kubectl edit topic MY_TOPIC</code> command and change <code>spec.partitions</code> to your needs. Alternately, the default behavior can be modified by editing the function’s configuration, setting <code>spec.maxReplicas</code> to a desired value.</p>
+
+<h2 id="next-steps">Next Steps</h2>
+
+<p>We’ve only begun to scratch the surface in this look at Project Riff. It would be worth in another installment looking at using some of the other types of functions - `Consumer`s and `Supplier`s - and look at when and how they’re used. In another installment we could look at how functions connect with each other. In another installment, we could look at how function-capable frameworks like <a href="https://cloud.spring.io/spring-cloud-function/">Spring Cloud Function</a> work in the Riff environment.</p>
+
+    </div>
+    
+    <footer>
+      <hr>
+      <p>
+  Published
+  
+    
+      by <span itemprop="author">Mario V. Gray</span>
+    
+  
+  <time itemprop="datePublished" datetime="0001-01-01T00:00:00&#43;00:00">
+    1 Jan, 0001
+  </time>
+  
+  
+  using <span itemprop="wordCount">923</span> words.
 </p>
-    
-  </header>
-  
-  <div itemprop="description">
-    Motivation Functions as a Service are a new paradigm for application composition and deployment. Functions are a smaller deployable unit than microservices and especially traditional monoliths. Project Riff is a new Pivotal project that runs functions in a cloud environment like Pivotal Container Services (Kubernetes). Lets get started by setting up a new Riff environment and then creating some functions.
-Preparing the environment minikube is the tool that we’ll use to run Kubernetes locally.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/introtoriffisforfunctions/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="0001-01-01T00:00:00&#43;00:00">
-  <meta itemprop="dateModified" content="0001-01-01T00:00:00&#43;00:00">
-  
-</article>
 
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/springtestslices/"></a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>5 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
+      
 
-  Published: <time datetime="0001-01-01T00:00:00&#43;00:00">1 Jan, 0001</time>
 
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-    Spring Test Slices Simplify testing by isolating the logical layers above and below that thing under test. These are the invariants. In a Spring Boot application, autoconfiguration produces a large monolithic application context.
-Test slices allow us to segment the application context in terms of logical layers. As an example, the @WebMvcTest slice only includes components related to the web tier, like @Controller-annotated components.
-The Basic Test As an example, let&rsquo;s look at the structure of a unit test that looks something like the default unit test generated by the Spring Initializr.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/springtestslices/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="0001-01-01T00:00:00&#43;00:00">
-  <meta itemprop="dateModified" content="0001-01-01T00:00:00&#43;00:00">
-  
-</article>
 
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/springwsclient/"></a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>3 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="0001-01-01T00:00:00&#43;00:00">1 Jan, 0001</time>
-
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-    This Demo This demo client will connect and receive events from any URL that emits an open websocket stream. We have an existing server to stand up that can supply the socket events. A reactive client means that we can respond to backpressure, and weild the Observer pattern to our client connections.
-The Client (SANS web) We can use our favorite Spring Application Initializr start dot spring dot io to generate the application.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/springwsclient/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="0001-01-01T00:00:00&#43;00:00">
-  <meta itemprop="dateModified" content="0001-01-01T00:00:00&#43;00:00">
-  
-</article>
-
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/springwsserver/"></a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>3 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="0001-01-01T00:00:00&#43;00:00">1 Jan, 0001</time>
-
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-    This Demo This demo will stand up Spring application service that exposes a WebSocket service through the Spring 5’s reactive WebSockets API. Typically, for inter-service comms, use a more traditional messaging system to deliver and expect events between services for example - messaging brokers such as Kafka, RabbitMq, etc.. WebSockets is an IETF standard and W3C API that provides a convenient way to issue and consume data streams across the Internet.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/springwsserver/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="0001-01-01T00:00:00&#43;00:00">
-  <meta itemprop="dateModified" content="0001-01-01T00:00:00&#43;00:00">
-  
-</article>
-
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/reactive-authentication/"></a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>4 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="0001-01-01T00:00:00&#43;00:00">1 Jan, 0001</time>
-
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-    Reactive Spring Security Authentication This demonstration examines Spring Security WebFlux&rsquo;s Authentication mechanisms. We will look at Authentication request escalation, as well as user-domain customizations.
-Authentication flow-control How do we determine when a request must provide an authentication context? Spring does this with help from an AuthenticationEntryPoint that identifies un-authenticated requests and returns with a response to the user to perform some authentication action.
-Configure ServerHttpSecurity to use HTTP-BASIC by calling it&rsquo;s httpBasic() method.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/reactive-authentication/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="0001-01-01T00:00:00&#43;00:00">
-  <meta itemprop="dateModified" content="0001-01-01T00:00:00&#43;00:00">
-  
-</article>
-
-  
+    </footer>
+  </article>
 </main>
     <footer>
-  <nav>
-  <p>
-    
-    <span>Page 1 of 2</span>
-    
-      | <a href="/page/2/">Next &raquo;</a>
-    
-  </p>
-</nav>
-
   
   <p class="muted">
     This page was generated using
