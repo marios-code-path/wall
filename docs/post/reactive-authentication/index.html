@@ -5,8 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> | #sudo init 5</title>
-    <meta name="description" content="Spring Kafka Writer and Readers What is Kafka Apache Kafka is an open-source stream-processing software platform developed by the Apache Software Foundation written in Scala and Java. You&rsquo;ll find more information about Kafka at it&rsquo;s Homepage.
-Intro to Spring For Apache Kafka The Spring for Apache Kafka (spring-kafka) project applies core Spring concepts to the development of Kafka-based messaging solutions. It provides a &ldquo;template&rdquo; as a high-level abstraction for sending messages.">
+    <meta name="description" content="Reactive Spring Security Authentication This demonstration examines Spring Security WebFlux&rsquo;s Authentication mechanisms. We will look at Authentication request escalation, as well as user-domain customizations.
+Authentication flow-control How do we determine when a request must provide an authentication context? Spring does this with help from an AuthenticationEntryPoint that identifies un-authenticated requests and returns with a response to the user to perform some authentication action.
+Configure ServerHttpSecurity to use HTTP-BASIC by calling it&rsquo;s httpBasic() method.">
     <meta name="keywords" content="">
     
     
@@ -18,10 +19,11 @@ Intro to Spring For Apache Kafka The Spring for Apache Kafka (spring-kafka) proj
 
 
     <meta property="og:title" content="" />
-<meta property="og:description" content="Spring Kafka Writer and Readers What is Kafka Apache Kafka is an open-source stream-processing software platform developed by the Apache Software Foundation written in Scala and Java. You&rsquo;ll find more information about Kafka at it&rsquo;s Homepage.
-Intro to Spring For Apache Kafka The Spring for Apache Kafka (spring-kafka) project applies core Spring concepts to the development of Kafka-based messaging solutions. It provides a &ldquo;template&rdquo; as a high-level abstraction for sending messages." />
+<meta property="og:description" content="Reactive Spring Security Authentication This demonstration examines Spring Security WebFlux&rsquo;s Authentication mechanisms. We will look at Authentication request escalation, as well as user-domain customizations.
+Authentication flow-control How do we determine when a request must provide an authentication context? Spring does this with help from an AuthenticationEntryPoint that identifies un-authenticated requests and returns with a response to the user to perform some authentication action.
+Configure ServerHttpSecurity to use HTTP-BASIC by calling it&rsquo;s httpBasic() method." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://sudoinit5.github.io/post/spring-kafka/" />
+<meta property="og:url" content="https://sudoinit5.github.io/post/reactive-authentication/" />
 
 
 
@@ -42,8 +44,9 @@ Intro to Spring For Apache Kafka The Spring for Apache Kafka (spring-kafka) proj
 <meta name="twitter:image" content="https://source.unsplash.com/category/technology/2000x1322"/>
 
 <meta name="twitter:title" content=""/>
-<meta name="twitter:description" content="Spring Kafka Writer and Readers What is Kafka Apache Kafka is an open-source stream-processing software platform developed by the Apache Software Foundation written in Scala and Java. You&rsquo;ll find more information about Kafka at it&rsquo;s Homepage.
-Intro to Spring For Apache Kafka The Spring for Apache Kafka (spring-kafka) project applies core Spring concepts to the development of Kafka-based messaging solutions. It provides a &ldquo;template&rdquo; as a high-level abstraction for sending messages."/>
+<meta name="twitter:description" content="Reactive Spring Security Authentication This demonstration examines Spring Security WebFlux&rsquo;s Authentication mechanisms. We will look at Authentication request escalation, as well as user-domain customizations.
+Authentication flow-control How do we determine when a request must provide an authentication context? Spring does this with help from an AuthenticationEntryPoint that identifies un-authenticated requests and returns with a response to the user to perform some authentication action.
+Configure ServerHttpSecurity to use HTTP-BASIC by calling it&rsquo;s httpBasic() method."/>
 
     
 
@@ -63,7 +66,7 @@ Intro to Spring For Apache Kafka The Spring for Apache Kafka (spring-kafka) proj
 
     
     
-    <link rel="canonical" href="https://sudoinit5.github.io/post/spring-kafka/">
+    <link rel="canonical" href="https://sudoinit5.github.io/post/reactive-authentication/">
     
     
     <link rel="icon" sizes="any" href="data:image/svg+xml,%3Csvg%20viewBox='0%200%2046%2045'%20xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EAfter%20Dark%3C/title%3E%3Cpath%20d='M.708%2045L23%20.416%2045.292%2045H.708zM35%2038L23%2019%2011%2038h24z'%20fill='%23000'/%3E%3C/svg%3E">
@@ -226,12 +229,13 @@ article header img {
   <article itemscope itemtype="http://schema.org/BlogPosting">
     
 <meta itemprop="name" content="">
-<meta itemprop="description" content="Spring Kafka Writer and Readers What is Kafka Apache Kafka is an open-source stream-processing software platform developed by the Apache Software Foundation written in Scala and Java. You&rsquo;ll find more information about Kafka at it&rsquo;s Homepage.
-Intro to Spring For Apache Kafka The Spring for Apache Kafka (spring-kafka) project applies core Spring concepts to the development of Kafka-based messaging solutions. It provides a &ldquo;template&rdquo; as a high-level abstraction for sending messages.">
+<meta itemprop="description" content="Reactive Spring Security Authentication This demonstration examines Spring Security WebFlux&rsquo;s Authentication mechanisms. We will look at Authentication request escalation, as well as user-domain customizations.
+Authentication flow-control How do we determine when a request must provide an authentication context? Spring does this with help from an AuthenticationEntryPoint that identifies un-authenticated requests and returns with a response to the user to perform some authentication action.
+Configure ServerHttpSecurity to use HTTP-BASIC by calling it&rsquo;s httpBasic() method.">
 
 
 
-<meta itemprop="wordCount" content="900">
+<meta itemprop="wordCount" content="819">
 
 
 
@@ -244,7 +248,7 @@ Intro to Spring For Apache Kafka The Spring for Apache Kafka (spring-kafka) proj
   <circle cx="16" cy="16" r="14" />
   <path d="M16 8 L16 16 20 20" />
 </svg>
-<span>5 minute read</span>
+<span>4 minute read</span>
 <svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
   <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
 </svg>
@@ -261,120 +265,204 @@ Intro to Spring For Apache Kafka The Spring for Apache Kafka (spring-kafka) proj
     <div itemprop="articleBody">
       
 
-<h1 id="spring-kafka-writer-and-readers">Spring Kafka Writer and Readers</h1>
+<h1 id="reactive-spring-security-authentication">Reactive Spring Security Authentication</h1>
 
-<h2 id="what-is-kafka">What is Kafka</h2>
+<p>This demonstration examines Spring Security WebFlux&rsquo;s Authentication mechanisms. We will look at Authentication request escalation, as well as user-domain customizations.</p>
 
-<p>Apache Kafka is an open-source stream-processing software platform developed by the Apache Software Foundation written in Scala and Java. You&rsquo;ll find
-more information about Kafka at <a href="http://kafka.apache.org/intro.html">it&rsquo;s Homepage</a>.</p>
+<h2 id="authentication-flow-control">Authentication flow-control</h2>
 
-<h2 id="intro-to-spring-for-apache-kafka">Intro to Spring For Apache Kafka</h2>
+<p>How do we determine when a request must provide an authentication context? Spring does this with help from an <a href="https://docs.spring.io/spring-security/site/docs/5.0.0.M3/api/org/springframework/security/web/server/AuthenticationEntryPoint.html">AuthenticationEntryPoint</a>
+that identifies un-authenticated requests and returns with a response to the user to perform some authentication action.</p>
 
-<p>The Spring for Apache Kafka (spring-kafka) project applies core Spring concepts to the development of Kafka-based messaging solutions. It provides a &ldquo;template&rdquo; as a high-level abstraction for sending messages. It also provides support for Message-driven POJOs with <a href="https://docs.spring.io/spring-kafka/api/org/springframework/kafka/annotation/KafkaListener.html">@KafkaListener</a> annotations and a &lsquo;listener container&rsquo;. You will see similarities to the JMS support in the Spring Framework and RabbitMQ support in Spring AMQP.</p>
+<p>Configure <a href="http://foo-bar">ServerHttpSecurity</a> to use HTTP-BASIC by calling it&rsquo;s <code>httpBasic()</code> method. This will enable HTTP-Basic within WebFlux while exposing <a href="http://foo-bar">HttpBasicSpec</a>&rsquo;s lower level components such as the <a href="http://foo-bar">ReactiveAuthenticationManager</a> for customization. For now, we are interested in overriding the default <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/server/authentication/HttpBasicServerAuthenticationEntryPoint.html">HttpBasicServerAuthenticationEntryPoint</a> it provides. This entry-point escalates authentication by sending <code>WWW-Authenticate</code> headers with status 401, triggering the HTTP-Basic login interaction.</p>
 
-<p>See <a href="https://docs.spring.io/spring-kafka/docs/current/reference/html/">HomePage</a> for more datails on this project.</p>
+<p>We can customize the HTTP-BASIC flow by configuring exception handling on the <a href="http://foo-bar">ServerHttpSecurity</a>. Override the provided <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/server/authentication/HttpBasicServerAuthenticationEntryPoint.html">HttpBasicServerAuthenticationEntryPoint</a> with an <a href="http://foo-bar">RedirectServerAuthenticationEntryPoint</a> that redirects users to the &ldquo;/custom-login&rdquo; view.</p>
 
-<h2 id="kafka-producers">Kafka Producers</h2>
+<p>NOTE: I do not condon the muddling of authentication flows; this is just an example:</p>
 
-<p>For connecting to Kafka brokers, you will need to specify a host:port
-property value for <code>spring.kafka.producer.bootstrap-servers</code>. This tells Spring to configure any of the Producer/Consumer Factories with that host as it&rsquo;s target. By default, Spring will autoconfigure this to connect to &lsquo;localhost:9092&rsquo;.</p>
+<p>SecurityConfiguration.java:</p>
 
-<p>A producer factory creates <code>org.apache.kafka.clients.producer.Producer</code>&rsquo;s.
-There is a lot of code involved when using the low level Producer API.
-Prefer instead to use the <code>org.springframework.kafka.core.KafkaTemplate</code>.</p>
+<pre><code>@Bean
+public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
 
-<h2 id="configuring-a-kafka-template">Configuring a Kafka Template</h2>
-
-<p>Spring provides the <a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/autoconfigure/kafka/KafkaAutoConfiguration.html">org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration</a> bean that gets consumed on app start. This bean will do all of the
-component creation and setup once we have configuration properties
-ready.</p>
-
-<p>Lets take a look at a fairly simple config for setting up a working producer called a <a href="https://docs.spring.io/spring-kafka/api/org/springframework/kafka/core/KafkaTemplate.html">KafkaTemplate</a>. The class
-<a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/autoconfigure/kafka/KafkaProperties.html">KafkaProperties</a> is where we can find any of the config items we&rsquo;ll need to make our producer work.
-This bean relays configuration specifics such a <code>acks</code>, and <code>retries</code> to the <a href="https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html">KafkaProducer<K,V></a> that is used within <code>KafkaTemplate</code>.</p>
-
-<p>application.properties:</p>
-
-<pre><code>spring.kafka.producer.client-id=producer-1
-spring.kafka.producer.retries=3
-spring.kafka.producer.acks=1
-spring.kafka.producer.value-serializer=org.springframework.kafka.support.serializer.JsonSerializer
+    return http
+            .authorizeExchange()
+            ...
+            .and()
+            .exceptionHandling()
+                .authenticationEntryPoint(new RedirectServerAuthenticationEntryPoint(&quot;/form-login&quot;))
+            .and()
+            .httpBasic()
+            .and()
+            .build();
+}
 </code></pre>
 
-<p>This is a producer configuration that Kafka brokers will see as &ldquo;producer-1&rdquo;.  It will attempt sending messages up to 3 times before erring, and will wait for leader acknowledgement (ack) before considering messages as sent. By default, Spring chooses a <a href="https://kafka.apache.org/0102/javadoc/org/apache/kafka/common/serialization/StringSerializer.html">StringSerializer</a>, but since we want to send our custom domain objects, we will opt for Json.</p>
+<h3 id="access-restriction-customization">Access Restriction Customization</h3>
 
-<h2 id="sending-messages-to-kafka">Sending Messages to Kafka</h2>
+<p><a href="https://docs.spring.io/spring-security/site/docs/5.0.0.M3/api/org/springframework/security/web/server/AuthenticationEntryPoint.html">AuthenticationEntryPoint</a> is activated when an un-authenticated request raises an <a href="http://flow-control">AccessDeniedException</a>. The exception is caught within <a href="http://ExceptionTranslationWebFilter">ExceptionTranslationWebFilter</a> and determines whether to block access, or escalate to authentication. The later is accomplished by invoking <a href="https://docs.spring.io/spring-security/site/docs/5.0.0.M3/api/org/springframework/security/web/server/AuthenticationEntryPoint.html">AuthenticationEntryPoint</a>&rsquo;s <code>commence()</code> method to initiate an authentication flow.</p>
 
-<p>KafkaTemplate will be used to get messages into Kafka topics. We should use the <a href="https://docs.spring.io/spring-kafka/api/org/springframework/kafka/core/KafkaOperations.html#send-java.lang.String-V-">send()</a> method which gets overloaded for topic, partition, key and then data(message body). Our situation requires us to get data into a topic, then later read it out. We&rsquo;ll send data into our topic given a topic named &lsquo;foobar&rsquo;, and a message containing the contents of a &lsquo;Customer&rsquo; POJO.</p>
+<p>Change the rejection behaviour by providing an <a href="http://ServerAcessDeniedHandler">ServerAccessDeniedHandler</a> to <a href="http://foo-bar">ExceptionHandlingSpec</a>&rsquo;s <code>accessDeniedHandler()</code> method.</p>
 
-<p>KafkaProducerApplication:</p>
+<p>SecurityXConfiguration.java:</p>
 
-<pre><code>@SpringBootApplication
-public class KafkaProducerApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(KafkaProducerApplication.class, args);
+<pre><code>@Bean
+public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
+
+    return http
+    ...
+    .and()
+    .exceptionHandling()
+    .accessDeniedHandler(new HttpStatusServerAccessDeniedHandler(HttpStatus.BAD_REQUEST))
+    .and()
+    ...
+</code></pre>
+
+<p>Now, with any access restriction, the client will see HTTP 400 instead of 403.</p>
+
+<h2 id="authenticating-users">Authenticating Users</h2>
+
+<p><a href="https://docs.spring.io/spring-security/site/docs/5.0.x/api/org/springframework/security/authentication/ReactiveAuthenticationManager.html">ReactiveAuthenticationManager</a>
+does the job of facilitating user and credential validation within the application. We can also use this component to escalate and complete the authentication process for a given flow.</p>
+
+<p>NOTE: Spring provides an integration component <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/authentication/ReactiveAuthenticationManagerAdapter.html">ReactiveAuthenticationManagerAdapter</a>
+for hoisting your existing, classic AuthenticationManager implementations into the reactive world.</p>
+
+<h3 id="customizing-the-user">Customizing the User</h3>
+
+<p>The <a href="https://docs.spring.io/spring-security/site/docs/5.0.3.RELEASE/api/org/springframework/security/authentication/UserDetailsRepositoryReactiveAuthenticationManager.html">UserDetailsRepositoryReactiveAuthenticationManager</a>
+bean is provided automatically if there are no other configured <a href="http://ReactiveAuthenticationManager">ReactiveAuthenticationManager</a> <code>@Bean</code> definitions. This authentication manager defers principal/credential operations to a <a href="https://docs.spring.io/spring-security/site/docs/5.1.0.M1/api/org/springframework/security/core/userdetails/ReactiveUserDetailsService.html">ReactiveUserDetailsService</a> implementation.</p>
+
+<p>Spring comes with ready-made implemenations for storing and looking up users in the <a href="http://MapReactiveUserDetailsService">MapReactiveUserDetailsService</a>. We&rsquo;ll complete this section by making 2 uses of this bean - one MapReactive, the other our own - to illustrate simplicity in overriding and levering this component..</p>
+
+<p>First, the custom User domain object with UserDetails as prescribed by the <code>UserDetailsService</code> interface:</p>
+
+<p>ExampleUser.java:</p>
+
+<pre><code>@Data
+@Slf4j
+public class ExampleUser implements UserDetails {
+
+    private final Account account;
+    Collection&lt;GrantedAuthority&gt; authorities;
+
+    public ExampleUser(Account account, String[] roles) {
+        this.authorities = Arrays.asList(roles)
+                .stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+        this.account = account;
     }
 
-    @Bean
-    ApplicationRunner applicationRunner(KafkaTemplate&lt;String, Customer&gt; kafkaTemplate) {
-        return args -&gt; {
-            while (true) {
-                Thread.sleep(1000);
-                kafkaTemplate.send(&quot;foobar&quot;, new Customer(System.currentTimeMillis(), &quot;mario&quot;));
-            }
-        };
+    @Override
+    public Collection&lt;? extends GrantedAuthority&gt; getAuthorities() {
+        return this.authorities;
+    }
+
+    @Override
+    public String getPassword() {
+        return account.getPassword();
+    }
+
+    @Override
+    public String getUsername() {
+        return account.getUsername();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return account.isActive();
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return account.isActive();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return account.isActive();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return account.isActive();
+    }
+
+    @Data
+    public static class Account {
+
+        private String username;
+        private String password;
+        private boolean active;
+
+        public Account(String username, String password, boolean active) {
+            this.username = username;
+            this.password = password;
+            this.active = active;
+        }
+
     }
 }
 </code></pre>
 
-<p>What this application does, is connect to Kafka, then sends a Customer POJO every second. The KafkaTemplate bean is automatically populated because we included <code>org.springframework.kafka:spring-kafka</code> depdency in our pom. Autoscanning found our application properties we declared earlier, and made sure the right serializers were active. So we neatly complete this scenario by injecting the KafkaTemplate instance into our application class and start pushing messages into our topic.</p>
+<p>We will also need a way to find our users. This demo will use a pre-programmed <code>List()</code> of users to hold any UserDetails we want to expose throughout the app. We provide a few convenience methods to setting up the object. Of significant import is the <a href="https://docs.spring.io/spring-security/site/docs/4.2.4.RELEASE/apidocs/org/springframework/security/crypto/password/PasswordEncoder.html">PasswordEncoder</a> that is used to encrypt (defaults to bcrypt) plaintext.</p>
 
-<p>Executing this application should show standard output of the spring-bot application, and nothing else. Next step here is to consume the messages we just sent in:</p>
+<p>UserDetailServiceBean.java:</p>
 
-<p>Log Output:</p>
+<pre><code>@Configuration
+public class UserDetailServiceBeans {
 
-<pre><code>2018-03-25 22:24:30.845  INFO 25704 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka version : 1.0.0
-2018-03-25 22:24:30.845  INFO 25704 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId : aaa7af6d4a11b29d
+    private static final PasswordEncoder pw = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+
+    private static UserDetails user(String u, String... roles) {
+        return new ExampleUser(new ExampleUser.Account(u, pw.encode(&quot;password&quot;), true),
+                roles);
+    }
+
+    private static final Collection&lt;UserDetails&gt; users = new    ArrayList&lt;&gt;(
+        Arrays.asList(
+                user(&quot;thor&quot;, &quot;ROLE_ADMIN&quot;),
+                user(&quot;loki&quot;, &quot;ROLE_USER&quot;),
+                user(&quot;zeus&quot;, &quot;ROLE_ADMIN&quot;, &quot;ROLE_USER&quot;)
+        ));
+//...
 </code></pre>
 
-<h2 id="a-kafka-consumer">A Kafka Consumer</h2>
+<p>Now, with users available, we can wire in a <a href="http://UserDetailService">UserDetailService</a>. Lets start with the easy-to-use <a href="http://mapReactiveUserDetailService">MapReactiveUserDetailService</a>. We&rsquo;ll bind it to a spring profile <code>&quot;map-reactive&quot;</code> for use case demonstration.</p>
 
-<p>Kafka library supports the <a href="https://kafka.apache.org/0100/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html">KafkaConsumer</a> class to bind client logic to Kafka topic events  - messages received. The event process can be programmed imparitively but is complex in that your
-message handling logic will have to find out how to deserialize, and ultimately route your messages to the right method.  Spring kafka provides the implementation for  <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jms/listener/MessageListenerContainer.html">MessageListenerContainer</a> to perform this message forwarding, manage concurrency, and  re-balance topic-partitions consumed by individual <code>KafkaConsumer</code>&rsquo;s.</p>
+<p>UserDetailServiceBean.java:</p>
 
-<p>Getting your messages out of Kafka is done by annotating a method with <a href="https://docs.spring.io/spring-kafka/api/org/springframework/kafka/annotation/KafkaListener.html">KafkaListener</a>.  This method accept both the <code>java.util.Collection&lt;T&gt;</code> and bare type <code>&lt;T&gt;</code> of the types you expect from the topic.  For example, lets visit how we wire this listening method together:</p>
-
-<p>MessageProcessor.java:</p>
-
-<pre><code>@KafkaListener(topics = {&quot;foobar&quot;})
-public void processMessage(Collection&lt;Customer&gt; customer) {
-    customer.forEach(r -&gt; {
-        System.out.println(&quot;gid: &quot; + myGroupId + &quot;, record = &quot; + r);
-    });
+<pre><code>@Bean
+@Profile(&quot;map-reactive&quot;)
+public MapReactiveUserDetailsService mapReactiveUserDetailsService() {
+    return new MapReactiveUserDetailsService(users);
 }
 </code></pre>
 
-<p>What the annotation does is hoist this processingMessage method into the <a href="https://docs.spring.io/spring-kafka/api/org/springframework/kafka/config/KafkaListenerEndpointRegistry.html">KafkaListenerContainerRegistry</a>. It gets invoked whenever a message arrives on topic &lsquo;foobar&rsquo; that satisfies the method arguments - in this case, a collection of Customers. Finally the body of our method prints out each customer.</p>
+<p>What if I wanted to implement my own <a href="http://ReactiveUserDetailService">ReactiveUserDetailService</a>? This can be accomplished! simply wire in an own implementation of <a href="http://ReactiveUserDetailService">ReactiveUserDetailService</a> as a bean. We&rsquo;ll bind it ot the spring profile <code>&quot;custom&quot;</code> for use case demonstration.</p>
 
-<p>application.properties:</p>
+<p>UserDetailServiceBeans.java:</p>
 
-<pre><code>spring.kafka.consumer.value-deserializer=org.springframework.kafka.support.serializer.JsonDeserializer
-spring.kafka.consumer.properties.spring.json.trusted.packages=*
-spring.kafka.consumer.group-id=${my.group.id:default}
+<pre><code>@Component
+@Profile(&quot;custom&quot;)
+class ExampleUserDetailService implements ReactiveUserDetailsService {
+
+    @Override
+    public Mono&lt;UserDetails&gt; findByUsername(String username) {
+        Optional&lt;UserDetails&gt; maybeUser = users.stream().filter(u -&gt; u.getUsername().equalsIgnoreCase(username)).findFirst();
+        return maybeUser.map(Mono::just).orElse(Mono.empty());
+    }
+}
 </code></pre>
 
-<p>As usual, you must specify the value-deserializer. Specifying <a href="https://docs.spring.io/spring-kafka/api/org/springframework/kafka/support/serializer/JsonDeserializer.html">JsonDeserializer</a> allows our applicaiton to read JSON encoded message bodies, and return our domain objects as payload for processing.  Setting trusted.packages to the lowest level of the package your POJO&rsquo;s (e.g. com.example.pojos) are located in. Alternately set this property to &lsquo;*&rsquo; so that any POJO can become eligible for deserialization. Each consumer should have a unique ID if you&rsquo;re running in offset mode. To avoid offset commit conflicts, you should usually ensure that the groupId is unique for each application context.</p>
+<p>This way we can call our services and be sure that the <a href="http://AuthenticationPrincipal">AuthenticationPrincipal</a> referenced in every request is our own <code>ExampleUser</code>.</p>
 
-<p>Running the consumer, we should expect to see the messages we put into the &ldquo;foobar&rdquo; topic earlier:</p>
+<h2 id="recap">Recap</h2>
 
-<pre><code>2018-03-26 00:47:54.464  INFO 30872 --- [ntainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer    : partitions assigned: [foobar-0]
-GROUPID default, record = Customer(id=1522050390932, name=mario)
-GROUPID default, record = Customer(id=1522050391934, name=mario)
-</code></pre>
+<p>Spring Security offers a rich and complete set of solutions for implementing authenticaiton and authorization schemes into our WebFlux application. The ReativeAuthenticationManager and ReactiveAuthorizationManagers do much of the work at the WebFilter level.  ServerHttpSecurity helps us to wire all this together using a fluent API.</p>
 
-<h2 id="wrap-up">Wrap-up</h2>
-
-<p>Indeed, we have scratched the surface just a little.  Your next logical step to discover more about spring-kafka is to visit my recommended reading list:</p>
+<p>What we want to do next is provide a oAuth2 solutions to our applications. We will tackle that in the next article for Spring Security Webflux.</p>
 
     </div>
     
@@ -392,7 +480,7 @@ GROUPID default, record = Customer(id=1522050391934, name=mario)
   </time>
   
   
-  using <span itemprop="wordCount">900</span> words.
+  using <span itemprop="wordCount">819</span> words.
 </p>
 
       

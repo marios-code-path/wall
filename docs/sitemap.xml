@@ -3,6 +3,18 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://sudoinit5.github.io/post/springtestslices/</loc>
+  </url>
+  
+  <url>
+    <loc>https://sudoinit5.github.io/post/springwsclient/</loc>
+  </url>
+  
+  <url>
+    <loc>https://sudoinit5.github.io/post/springwsserver/</loc>
+  </url>
+  
+  <url>
     <loc>https://sudoinit5.github.io/post/reactive-authentication/</loc>
   </url>
   

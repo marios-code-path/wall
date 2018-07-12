@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> | #sudo init 5</title>
-    <meta name="description" content="Spring Kafka Writer and Readers What is Kafka Apache Kafka is an open-source stream-processing software platform developed by the Apache Software Foundation written in Scala and Java. You&rsquo;ll find more information about Kafka at it&rsquo;s Homepage.
-Intro to Spring For Apache Kafka The Spring for Apache Kafka (spring-kafka) project applies core Spring concepts to the development of Kafka-based messaging solutions. It provides a &ldquo;template&rdquo; as a high-level abstraction for sending messages.">
+    <meta name="description" content="This Demo This demo client will connect and receive events from any URL that emits an open websocket stream. We have an existing server to stand up that can supply the socket events. A reactive client means that we can respond to backpressure, and weild the Observer pattern to our client connections.
+The Client (SANS web) We can use our favorite Spring Application Initializr start dot spring dot io to generate the application.">
     <meta name="keywords" content="">
     
     
@@ -18,10 +18,10 @@ Intro to Spring For Apache Kafka The Spring for Apache Kafka (spring-kafka) proj
 
 
     <meta property="og:title" content="" />
-<meta property="og:description" content="Spring Kafka Writer and Readers What is Kafka Apache Kafka is an open-source stream-processing software platform developed by the Apache Software Foundation written in Scala and Java. You&rsquo;ll find more information about Kafka at it&rsquo;s Homepage.
-Intro to Spring For Apache Kafka The Spring for Apache Kafka (spring-kafka) project applies core Spring concepts to the development of Kafka-based messaging solutions. It provides a &ldquo;template&rdquo; as a high-level abstraction for sending messages." />
+<meta property="og:description" content="This Demo This demo client will connect and receive events from any URL that emits an open websocket stream. We have an existing server to stand up that can supply the socket events. A reactive client means that we can respond to backpressure, and weild the Observer pattern to our client connections.
+The Client (SANS web) We can use our favorite Spring Application Initializr start dot spring dot io to generate the application." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://sudoinit5.github.io/post/spring-kafka/" />
+<meta property="og:url" content="https://sudoinit5.github.io/post/springwsclient/" />
 
 
 
@@ -42,8 +42,8 @@ Intro to Spring For Apache Kafka The Spring for Apache Kafka (spring-kafka) proj
 <meta name="twitter:image" content="https://source.unsplash.com/category/technology/2000x1322"/>
 
 <meta name="twitter:title" content=""/>
-<meta name="twitter:description" content="Spring Kafka Writer and Readers What is Kafka Apache Kafka is an open-source stream-processing software platform developed by the Apache Software Foundation written in Scala and Java. You&rsquo;ll find more information about Kafka at it&rsquo;s Homepage.
-Intro to Spring For Apache Kafka The Spring for Apache Kafka (spring-kafka) project applies core Spring concepts to the development of Kafka-based messaging solutions. It provides a &ldquo;template&rdquo; as a high-level abstraction for sending messages."/>
+<meta name="twitter:description" content="This Demo This demo client will connect and receive events from any URL that emits an open websocket stream. We have an existing server to stand up that can supply the socket events. A reactive client means that we can respond to backpressure, and weild the Observer pattern to our client connections.
+The Client (SANS web) We can use our favorite Spring Application Initializr start dot spring dot io to generate the application."/>
 
     
 
@@ -63,7 +63,7 @@ Intro to Spring For Apache Kafka The Spring for Apache Kafka (spring-kafka) proj
 
     
     
-    <link rel="canonical" href="https://sudoinit5.github.io/post/spring-kafka/">
+    <link rel="canonical" href="https://sudoinit5.github.io/post/springwsclient/">
     
     
     <link rel="icon" sizes="any" href="data:image/svg+xml,%3Csvg%20viewBox='0%200%2046%2045'%20xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EAfter%20Dark%3C/title%3E%3Cpath%20d='M.708%2045L23%20.416%2045.292%2045H.708zM35%2038L23%2019%2011%2038h24z'%20fill='%23000'/%3E%3C/svg%3E">
@@ -226,12 +226,12 @@ article header img {
   <article itemscope itemtype="http://schema.org/BlogPosting">
     
 <meta itemprop="name" content="">
-<meta itemprop="description" content="Spring Kafka Writer and Readers What is Kafka Apache Kafka is an open-source stream-processing software platform developed by the Apache Software Foundation written in Scala and Java. You&rsquo;ll find more information about Kafka at it&rsquo;s Homepage.
-Intro to Spring For Apache Kafka The Spring for Apache Kafka (spring-kafka) project applies core Spring concepts to the development of Kafka-based messaging solutions. It provides a &ldquo;template&rdquo; as a high-level abstraction for sending messages.">
+<meta itemprop="description" content="This Demo This demo client will connect and receive events from any URL that emits an open websocket stream. We have an existing server to stand up that can supply the socket events. A reactive client means that we can respond to backpressure, and weild the Observer pattern to our client connections.
+The Client (SANS web) We can use our favorite Spring Application Initializr start dot spring dot io to generate the application.">
 
 
 
-<meta itemprop="wordCount" content="900">
+<meta itemprop="wordCount" content="635">
 
 
 
@@ -244,7 +244,7 @@ Intro to Spring For Apache Kafka The Spring for Apache Kafka (spring-kafka) proj
   <circle cx="16" cy="16" r="14" />
   <path d="M16 8 L16 16 20 20" />
 </svg>
-<span>5 minute read</span>
+<span>3 minute read</span>
 <svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
   <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
 </svg>
@@ -261,120 +261,209 @@ Intro to Spring For Apache Kafka The Spring for Apache Kafka (spring-kafka) proj
     <div itemprop="articleBody">
       
 
-<h1 id="spring-kafka-writer-and-readers">Spring Kafka Writer and Readers</h1>
+<h1 id="this-demo">This Demo</h1>
 
-<h2 id="what-is-kafka">What is Kafka</h2>
+<p>This demo client will connect and receive events from any URL that emits
+an open websocket stream. We have an <a href="https://github.com/marios-code-path/spring-web-sockets/tree/master/socket-server">existing
+server</a>
+to stand up that can supply the socket events. A reactive client means
+that we can respond to backpressure, and weild the <code>Observer</code> pattern to
+our client connections.</p>
 
-<p>Apache Kafka is an open-source stream-processing software platform developed by the Apache Software Foundation written in Scala and Java. You&rsquo;ll find
-more information about Kafka at <a href="http://kafka.apache.org/intro.html">it&rsquo;s Homepage</a>.</p>
+<h1 id="the-client-sans-web">The Client (SANS web)</h1>
 
-<h2 id="intro-to-spring-for-apache-kafka">Intro to Spring For Apache Kafka</h2>
+<p>We can use our favorite Spring Application Initializr <a href="http://start.spring.io">start dot spring
+dot io</a> to generate the application. To get
+started, any project must have the following dependencies:</p>
 
-<p>The Spring for Apache Kafka (spring-kafka) project applies core Spring concepts to the development of Kafka-based messaging solutions. It provides a &ldquo;template&rdquo; as a high-level abstraction for sending messages. It also provides support for Message-driven POJOs with <a href="https://docs.spring.io/spring-kafka/api/org/springframework/kafka/annotation/KafkaListener.html">@KafkaListener</a> annotations and a &lsquo;listener container&rsquo;. You will see similarities to the JMS support in the Spring Framework and RabbitMQ support in Spring AMQP.</p>
+<p><strong>dependencies_for_webflux.</strong></p>
 
-<p>See <a href="https://docs.spring.io/spring-kafka/docs/current/reference/html/">HomePage</a> for more datails on this project.</p>
-
-<h2 id="kafka-producers">Kafka Producers</h2>
-
-<p>For connecting to Kafka brokers, you will need to specify a host:port
-property value for <code>spring.kafka.producer.bootstrap-servers</code>. This tells Spring to configure any of the Producer/Consumer Factories with that host as it&rsquo;s target. By default, Spring will autoconfigure this to connect to &lsquo;localhost:9092&rsquo;.</p>
-
-<p>A producer factory creates <code>org.apache.kafka.clients.producer.Producer</code>&rsquo;s.
-There is a lot of code involved when using the low level Producer API.
-Prefer instead to use the <code>org.springframework.kafka.core.KafkaTemplate</code>.</p>
-
-<h2 id="configuring-a-kafka-template">Configuring a Kafka Template</h2>
-
-<p>Spring provides the <a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/autoconfigure/kafka/KafkaAutoConfiguration.html">org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration</a> bean that gets consumed on app start. This bean will do all of the
-component creation and setup once we have configuration properties
-ready.</p>
-
-<p>Lets take a look at a fairly simple config for setting up a working producer called a <a href="https://docs.spring.io/spring-kafka/api/org/springframework/kafka/core/KafkaTemplate.html">KafkaTemplate</a>. The class
-<a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/autoconfigure/kafka/KafkaProperties.html">KafkaProperties</a> is where we can find any of the config items we&rsquo;ll need to make our producer work.
-This bean relays configuration specifics such a <code>acks</code>, and <code>retries</code> to the <a href="https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html">KafkaProducer<K,V></a> that is used within <code>KafkaTemplate</code>.</p>
-
-<p>application.properties:</p>
-
-<pre><code>spring.kafka.producer.client-id=producer-1
-spring.kafka.producer.retries=3
-spring.kafka.producer.acks=1
-spring.kafka.producer.value-serializer=org.springframework.kafka.support.serializer.JsonSerializer
+<pre><code>        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-webflux&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+            &lt;artifactId&gt;lombok&lt;/artifactId&gt;
+            &lt;optional&gt;true&lt;/optional&gt;
+        &lt;/dependency&gt;
 </code></pre>
 
-<p>This is a producer configuration that Kafka brokers will see as &ldquo;producer-1&rdquo;.  It will attempt sending messages up to 3 times before erring, and will wait for leader acknowledgement (ack) before considering messages as sent. By default, Spring chooses a <a href="https://kafka.apache.org/0102/javadoc/org/apache/kafka/common/serialization/StringSerializer.html">StringSerializer</a>, but since we want to send our custom domain objects, we will opt for Json.</p>
+<p>For this client, we will use the
+<a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/reactive/socket/client/ReactorNettyWebSocketClient.html"><code>ReactorNettyWebSocketClient</code></a>
+request and handle our WebSocket connection. The <code>execute(…​)</code> method
+lets us pass in a
+<a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/reactive/socket/WebSocketHandler.html"><code>WebSocketHandler</code></a>
+to manage the session. Connecting to to the session’s <code>receive()</code> stream
+will let us handle server source events, and produce our custom stream
+logic.</p>
 
-<h2 id="sending-messages-to-kafka">Sending Messages to Kafka</h2>
+<blockquote>
+<p><strong>Note</strong></p>
 
-<p>KafkaTemplate will be used to get messages into Kafka topics. We should use the <a href="https://docs.spring.io/spring-kafka/api/org/springframework/kafka/core/KafkaOperations.html#send-java.lang.String-V-">send()</a> method which gets overloaded for topic, partition, key and then data(message body). Our situation requires us to get data into a topic, then later read it out. We&rsquo;ll send data into our topic given a topic named &lsquo;foobar&rsquo;, and a message containing the contents of a &lsquo;Customer&rsquo; POJO.</p>
+<p>Be aware though, browsers do not support custom headers in ws://
+websocket connections.</p>
+</blockquote>
 
-<p>KafkaProducerApplication:</p>
+<p><strong>websocket_client.</strong></p>
 
-<pre><code>@SpringBootApplication
-public class KafkaProducerApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(KafkaProducerApplication.class, args);
+<pre><code>    Mono&lt;Void&gt; wsConnectNetty(int id) {
+        URI uri = getURI(&quot;ws://localhost:8080/ws/feed&quot;);
+        return new ReactorNettyWebSocketClient()
+                        .execute(uri, session -&gt; session
+                        .receive()
+                        .map(WebSocketMessage::getPayloadAsText)
+                        .take(MAX_EVENTS)
+                        .doOnNext(txt -&gt; log.info(id + &quot;.IN: &quot; + txt))
+                        .filter(txt -&gt; is_prime(Long.valueOf(txt)))
+                        .flatMap(txt -&gt; session.send(Mono.just(session.textMessage(txt))))
+                        .doOnSubscribe(subscriber -&gt; log.info(id + &quot;.OPEN&quot;))
+                        .doFinally(signalType -&gt; log.info(id + &quot;.CLOSE&quot;))
+                        .then() // only handle stream signals (term, complete, etc..)
+                )
     }
+</code></pre>
 
-    @Bean
-    ApplicationRunner applicationRunner(KafkaTemplate&lt;String, Customer&gt; kafkaTemplate) {
+<p>Now we can setup the subscription method. Since our client execution
+returnd a type of <code>Mono&lt;Void&gt;</code>, we will compose a stream to emit many
+client instances that will survive on a single threaded event loop.
+Using
+<a href="https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/CountDownLatch.html"><code>CountDownLatch</code></a>,
+we can avoid using the deadly
+<a href="https://projectreactor.io/docs/core/release/api/reactor/core/publisher/Mono.html#block--"><code>block()</code></a>
+operator in Flux.</p>
+
+<p><strong>a_reactive_ws_stream.</strong></p>
+
+<pre><code>    @Bean
+    ApplicationRunner appRunner() {
         return args -&gt; {
-            while (true) {
-                Thread.sleep(1000);
-                kafkaTemplate.send(&quot;foobar&quot;, new Customer(System.currentTimeMillis(), &quot;mario&quot;));
-            }
+            final CountDownLatch latch = new CountDownLatch(5);
+            Flux.merge(
+                    Flux.range(0, 5)
+                            .subscribeOn(Schedulers.single())
+                            .map(this::wsConnectNetty)
+                            .flatMap(sp -&gt; sp.doOnTerminate(latch::countDown))
+                            .parallel()
+            )
+                    .subscribe();
+            latch.await(20, TimeUnit.SECONDS);
         };
     }
+</code></pre>
+
+<p>Finally, to make this application runnable, there is a fancy
+<code>@SpringBootApplication</code> code :)</p>
+
+<p><strong>ws_client_main.</strong></p>
+
+<pre><code>@SpringBootApplication
+@Slf4j
+public class SocketClientApp {
+    // rest of the code goes here
+
+    public static void main(String[] args) throws Exception {
+        SpringApplication app = new SpringApplication(SocketClientApp.class);
+                app.setWebApplicationType(WebApplicationType.NONE);
+                app.run(args);
+    }
 }
 </code></pre>
 
-<p>What this application does, is connect to Kafka, then sends a Customer POJO every second. The KafkaTemplate bean is automatically populated because we included <code>org.springframework.kafka:spring-kafka</code> depdency in our pom. Autoscanning found our application properties we declared earlier, and made sure the right serializers were active. So we neatly complete this scenario by injecting the KafkaTemplate instance into our application class and start pushing messages into our topic.</p>
+<p>The <code>spring.main.web-environment</code> property variable has been deprecated
+in Spring 5.0. The recommended method is now to programatically setup
+<code>WebApplicationType</code> at initialization. I removed the
+<code>application.properties</code> for one property (and kept configuration
+condensed) :)</p>
 
-<p>Executing this application should show standard output of the spring-bot application, and nothing else. Next step here is to consume the messages we just sent in:</p>
+<p><strong>execute.</strong></p>
 
-<p>Log Output:</p>
-
-<pre><code>2018-03-25 22:24:30.845  INFO 25704 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka version : 1.0.0
-2018-03-25 22:24:30.845  INFO 25704 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId : aaa7af6d4a11b29d
+<pre><code>$ mvn spring-boot:run
 </code></pre>
 
-<h2 id="a-kafka-consumer">A Kafka Consumer</h2>
+<p>Execute this application and you see the following output on the client
+side.</p>
 
-<p>Kafka library supports the <a href="https://kafka.apache.org/0100/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html">KafkaConsumer</a> class to bind client logic to Kafka topic events  - messages received. The event process can be programmed imparitively but is complex in that your
-message handling logic will have to find out how to deserialize, and ultimately route your messages to the right method.  Spring kafka provides the implementation for  <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jms/listener/MessageListenerContainer.html">MessageListenerContainer</a> to perform this message forwarding, manage concurrency, and  re-balance topic-partitions consumed by individual <code>KafkaConsumer</code>&rsquo;s.</p>
+<p><strong>output.</strong></p>
 
-<p>Getting your messages out of Kafka is done by annotating a method with <a href="https://docs.spring.io/spring-kafka/api/org/springframework/kafka/annotation/KafkaListener.html">KafkaListener</a>.  This method accept both the <code>java.util.Collection&lt;T&gt;</code> and bare type <code>&lt;T&gt;</code> of the types you expect from the topic.  For example, lets visit how we wire this listening method together:</p>
-
-<p>MessageProcessor.java:</p>
-
-<pre><code>@KafkaListener(topics = {&quot;foobar&quot;})
-public void processMessage(Collection&lt;Customer&gt; customer) {
-    customer.forEach(r -&gt; {
-        System.out.println(&quot;gid: &quot; + myGroupId + &quot;, record = &quot; + r);
-    });
-}
+<pre><code>INFO 5292 --- [           main] c.example.socketclient.SocketClientApp   : Started SocketClientApp in 1.735 seconds (JVM running for 2.464)
+INFO 5292 --- [ctor-http-nio-2] c.example.socketclient.SocketClientApp   : 1.OPEN
+INFO 5292 --- [ctor-http-nio-4] c.example.socketclient.SocketClientApp   : 0.OPEN
+INFO 5292 --- [ctor-http-nio-4] c.example.socketclient.SocketClientApp   : 0.IN: 0
+INFO 5292 --- [ctor-http-nio-2] c.example.socketclient.SocketClientApp   : 1.IN: 0
+INFO 5292 --- [ctor-http-nio-4] c.example.socketclient.SocketClientApp   : 0.IN: 1
+INFO 5292 --- [ctor-http-nio-2] c.example.socketclient.SocketClientApp   : 1.IN: 1
+INFO 5292 --- [ctor-http-nio-2] c.example.socketclient.SocketClientApp   : 1.IN: 2
+INFO 5292 --- [ctor-http-nio-4] c.example.socketclient.SocketClientApp   : 0.IN: 2
+INFO 5292 --- [ctor-http-nio-4] c.example.socketclient.SocketClientApp   : 0.IN: 3
+INFO 5292 --- [ctor-http-nio-2] c.example.socketclient.SocketClientApp   : 1.IN: 3
+INFO 5292 --- [ctor-http-nio-4] c.example.socketclient.SocketClientApp   : 0.IN: 4
+INFO 5292 --- [ctor-http-nio-2] c.example.socketclient.SocketClientApp   : 1.IN: 4
+INFO 5292 --- [ctor-http-nio-4] c.example.socketclient.SocketClientApp   : 0.CLOSE
+INFO 5292 --- [ctor-http-nio-2] c.example.socketclient.SocketClientApp   : 1.CLOSE
+INFO 5292 --- [       Thread-6] s.c.a.AnnotationConfigApplicationContext : Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@6e75aa0d: startup date []; root of context hierarchy
 </code></pre>
 
-<p>What the annotation does is hoist this processingMessage method into the <a href="https://docs.spring.io/spring-kafka/api/org/springframework/kafka/config/KafkaListenerEndpointRegistry.html">KafkaListenerContainerRegistry</a>. It gets invoked whenever a message arrives on topic &lsquo;foobar&rsquo; that satisfies the method arguments - in this case, a collection of Customers. Finally the body of our method prints out each customer.</p>
+<p>Server Side should see similar output:</p>
 
-<p>application.properties:</p>
+<p><strong>output_server.</strong></p>
 
-<pre><code>spring.kafka.consumer.value-deserializer=org.springframework.kafka.support.serializer.JsonDeserializer
-spring.kafka.consumer.properties.spring.json.trusted.packages=*
-spring.kafka.consumer.group-id=${my.group.id:default}
+<pre><code>INFO 5260 --- [ctor-http-nio-4] c.e.socketserver.WebSocketServerApp      : Started.6fa56d2b
+INFO 5260 --- [ctor-http-nio-1] c.e.socketserver.WebSocketServerApp      : Started.35994779
+INFO 5260 --- [ctor-http-nio-4] c.e.socketserver.WebSocketServerApp      : Prime#: 2
+INFO 5260 --- [ctor-http-nio-1] c.e.socketserver.WebSocketServerApp      : Prime#: 2
+INFO 5260 --- [ctor-http-nio-1] c.e.socketserver.WebSocketServerApp      : Prime#: 3
+INFO 5260 --- [ctor-http-nio-4] c.e.socketserver.WebSocketServerApp      : Prime#: 3
+INFO 5260 --- [ctor-http-nio-1] c.e.socketserver.WebSocketServerApp      : Complete.35994779
+INFO 5260 --- [ctor-http-nio-4] c.e.socketserver.WebSocketServerApp      : Complete.6fa56d2b
 </code></pre>
 
-<p>As usual, you must specify the value-deserializer. Specifying <a href="https://docs.spring.io/spring-kafka/api/org/springframework/kafka/support/serializer/JsonDeserializer.html">JsonDeserializer</a> allows our applicaiton to read JSON encoded message bodies, and return our domain objects as payload for processing.  Setting trusted.packages to the lowest level of the package your POJO&rsquo;s (e.g. com.example.pojos) are located in. Alternately set this property to &lsquo;*&rsquo; so that any POJO can become eligible for deserialization. Each consumer should have a unique ID if you&rsquo;re running in offset mode. To avoid offset commit conflicts, you should usually ensure that the groupId is unique for each application context.</p>
+<h1 id="notes">Notes</h1>
 
-<p>Running the consumer, we should expect to see the messages we put into the &ldquo;foobar&rdquo; topic earlier:</p>
+<p>Hope you find this demonstration useful. Send your feedback to me via
+email twitter, or Carrier Pigeon.</p>
 
-<pre><code>2018-03-26 00:47:54.464  INFO 30872 --- [ntainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer    : partitions assigned: [foobar-0]
-GROUPID default, record = Customer(id=1522050390932, name=mario)
-GROUPID default, record = Customer(id=1522050391934, name=mario)
-</code></pre>
+<ul>
+<li><p><a href="mailto:mgray@pivotal.io">mgray@pivotal.io</a></p></li>
 
-<h2 id="wrap-up">Wrap-up</h2>
+<li><p>@mariogray</p></li>
 
-<p>Indeed, we have scratched the surface just a little.  Your next logical step to discover more about spring-kafka is to visit my recommended reading list:</p>
+<li><p><a href="https://tools.ietf.org/html/rfc1149">gps_coordinates_for_carrier_pigeon</a></p></li>
+</ul>
+
+<h1 id="references-readling-list">References/Readling List</h1>
+
+<ul>
+<li><p>Spring WebFlux guide</p>
+
+<ul>
+<li><p><a href="https://docs.spring.io/spring/docs/5.0.0.BUILD-SNAPSHOT/spring-framework-reference/html/web-reactive.html">https://docs.spring.io/spring/docs/5.0.0.BUILD-SNAPSHOT/spring-framework-reference/html/web-reactive.html</a></p></li>
+
+<li><p><a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html">https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html</a></p></li>
+</ul></li>
+
+<li><p>Articles</p>
+
+<ul>
+<li>Tom Van den Bulck has a niece
+<a href="https://ordina-jworks.github.io/reactive/2016/12/12/Reactive-Programming-Spring-Reactor.html">piece</a>
+on reactive programming with Spring.</li>
+</ul></li>
+
+<li><p>W3C Proposals</p>
+
+<ul>
+<li><a href="https://tools.ietf.org/html/rfc6455">https://tools.ietf.org/html/rfc6455</a></li>
+</ul></li>
+
+<li><p>Theory</p>
+
+<ul>
+<li><p><a href="http://reactivex.io/documentation/operators.html">http://reactivex.io/documentation/operators.html</a></p></li>
+
+<li><p><a href="https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/core/operators/debounce.md">https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/core/operators/debounce.md</a></p></li>
+</ul></li>
+</ul>
 
     </div>
     
@@ -392,7 +481,7 @@ GROUPID default, record = Customer(id=1522050391934, name=mario)
   </time>
   
   
-  using <span itemprop="wordCount">900</span> words.
+  using <span itemprop="wordCount">635</span> words.
 </p>
 
       
