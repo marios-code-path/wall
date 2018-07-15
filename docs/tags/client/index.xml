@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Client on # sudo init 5 - A Developer&#39;s web log</title>
+    <link>https://www.sudoinit5.com/tags/client/</link>
+    <description>Recent content in Client on # sudo init 5 - A Developer&#39;s web log</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Sun, 06 May 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://www.sudoinit5.com/tags/client/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Reactive Websocket Client with Spring</title>
+      <link>https://www.sudoinit5.com/post/spring-reactive-ws-client/</link>
+      <pubDate>Sun, 06 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.sudoinit5.com/post/spring-reactive-ws-client/</guid>
+      <description>This Demo This demo client will connect and receive events from any URL that emits an open websocket stream. We have an existing server to stand up that can supply the socket events. A reactive client means that we can respond to backpressure, and weild the Observer pattern to our client connections.
+The Client (SANS web) We can use our favorite Spring Application Initializr start dot spring dot io to generate the application.</description>
+    </item>
+    
+  </channel>
+</rss>

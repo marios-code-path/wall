@@ -1,14 +1,195 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on #sudo init 5</title>
-    <link>https://sudoinit5.github.io/categories/</link>
-    <description>Recent content in Categories on #sudo init 5</description>
+    <title>Categories on # sudo init 5 - A Developer&#39;s web log</title>
+    <link>https://www.sudoinit5.com/categories/</link>
+    <description>Recent content in Categories on # sudo init 5 - A Developer&#39;s web log</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
+    <lastBuildDate>Sat, 14 Jul 2018 00:00:00 -0700</lastBuildDate>
     
-	<atom:link href="https://sudoinit5.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.sudoinit5.com/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Appsec</title>
+      <link>https://www.sudoinit5.com/categories/appsec/</link>
+      <pubDate>Sat, 14 Jul 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/categories/appsec/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Client</title>
+      <link>https://www.sudoinit5.com/categories/client/</link>
+      <pubDate>Sun, 06 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.sudoinit5.com/categories/client/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Container</title>
+      <link>https://www.sudoinit5.com/categories/container/</link>
+      <pubDate>Mon, 12 Feb 2018 00:00:00 -0800</pubDate>
+      
+      <guid>https://www.sudoinit5.com/categories/container/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Faas</title>
+      <link>https://www.sudoinit5.com/categories/faas/</link>
+      <pubDate>Mon, 12 Feb 2018 00:00:00 -0800</pubDate>
+      
+      <guid>https://www.sudoinit5.com/categories/faas/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Java</title>
+      <link>https://www.sudoinit5.com/categories/java/</link>
+      <pubDate>Mon, 16 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.sudoinit5.com/categories/java/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Kafka</title>
+      <link>https://www.sudoinit5.com/categories/kafka/</link>
+      <pubDate>Fri, 13 Apr 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/categories/kafka/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Kubernetes</title>
+      <link>https://www.sudoinit5.com/categories/kubernetes/</link>
+      <pubDate>Mon, 12 Feb 2018 00:00:00 -0800</pubDate>
+      
+      <guid>https://www.sudoinit5.com/categories/kubernetes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Messaging</title>
+      <link>https://www.sudoinit5.com/categories/messaging/</link>
+      <pubDate>Fri, 13 Apr 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/categories/messaging/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Mq</title>
+      <link>https://www.sudoinit5.com/categories/mq/</link>
+      <pubDate>Fri, 13 Apr 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/categories/mq/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Reactive</title>
+      <link>https://www.sudoinit5.com/categories/reactive/</link>
+      <pubDate>Sat, 14 Jul 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/categories/reactive/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Security</title>
+      <link>https://www.sudoinit5.com/categories/security/</link>
+      <pubDate>Sat, 14 Jul 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/categories/security/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Spring</title>
+      <link>https://www.sudoinit5.com/categories/spring/</link>
+      <pubDate>Thu, 05 Jul 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/categories/spring/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Tdd</title>
+      <link>https://www.sudoinit5.com/categories/tdd/</link>
+      <pubDate>Tue, 13 Mar 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/categories/tdd/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Test</title>
+      <link>https://www.sudoinit5.com/categories/test/</link>
+      <pubDate>Tue, 13 Mar 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/categories/test/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Test Slice</title>
+      <link>https://www.sudoinit5.com/categories/test-slice/</link>
+      <pubDate>Tue, 13 Mar 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/categories/test-slice/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Tracing</title>
+      <link>https://www.sudoinit5.com/categories/tracing/</link>
+      <pubDate>Mon, 16 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.sudoinit5.com/categories/tracing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Web</title>
+      <link>https://www.sudoinit5.com/categories/web/</link>
+      <pubDate>Wed, 09 May 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/categories/web/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Websocket</title>
+      <link>https://www.sudoinit5.com/categories/websocket/</link>
+      <pubDate>Wed, 09 May 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/categories/websocket/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Websocket Client</title>
+      <link>https://www.sudoinit5.com/categories/websocket-client/</link>
+      <pubDate>Sun, 06 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.sudoinit5.com/categories/websocket-client/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Zipkin</title>
+      <link>https://www.sudoinit5.com/categories/zipkin/</link>
+      <pubDate>Mon, 16 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.sudoinit5.com/categories/zipkin/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>

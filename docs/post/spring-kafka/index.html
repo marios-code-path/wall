@@ -4,29 +4,28 @@
     <meta name="generator" content="Hugo 0.43" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> | #sudo init 5</title>
-    <meta name="description" content="Spring Kafka Writer and Readers What is Kafka Apache Kafka is an open-source stream-processing software platform developed by the Apache Software Foundation written in Scala and Java. You&rsquo;ll find more information about Kafka at it&rsquo;s Homepage.
-Intro to Spring For Apache Kafka The Spring for Apache Kafka (spring-kafka) project applies core Spring concepts to the development of Kafka-based messaging solutions. It provides a &ldquo;template&rdquo; as a high-level abstraction for sending messages.">
-    <meta name="keywords" content="">
+    <title>Sending and consuming messages with Spring and KafKa | # sudo init 5 - A Developer&#39;s web log</title>
+    <meta name="description" content="This demonstration explains how to craft classical (not reactive) consumer/producer componentS within you Spring apps">
+    <meta name="keywords" content="functional, java, spring, web, demo">
     
     
     
     
     
 
-  <meta name="author" content="Mario V. Gray">
+  <meta name="author" content="Mario Gray">
 
 
-    <meta property="og:title" content="" />
-<meta property="og:description" content="Spring Kafka Writer and Readers What is Kafka Apache Kafka is an open-source stream-processing software platform developed by the Apache Software Foundation written in Scala and Java. You&rsquo;ll find more information about Kafka at it&rsquo;s Homepage.
-Intro to Spring For Apache Kafka The Spring for Apache Kafka (spring-kafka) project applies core Spring concepts to the development of Kafka-based messaging solutions. It provides a &ldquo;template&rdquo; as a high-level abstraction for sending messages." />
+    <meta property="og:title" content="Sending and consuming messages with Spring and KafKa" />
+<meta property="og:description" content="This demonstration explains how to craft classical (not reactive) consumer/producer componentS within you Spring apps" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://sudoinit5.github.io/post/spring-kafka/" />
+<meta property="og:url" content="https://www.sudoinit5.com/post/spring-kafka/" />
 
 
 
+<meta property="article:published_time" content="2018-04-13T00:00:00-07:00"/>
 
-
+<meta property="article:modified_time" content="2018-04-13T00:00:00-07:00"/>
 
 
 
@@ -41,9 +40,8 @@ Intro to Spring For Apache Kafka The Spring for Apache Kafka (spring-kafka) proj
     <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://source.unsplash.com/category/technology/2000x1322"/>
 
-<meta name="twitter:title" content=""/>
-<meta name="twitter:description" content="Spring Kafka Writer and Readers What is Kafka Apache Kafka is an open-source stream-processing software platform developed by the Apache Software Foundation written in Scala and Java. You&rsquo;ll find more information about Kafka at it&rsquo;s Homepage.
-Intro to Spring For Apache Kafka The Spring for Apache Kafka (spring-kafka) project applies core Spring concepts to the development of Kafka-based messaging solutions. It provides a &ldquo;template&rdquo; as a high-level abstraction for sending messages."/>
+<meta name="twitter:title" content="Sending and consuming messages with Spring and KafKa"/>
+<meta name="twitter:description" content="This demonstration explains how to craft classical (not reactive) consumer/producer componentS within you Spring apps"/>
 
     
 
@@ -63,7 +61,7 @@ Intro to Spring For Apache Kafka The Spring for Apache Kafka (spring-kafka) proj
 
     
     
-    <link rel="canonical" href="https://sudoinit5.github.io/post/spring-kafka/">
+    <link rel="canonical" href="https://www.sudoinit5.com/post/spring-kafka/">
     
     
     <link rel="icon" sizes="any" href="data:image/svg+xml,%3Csvg%20viewBox='0%200%2046%2045'%20xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EAfter%20Dark%3C/title%3E%3Cpath%20d='M.708%2045L23%20.416%2045.292%2045H.708zM35%2038L23%2019%2011%2038h24z'%20fill='%23000'/%3E%3C/svg%3E">
@@ -220,25 +218,32 @@ article header img {
   <body class="hack dark main container">
     <header>
   
+  <nav itemscope itemtype="http://schema.org/SiteNavigationElement">
+    
+    
+      <a itemprop="url" class="active" href="/post/"><span itemprop="name">Posts</span></a>
+    
+  </nav>
+
 
 </header>
     <main>
   <article itemscope itemtype="http://schema.org/BlogPosting">
     
-<meta itemprop="name" content="">
-<meta itemprop="description" content="Spring Kafka Writer and Readers What is Kafka Apache Kafka is an open-source stream-processing software platform developed by the Apache Software Foundation written in Scala and Java. You&rsquo;ll find more information about Kafka at it&rsquo;s Homepage.
-Intro to Spring For Apache Kafka The Spring for Apache Kafka (spring-kafka) project applies core Spring concepts to the development of Kafka-based messaging solutions. It provides a &ldquo;template&rdquo; as a high-level abstraction for sending messages.">
+<meta itemprop="name" content="Sending and consuming messages with Spring and KafKa">
+<meta itemprop="description" content="This demonstration explains how to craft classical (not reactive) consumer/producer componentS within you Spring apps">
 
 
-
+<meta itemprop="datePublished" content="2018-04-13T00:00:00-07:00" />
+<meta itemprop="dateModified" content="2018-04-13T00:00:00-07:00" />
 <meta itemprop="wordCount" content="900">
 
 
 
-<meta itemprop="keywords" content="" />
+<meta itemprop="keywords" content="functional,java,spring,web,demo," />
 
     <header>
-      <h1 itemprop="headline"></h1>
+      <h1 itemprop="headline">Sending and consuming messages with Spring and KafKa</h1>
       <p class="muted">
         <svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
   <circle cx="16" cy="16" r="14" />
@@ -249,14 +254,48 @@ Intro to Spring For Apache Kafka The Spring for Apache Kafka (spring-kafka) proj
   <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
 </svg>
 
-  Published: <time datetime="0001-01-01T00:00:00&#43;00:00">1 Jan, 0001</time>
+  Published: <time datetime="2018-04-13T00:00:00-07:00">13 Apr, 2018</time>
 
 
       </p>
       
+        <blockquote itemprop="description">This demonstration explains how to craft classical (not reactive) consumer/producer componentS within you Spring apps</blockquote>
+      
       
     </header>
     
+  <details>
+    <summary>Table of Contents</summary>
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#spring-kafka-writer-and-readers">Spring Kafka Writer and Readers</a>
+<ul>
+<li><a href="#what-is-kafka">What is Kafka</a></li>
+<li><a href="#intro-to-spring-for-apache-kafka">Intro to Spring For Apache Kafka</a></li>
+<li><a href="#kafka-producers">Kafka Producers</a></li>
+<li><a href="#configuring-a-kafka-template">Configuring a Kafka Template</a></li>
+<li><a href="#sending-messages-to-kafka">Sending Messages to Kafka</a></li>
+<li><a href="#a-kafka-consumer">A Kafka Consumer</a></li>
+<li><a href="#wrap-up">Wrap-up</a></li>
+</ul></li>
+</ul>
+</nav>
+  </details>
+  <script>
+    const el = document.querySelector('details summary')
+    el.onclick = () => {
+      (function(l,o,a,d,e,r){e=o.createElement(a),r=o.getElementsByTagName(a)[0];e.async=1;e.src=d;r.parentNode.insertBefore(e,r)})(window,document,'script','/js/smoothscroll.js');
+      el.onclick = null
+    }
+    document.querySelectorAll('#TableOfContents a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.querySelector(
+          link.href.slice(link.href.indexOf('#'))
+        ).scrollIntoView({ behavior: 'smooth' })
+      })
+    })
+  </script>
+
 
     <div itemprop="articleBody">
       
@@ -384,19 +423,36 @@ GROUPID default, record = Customer(id=1522050391934, name=mario)
   Published
   
     
-      by <span itemprop="author">Mario V. Gray</span>
+      by <span itemprop="author">Mario Gray</span>
     
   
-  <time itemprop="datePublished" datetime="0001-01-01T00:00:00&#43;00:00">
-    1 Jan, 0001
+  <time itemprop="datePublished" datetime="2018-04-13T00:00:00-07:00">
+    13 Apr, 2018
   </time>
   
+    in <span itemprop="articleSection"><a href="/categories/kafka/">kafka</a>, <a href="/categories/messaging/">messaging</a>, <a href="/categories/mq/">mq</a> and <a href="/categories/spring/">spring</a></span>
+  
+  
+    and tagged <a href="/tags/demo/">demo</a>, <a href="/tags/functional/">functional</a>, <a href="/tags/java/">java</a>, <a href="/tags/spring/">spring</a> and <a href="/tags/web/">web</a>
   
   using <span itemprop="wordCount">900</span> words.
 </p>
 
       
 
+
+  <aside>
+    <header>Related Content</header>
+    <ul>
+      
+        <li><a href="/post/riff-intro/">Intro to RIFF Is For Functions</a>
+        <time datetime="5M">5 minutes</time>
+      
+        <li><a href="/post/spring-test-slices/">Spring Test Slices</a>
+        <time datetime="5M">5 minutes</time>
+      
+    </ul>
+  </aside>
 
 
     </footer>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Demo on # sudo init 5 - A Developer&#39;s web log</title>
+    <link>https://www.sudoinit5.com/tags/demo/</link>
+    <description>Recent content in Demo on # sudo init 5 - A Developer&#39;s web log</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Sat, 14 Jul 2018 00:00:00 -0700</lastBuildDate>
+    
+	<atom:link href="https://www.sudoinit5.com/tags/demo/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Setup and customize Authentication against a WebFlux Application</title>
+      <link>https://www.sudoinit5.com/post/spring-reactive-authentication/</link>
+      <pubDate>Sat, 14 Jul 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/post/spring-reactive-authentication/</guid>
+      <description>Configuring Authentication against a WebFlux app This demonstration examines Spring Security WebFlux&amp;rsquo;s Authentication mechanisms. We will look at Authentication request escalation, as well as user-domain customizations.
+Authentication flow-control How do we determine when a request must provide an authentication context? Spring does this with help from an AuthenticationEntryPoint that identifies un-authenticated requests and returns with a response to the user to perform some authentication action.
+Configure ServerHttpSecurity to use HTTP-BASIC by calling it&amp;rsquo;s httpBasic() method.</description>
+    </item>
+    
+    <item>
+      <title>Configuring Authorization with Reactive Spring Security 5</title>
+      <link>https://www.sudoinit5.com/post/spring-reactive-authorization/</link>
+      <pubDate>Thu, 05 Jul 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/post/spring-reactive-authorization/</guid>
+      <description>Configuring Authorization against a Webflux App Effective security can insulate our applications from ill effects of malicious, and accidental intent in many aspects of programming. Things like network security can only go so far in isolating harm to distributed computing applications. Prevent malicious hackers from gaining access to your systems by ensuring the tools meet the standards for your appcation.
+Spring Security WebFlux is the framework that lets us declare security constructs to our ordinary WebFluxapplications.</description>
+    </item>
+    
+    <item>
+      <title>Reactive Websocket Client with Spring</title>
+      <link>https://www.sudoinit5.com/post/spring-reactive-ws-client/</link>
+      <pubDate>Sun, 06 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.sudoinit5.com/post/spring-reactive-ws-client/</guid>
+      <description>This Demo This demo client will connect and receive events from any URL that emits an open websocket stream. We have an existing server to stand up that can supply the socket events. A reactive client means that we can respond to backpressure, and weild the Observer pattern to our client connections.
+The Client (SANS web) We can use our favorite Spring Application Initializr start dot spring dot io to generate the application.</description>
+    </item>
+    
+    <item>
+      <title>Sending and consuming messages with Spring and KafKa</title>
+      <link>https://www.sudoinit5.com/post/spring-kafka/</link>
+      <pubDate>Fri, 13 Apr 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/post/spring-kafka/</guid>
+      <description>Spring Kafka Writer and Readers What is Kafka Apache Kafka is an open-source stream-processing software platform developed by the Apache Software Foundation written in Scala and Java. You&amp;rsquo;ll find more information about Kafka at it&amp;rsquo;s Homepage.
+Intro to Spring For Apache Kafka The Spring for Apache Kafka (spring-kafka) project applies core Spring concepts to the development of Kafka-based messaging solutions. It provides a &amp;ldquo;template&amp;rdquo; as a high-level abstraction for sending messages.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta name="generator" content="Hugo 0.43" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuring Zipkin Tracing with Spring Boot | # sudo init 5 - A Developer&#39;s web log</title>
+    <meta name="description" content="Demonstrates how to trace a Spring Boot application that includes multiple hop services.">
+    <meta name="keywords" content="tracing, b3, trace, java, spring, zipkin">
+    
+    
+    
+    
+    
+
+  <meta name="author" content="Mario Gray">
+
+
+    <meta property="og:title" content="Configuring Zipkin Tracing with Spring Boot" />
+<meta property="og:description" content="Demonstrates how to trace a Spring Boot application that includes multiple hop services." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.sudoinit5.com/post/spring-tracing-zipkin/" />
+
+
+
+<meta property="article:published_time" content="2018-04-16T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2018-04-16T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+    <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://source.unsplash.com/category/technology/2000x1322"/>
+
+<meta name="twitter:title" content="Configuring Zipkin Tracing with Spring Boot"/>
+<meta name="twitter:description" content="Demonstrates how to trace a Spring Boot application that includes multiple hop services."/>
+
+    
+
+
+
+  <meta property="og:image" content="https://source.unsplash.com/category/technology/2000x1322">
+
+
+    
+
+    <meta name="theme-color" content="#000">
+
+    
+    
+  <meta name="referrer" content="same-origin">
+
+
+    
+    
+    <link rel="canonical" href="https://www.sudoinit5.com/post/spring-tracing-zipkin/">
+    
+    
+    <link rel="icon" sizes="any" href="data:image/svg+xml,%3Csvg%20viewBox='0%200%2046%2045'%20xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EAfter%20Dark%3C/title%3E%3Cpath%20d='M.708%2045L23%20.416%2045.292%2045H.708zM35%2038L23%2019%2011%2038h24z'%20fill='%23000'/%3E%3C/svg%3E">
+
+    <style>
+  html{font-size:12px}*{box-sizing:border-box;text-rendering:geometricPrecision}body{font-size:1rem;line-height:1.5rem;margin:0;font-family:Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;word-wrap:break-word}h1,h2,h3,h4,h5,h6{line-height:1.3em}fieldset{border:none;padding:0;margin:0}pre{padding:2rem;margin:1.75rem 0;background-color:#fff;border:1px solid #ccc;overflow:auto}code[class*=language-],pre[class*=language-],pre code{font-weight:100;text-shadow:none;margin:1.75rem 0}a{cursor:pointer;color:#ff2e88;text-decoration:none;border-bottom:1px solid #ff2e88}a:hover{background-color:#ff2e88;color:#fff}.grid{display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap}.grid.\-top{-ms-flex-align:start;-ms-grid-row-align:flex-start;align-items:flex-start}.grid.\-middle{-ms-flex-align:center;-ms-grid-row-align:center;align-items:center}.grid.\-bottom{-ms-flex-align:end;-ms-grid-row-align:flex-end;align-items:flex-end}.grid.\-stretch{-ms-flex-align:stretch;-ms-grid-row-align:stretch;align-items:stretch}.grid.\-baseline{-ms-flex-align:baseline;-ms-grid-row-align:baseline;align-items:baseline}.grid.\-left{-ms-flex-pack:start;justify-content:flex-start}.grid.\-center{-ms-flex-pack:center;justify-content:center}.grid.\-right{-ms-flex-pack:end;justify-content:flex-end}.grid.\-between{-ms-flex-pack:justify;justify-content:space-between}.grid.\-around{-ms-flex-pack:distribute;justify-content:space-around}.cell{-ms-flex:1;flex:1;box-sizing:border-box}@media screen and (min-width:768px){.cell.\-1of12{-ms-flex:0 0 8.33333%;flex:0 0 8.33333%}.cell.\-2of12{-ms-flex:0 0 16.66667%;flex:0 0 16.66667%}.cell.\-3of12{-ms-flex:0 0 25%;flex:0 0 25%}.cell.\-4of12{-ms-flex:0 0 33.33333%;flex:0 0 33.33333%}.cell.\-5of12{-ms-flex:0 0 41.66667%;flex:0 0 41.66667%}.cell.\-6of12{-ms-flex:0 0 50%;flex:0 0 50%}.cell.\-7of12{-ms-flex:0 0 58.33333%;flex:0 0 58.33333%}.cell.\-8of12{-ms-flex:0 0 66.66667%;flex:0 0 66.66667%}.cell.\-9of12{-ms-flex:0 0 75%;flex:0 0 75%}.cell.\-10of12{-ms-flex:0 0 83.33333%;flex:0 0 83.33333%}.cell.\-11of12{-ms-flex:0 0 91.66667%;flex:0 0 91.66667%}}@media screen and (max-width:768px){.grid{-ms-flex-direction:column;flex-direction:column}.cell{-ms-flex:0 0 auto;flex:0 0 auto}}.hack,.hack blockquote,.hack code,.hack em,.hack h1,.hack h2,.hack h3,.hack h4,.hack h5,.hack h6,.hack strong{font-size:1rem;font-style:normal;font-family:Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif}.hack blockquote,.hack code,.hack em,.hack strong{line-height:20px}.hack blockquote,.hack code,.hack footer,.hack h1,.hack h2,.hack h3,.hack h4,.hack h5,.hack h6,.hack header,.hack li,.hack ol,.hack p,.hack section,.hack ul{float:none;margin:0;padding:0}.hack blockquote,.hack h1,.hack ol,.hack p,.hack ul{margin-top:20px;margin-bottom:20px}.hack h1{position:relative;display:inline-block;display:table-cell;padding:20px 0 30px;margin:0;overflow:hidden}.hack h1:after{content:"====================================================================================================";position:absolute;bottom:10px;left:0}.hack h1+*{margin-top:0}.hack h2,.hack h3,.hack h4,.hack h5,.hack h6{position:relative;margin-bottom:1.75rem}.hack h2:before,.hack h3:before,.hack h4:before,.hack h5:before,.hack h6:before{display:inline}.hack h2:before{content:"## "}.hack h3:before{content:"### "}.hack h4:before{content:"#### "}.hack h5:before{content:"##### "}.hack h6:before{content:"###### "}.hack li{position:relative;display:block;padding-left:20px}.hack li:after{position:absolute;top:0;left:0}.hack ul>li:after{content:"-"}.hack ol{counter-reset:a}.hack ol>li:after{content:counter(a) ".";counter-increment:a}.hack blockquote{position:relative;padding-left:17px;padding-left:2ch;overflow:hidden}.hack blockquote:after{content:">\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>";white-space:pre;position:absolute;top:0;left:0;line-height:20px}.hack em:after,.hack em:before{content:"*";display:inline}.hack pre code:after,.hack pre code:before{content:''}.hack code{font-weight:700}.hack code:after,.hack code:before{content:"`";display:inline}.hack hr{position:relative;height:20px;overflow:hidden;border:0;margin:20px 0}.hack hr:after{content:"----------------------------------------------------------------------------------------------------";position:absolute;top:0;left:0;line-height:20px;width:100%;word-wrap:break-word}@-moz-document url-prefix(){.hack h1{display:block}}.hack-ones ol>li:after{content:"1."}p{margin:0 0 1.75rem}.container{max-width:70rem}.container,.container-fluid{margin:0 auto;padding:0 1rem}.inner{padding:1rem}.inner2x{padding:2rem}.pull-left{float:left}.pull-right{float:right}.progress-bar{height:8px;opacity:.8;background-color:#ccc;margin-top:12px}.progress-bar.progress-bar-show-percent{margin-top:38px}.progress-bar-filled{background-color:gray;height:100%;transition:width .3s ease;position:relative;width:0}.progress-bar-filled:before{content:'';border:6px solid transparent;border-top-color:gray;position:absolute;top:-12px;right:-6px}.progress-bar-filled:after{color:gray;content:attr(data-filled);display:block;font-size:12px;white-space:nowrap;position:absolute;border:6px solid transparent;top:-38px;right:0;-ms-transform:translateX(50%);transform:translateX(50%)}table{width:100%;border-collapse:collapse;margin:1.75rem 0;color:#778087}table td,table th{vertical-align:top;border:1px solid #ccc;line-height:15px;padding:10px}table thead th{font-size:10px}table tbody td:first-child{font-weight:700;color:#333}.form{width:30rem}.form-group{margin-bottom:1.75rem;overflow:auto}.form-group label{border-bottom:2px solid #ccc;color:#333;width:10rem;display:inline-block;height:38px;line-height:38px;padding:0;float:left;position:relative}.form-group.form-success label{color:#4caf50!important;border-color:#4caf50!important}.form-group.form-warning label{color:#ff9800!important;border-color:#ff9800!important}.form-group.form-error label{color:#f44336!important;border-color:#f44336!important}.form-control{outline:none;border:none;border-bottom:2px solid #ccc;padding:.5rem 0;width:20rem;height:38px;background-color:transparent}.form-control:focus{border-color:#555}.form-group.form-textarea label:after{position:absolute;content:'';width:2px;background-color:#fff;right:-2px;top:0;bottom:0}textarea.form-control{height:auto;resize:none;padding:1rem 0;border-bottom:2px solid #ccc;border-left:2px solid #ccc;padding:.5rem}select.form-control{border-radius:0;background-color:transparent;-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none}.help-block{color:#999;margin-top:.5rem}.form-actions{margin-bottom:1.75rem}.btn{display:-ms-inline-flexbox;display:inline-flex;-ms-flex-align:center;align-items:center;-ms-flex-pack:center;justify-content:center;cursor:pointer;outline:none;padding:.65rem 2rem;font-size:1rem;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;position:relative;z-index:1}.btn:active{box-shadow:inset 0 1px 3px rgba(0,0,0,.12)}.btn.btn-ghost{border-color:#757575;color:#757575;background-color:transparent}.btn.btn-ghost:focus,.btn.btn-ghost:hover{border-color:#424242;color:#424242;z-index:2}.btn.btn-ghost:hover{background-color:transparent}.btn-block{width:100%;display:-ms-flexbox;display:flex}.btn-default{color:#fff;background-color:#e0e0e0;border:1px solid #e0e0e0;color:#333}.btn-default:focus:not(.btn-ghost),.btn-default:hover{background-color:#dcdcdc;border-color:#dcdcdc}.btn-success{color:#fff;background-color:#4caf50;border:1px solid #4caf50}.btn-success:focus:not(.btn-ghost),.btn-success:hover{background-color:#43a047;border-color:#43a047}.btn-success.btn-ghost{border-color:#4caf50;color:#4caf50}.btn-success.btn-ghost:focus,.btn-success.btn-ghost:hover{border-color:#388e3c;color:#388e3c;z-index:2}.btn-error{color:#fff;background-color:#f44336;border:1px solid #f44336}.btn-error:focus:not(.btn-ghost),.btn-error:hover{background-color:#e53935;border-color:#e53935}.btn-error.btn-ghost{border-color:#f44336;color:#f44336}.btn-error.btn-ghost:focus,.btn-error.btn-ghost:hover{border-color:#d32f2f;color:#d32f2f;z-index:2}.btn-warning{color:#fff;background-color:#ff9800;border:1px solid #ff9800}.btn-warning:focus:not(.btn-ghost),.btn-warning:hover{background-color:#fb8c00;border-color:#fb8c00}.btn-warning.btn-ghost{border-color:#ff9800;color:#ff9800}.btn-warning.btn-ghost:focus,.btn-warning.btn-ghost:hover{border-color:#f57c00;color:#f57c00;z-index:2}.btn-info{color:#fff;background-color:#00bcd4;border:1px solid #00bcd4}.btn-info:focus:not(.btn-ghost),.btn-info:hover{background-color:#00acc1;border-color:#00acc1}.btn-info.btn-ghost{border-color:#00bcd4;color:#00bcd4}.btn-info.btn-ghost:focus,.btn-info.btn-ghost:hover{border-color:#0097a7;color:#0097a7;z-index:2}.btn-primary{color:#fff;background-color:#2196f3;border:1px solid #2196f3}.btn-primary:focus:not(.btn-ghost),.btn-primary:hover{background-color:#1e88e5;border-color:#1e88e5}.btn-primary.btn-ghost{border-color:#2196f3;color:#2196f3}.btn-primary.btn-ghost:focus,.btn-primary.btn-ghost:hover{border-color:#1976d2;color:#1976d2;z-index:2}.btn-group{overflow:auto}.btn-group .btn{float:left}.btn-group .btn-ghost:not(:first-child){margin-left:-1px}.card{border:1px solid #ccc}.card .card-header{color:#333;text-align:center;background-color:#ddd;padding:.5rem 0}.alert{color:#ccc;padding:1rem;border:1px solid #ccc;margin-bottom:1.75rem}.alert-success{color:#4caf50;border-color:#4caf50}.alert-error{color:#f44336;border-color:#f44336}.alert-info{color:#00bcd4;border-color:#00bcd4}.alert-warning{color:#ff9800;border-color:#ff9800}.media:not(:last-child){margin-bottom:1.25rem}.media-left{padding-right:1rem}.media-left,.media-right{display:table-cell;vertical-align:top}.media-right{padding-left:1rem}.media-body{display:table-cell;vertical-align:top}.media-heading{font-size:1.16667rem;font-weight:700}.media-content{margin-top:.3rem}.avatarholder,.placeholder{background-color:#f0f0f0;text-align:center;color:#b9b9b9;font-size:1rem;border:1px solid #f0f0f0}.avatarholder{width:48px;height:48px;line-height:46px;font-size:2rem;background-size:cover;background-position:50%;background-repeat:no-repeat}.avatarholder.rounded{border-radius:33px}.loading{display:inline-block;content:'&nbsp;';height:20px;width:20px;margin:0 .5rem;animation:a .6s infinite linear;border:2px solid #e91e63;border-right-color:transparent;border-radius:50%}.btn .loading{margin-bottom:0;width:14px;height:14px}.btn div.loading{float:left}.alert .loading{margin-bottom:-5px}@keyframes a{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}.menu{width:100%}.menu .menu-item{display:block;color:#616161;border-color:#616161}.menu .menu-item.active,.menu .menu-item:hover{color:#000;border-color:#000;background-color:transparent}@media screen and (max-width:768px){.form-group label{display:block;border-bottom:none;width:100%}.form-group.form-textarea label:after{display:none}.form-control{width:100%}textarea.form-control{border-left:none;padding:.5rem 0}pre::-webkit-scrollbar{height:3px}}@media screen and (max-width:480px){.form{width:100%}}.dark{color:#ccc}.dark,.dark pre{background-color:#000}.dark pre{padding:0;border:none}.dark pre code{color:#00bcd4}.dark h1 a,.dark h2 a,.dark h3 a,.dark h4 a,.dark h5 a{color:#ccc}.dark code,.dark strong{color:#fff}.dark code{font-weight:100}.dark table{color:#ccc}.dark table td,.dark table th{border-color:#444}.dark table tbody td:first-child{color:#fff}.dark .form-group label{color:#ccc;border-color:rgba(95,95,95,.78)}.dark .form-group.form-textarea label:after{background-color:#000}.dark .form-control{color:#ccc;border-color:rgba(95,95,95,.78)}.dark .form-control:focus{border-color:#ccc;color:#ccc}.dark textarea.form-control{color:#ccc}.dark .card{border-color:rgba(95,95,95,.78)}.dark .card .card-header{background-color:transparent;color:#ccc;border-bottom:1px solid rgba(95,95,95,.78)}.dark .btn.btn-ghost.btn-default{border-color:#ababab;color:#ababab}.dark .btn.btn-ghost.btn-default:focus,.dark .btn.btn-ghost.btn-default:hover{border-color:#9c9c9c;color:#9c9c9c;z-index:1}.dark .btn.btn-ghost.btn-default:focus,.dark .btn.btn-ghost.btn-default:hover{border-color:#e0e0e0;color:#e0e0e0}.dark .btn.btn-ghost.btn-primary:focus,.dark .btn.btn-ghost.btn-primary:hover{border-color:#64b5f6;color:#64b5f6}.dark .btn.btn-ghost.btn-success:focus,.dark .btn.btn-ghost.btn-success:hover{border-color:#81c784;color:#81c784}.dark .btn.btn-ghost.btn-info:focus,.dark .btn.btn-ghost.btn-info:hover{border-color:#4dd0e1;color:#4dd0e1}.dark .btn.btn-ghost.btn-error:focus,.dark .btn.btn-ghost.btn-error:hover{border-color:#e57373;color:#e57373}.dark .btn.btn-ghost.btn-warning:focus,.dark .btn.btn-ghost.btn-warning:hover{border-color:#ffb74d;color:#ffb74d}.dark .avatarholder,.dark .placeholder{background-color:transparent;border-color:#333}.dark .menu .menu-item{color:#ccc;border-color:rgba(95,95,95,.78)}.dark .menu .menu-item.active,.dark .menu .menu-item:hover{color:#fff;border-color:#ccc}
+  :root {
+  --screen-size-small: 30em; /* breakpoint reference only */
+}
+@keyframes intro {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.blur-up {
+  -webkit-filter: blur(5px);
+  filter: blur(5px);
+  transition: filter 400ms, -webkit-filter 400ms;
+}
+.blur-up.lazyloaded {
+  -webkit-filter: blur(0);
+  filter: blur(0);
+}
+.muted,
+.hack .help-block {
+  color: #e0e0e070;
+}
+.hack .readmore {
+  margin-bottom: 2.2em;
+}
+.responsive-iframe {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  padding-top: 25px;
+  height: 0;
+}
+.responsive-iframe iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+iframe {
+  border: 0;
+}
+main, footer {
+  animation: intro 0.3s both;
+  animation-delay: 0.15s;
+}
+footer time[datetime$="M"]:before {
+  content: "\2013\0020";
+}
+@media only screen
+  and ( max-width: 30em ) {
+  footer time[datetime$="M"] {
+    display: none;
+  }
+}
+blockquote cite {
+  display: block;
+}
+blockquote cite::before {
+   content: "\2014";
+}
+:target {
+  color: #fff;
+}
+/* hack.css overrides and enhancements */
+.hack li ul {
+  margin: 0;
+}
+.main {
+  padding: 20px 10px;
+}
+input.form-control {
+  border-radius: 0;
+  background-color: transparent;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+}
+input.form-control {
+  font-size: initial;
+}
+.hack .help-block {
+  font-size: 1rem;
+}
+nav a.active {
+  background-color: #ff2e88;
+  color: #fff;
+}
+a[itemprop="url"] {
+  color: #ff9800;
+}
+a[itemprop="url"]:hover {
+  color: #fff;
+}
+a[href*="://"]::after,
+a[rel*="external"] {
+  content: " " url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20class='i-external'%20viewBox='0%200%2032%2032'%20width='14'%20height='14'%20fill='none'%20stroke='%23ff9800'%20stroke-linecap='round'%20stroke-linejoin='round'%20stroke-width='9.38%'%3E%3Cpath%20d='M14%209%20L3%209%203%2029%2023%2029%2023%2018%20M18%204%20L28%204%2028%2014%20M28%204%20L14%2018'/%3E%3C/svg%3E");
+}
+figure a[href*="://"]::after,
+figure a[rel*="external"] {
+  content: "";
+}
+html {
+  font-size: 13px;
+}
+.hack pre {
+  font-size: 17px;
+}
+.hack .form input,
+.hack .form textarea,
+.hack .form button,
+.hack .form label {
+  font-size: 1rem;
+}
+article [itemprop="description"] {
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+article header img {
+  width: 100%;
+  border-radius: 3px;
+}
+@media screen and (min-width: 768px) {
+  html {
+    font-size: 1em;
+  }
+  .container {
+    max-width: 50rem;
+  }
+}
+[v-cloak] {
+  display: none;
+}
+
+  
+
+</style>
+
+    <script async src="/js/lazysizes.min.js"></script>
+
+  <script async src="/js/bpgdec8a.js"></script>
+  <script async src="/js/bpgdec8.js"></script>
+  <script async src="/js/bpgdec.js"></script>
+
+  </head>
+  
+  <body class="hack dark main container">
+    <header>
+  
+  <nav itemscope itemtype="http://schema.org/SiteNavigationElement">
+    
+    
+      <a itemprop="url" class="active" href="/post/"><span itemprop="name">Posts</span></a>
+    
+  </nav>
+
+
+</header>
+    <main>
+  <article itemscope itemtype="http://schema.org/BlogPosting">
+    
+<meta itemprop="name" content="Configuring Zipkin Tracing with Spring Boot">
+<meta itemprop="description" content="Demonstrates how to trace a Spring Boot application that includes multiple hop services.">
+
+
+<meta itemprop="datePublished" content="2018-04-16T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-04-16T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2221">
+
+
+
+<meta itemprop="keywords" content="tracing,b3,trace,java,spring,zipkin," />
+
+    <header>
+      <h1 itemprop="headline">Configuring Zipkin Tracing with Spring Boot</h1>
+      <p class="muted">
+        <svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <circle cx="16" cy="16" r="14" />
+  <path d="M16 8 L16 16 20 20" />
+</svg>
+<span>11 minute read</span>
+<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
+</svg>
+
+  Published: <time datetime="2018-04-16T00:00:00&#43;00:00">16 Apr, 2018</time>
+
+
+      </p>
+      
+        <blockquote itemprop="description">Demonstrates how to trace a Spring Boot application that includes multiple hop services.</blockquote>
+      
+      
+    </header>
+    
+  <details>
+    <summary>Table of Contents</summary>
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#tracing-motivation">Tracing Motivation</a></li>
+<li><a href="#trace-primer">Trace Primer</a></li>
+<li><a href="#setup-zipkin-server">Setup Zipkin Server</a>
+<ul>
+<li><a href="#http-collector">HTTP Collector</a></li>
+<li><a href="#enable-kafka-collector-option">Enable Kafka Collector option</a></li>
+<li><a href="#enable-rabbitmq-collector">Enable RabbitMQ Collector</a></li>
+</ul></li>
+<li><a href="#standing-up-the-traced-application">Standing up the traced Application</a></li>
+<li><a href="#configure-the-tracing-bean">Configure the Tracing Bean</a></li>
+<li><a href="#configure-trace-reporting-sending">Configure Trace Reporting (sending)</a>
+<ul>
+<li><a href="#via-http">Via HTTP</a></li>
+<li><a href="#via-kafka-sender">Via Kafka Sender</a></li>
+<li><a href="#via-rabbitmq-sender">Via RabbitMQ Sender</a></li>
+</ul></li>
+<li><a href="#instrumenting-the-web-stack">Instrumenting the Web stack</a>
+<ul>
+<li><a href="#webmvc">WebMVC</a></li>
+<li><a href="#resttemplate">RestTemplate</a>
+<ul>
+<li><a href="#observing-propagated-trace-detials">Observing (propagated) trace detials</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#instrumenting-the-grpc-stack">Instrumenting the gRPC stack</a>
+<ul>
+<li><a href="#lognet-s-grpc-starter">Lognet’s GRPC-starter</a></li>
+<li><a href="#instrumenting-grpc-server">Instrumenting gRPC Server</a></li>
+<li><a href="#instrumenting-grpc-client">Instrumenting gRPC Client</a></li>
+</ul></li>
+<li><a href="#afterwords">Afterwords</a>
+<ul>
+<li><a href="#reading-list">Reading List</a></li>
+</ul></li>
+</ul>
+</nav>
+  </details>
+  <script>
+    const el = document.querySelector('details summary')
+    el.onclick = () => {
+      (function(l,o,a,d,e,r){e=o.createElement(a),r=o.getElementsByTagName(a)[0];e.async=1;e.src=d;r.parentNode.insertBefore(e,r)})(window,document,'script','/js/smoothscroll.js');
+      el.onclick = null
+    }
+    document.querySelectorAll('#TableOfContents a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.querySelector(
+          link.href.slice(link.href.indexOf('#'))
+        ).scrollIntoView({ behavior: 'smooth' })
+      })
+    })
+  </script>
+
+
+    <div itemprop="articleBody">
+      
+
+<h1 id="tracing-motivation">Tracing Motivation</h1>
+
+<p>The more distributed a system the harder it is to debug errors, find latency, and to understand the potentially cascading impact of a bug. External monitoring only tells you the overall response time and number of invocations but doesn’t give us a way to understand internal invocations. Structured log entries can be correllated, eventually, to paint a picture of the movement of a request through a system, but structured logs are not easy to query.</p>
+
+<h1 id="trace-primer">Trace Primer</h1>
+
+<p>Distributed tracing platforms like <a href="https://zipkin.io/">Open Zipkin</a> record trace data. Trace data is composed of a parent:child tree structure called a Directed Acyclic Graph (DAG for short). A root node represents the <code>trace</code> or overall journey, and each <code>span</code> represents an individual hop along the service route. To illustrate better, I have included an ASCII diagram from <a href="https://github.com/openzipkin/zipkin">openzipkin github</a>.</p>
+
+<p>``` Client Tracer Server Tracer ┌─────────────────&mdash;&ndash;─┐ ┌────────────────&mdash;&ndash;──┐ │ │ │ │ │ TraceContext │ Http Request Headers │ TraceContext │ │ ┌─────────────&mdash;&ndash;─┐ │ ┌───────────────────┐ │ ┌────────────&mdash;&ndash;──┐ │ │ │ TraceId │ │ │ X─B3─TraceId │ │ │ TraceId │ │ │ │ │ │ │ │ │ │ │ │ │ │ ParentSpanId │ │ Extract │ X─B3─ParentSpanId │ Inject │ │ ParentSpanId │ │ │ │ ├─┼─────────&gt;│ ├────────┼&gt;│ │ │ │ │ SpanId │ │ │ X─B3─SpanId │ │ │ SpanId │ │ │ │ │ │ │ │ │ │ │ │ │ │ Sampling decision │ │ │ X─B3─Sampled │ │ │ Sampling decision │ │ │ └──────────&mdash;&ndash;────┘ │ └───────────────────┘ │ └────────────&mdash;&ndash;──┘ │ │ │ │ │ └────────────────&mdash;&ndash;──┘ └───────────────&mdash;&ndash;───┘ ``` An upstream HTTP call with <a href="https://github.com/openzipkin/b3-propagation">B3Propagation</a>. At this time of writing, B3 propagation is supported for Finagle, HTTP and gRPC. We will utilize both methods in this example.</p>
+
+<p>For further visualization of what a span and trace look like in a system wired with Zipkin.</p>
+
+<p><img src="./graphics/spring-cloud-tracing-graphic.png" alt="zipkin-tracing" /></p>
+
+<p>Zipkin itself has a design based on the Google Dapper[<a href="http://pub.google.com/papers/dapper.pdf">http://pub.google.com/papers/dapper.pdf</a>] paper. As the homepage says, a key advantage was the need to implement a non-invasive library. The minimal JRE requirements are JDK 6 for core modules, additional requirements are up-stream (eg. storage) Check out the <a href="https://github.com/openzipkin/zipkin">Zipkin git</a> to gather additional requirements for your project.</p>
+
+<h1 id="setup-zipkin-server">Setup Zipkin Server</h1>
+
+<p>Configuring Zipkin is easy using environment variables. In this section we will take a look at getting the Zipkin server up and running with ingress from HTTP, Kafka and RabbitMQ.</p>
+
+<p>In order to match the transport coverage given in later application sections, we will briefly explore setting up Zipkin server in it’s most basic form for three different ingress configurations.</p>
+
+<h2 id="http-collector">HTTP Collector</h2>
+
+<p>There are a few ways to start Zipkin. To start a basic configuration of Zipkin with <a href="https://github.com/openzipkin/zipkin/blob/master/zipkin-server/src/main/java/zipkin/server/ZipkinHttpCollector.java">HTTP</a> ingress, simply execute the following in an empty console.</p>
+
+<p><strong>startzipkin.sh.</strong></p>
+
+<pre><code>$ java -jar /path/zipkin-server.jar
+</code></pre>
+
+<h2 id="enable-kafka-collector-option">Enable Kafka Collector option</h2>
+
+<p>To enable the <a href="https://github.com/openzipkin/zipkin/tree/master/zipkin-collector/kafka">Kafka Collector</a>, you will need to have a Kafka sevice running. For information on standing up a Kafka server, see <a href="https://kafka.apache.org/quickstart">the quickstart</a> section. Running the zipkin server is done with the following method:</p>
+
+<pre><code>$ KAFKA_ZOOKEEPER=127.0.0.1:2181
+$ java -jar /path/kafka-server.jar
+</code></pre>
+
+<h2 id="enable-rabbitmq-collector">Enable RabbitMQ Collector</h2>
+
+<p>To start up Zipkin server with <a href="https://github.com/openzipkin/zipkin/tree/master/zipkin-collector/rabbitmq">RabbitMQ</a> Collectors active:</p>
+
+<p><strong>startZipkinRabbit.sh.</strong></p>
+
+<pre><code>$ export RABBIT_URI=amqp://localhost:5672/
+$ java -jar /path/zipkin-server.jar
+</code></pre>
+
+<h1 id="standing-up-the-traced-application">Standing up the traced Application</h1>
+
+<p>In this example, we will declare profiles for the back-ends (kafka, rabbit, zipkin/http) as the ingress for our trace reporting. We will then take on an application which exposes multiple services with HTTP and gRPC.</p>
+
+<p>Furthermore, we will organize the application into four modules (trace-configuration, http-server, grpc-server, grpc-client) in order to keep concerns separate.</p>
+
+<p>Generate a new Spring application with the dependencies for Web and Lombok. Use this link to generate a <a href="http://start.spring.io/starter.zip?dependencies=web,lombok,h2,jpa&amp;type=maven-project&amp;javaVersion=1.8&amp;baseDir=spring-tracing&amp;packageName=mcp.client&amp;name=spring-tracing">new project from the Spring Initializr (<a href="http://start.spring.io">http://start.spring.io</a>)</a>. We’ll stand up a HTTP/REST API and it’s endpoints. One endpoint will call the other in the order [frontend→backend→delay]. We’ll use the Spring Framework <code>RestTemplate</code> to make HTTP calls.</p>
+
+<p><strong>RestController.java.</strong></p>
+
+<pre><code>@Profile(&quot;http-web&quot;)
+@RestController
+public class TracingRestController {
+    private final RestTemplate restTemplate;
+    private final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TracingRestController.class);
+
+    public TracingRestController(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
+    @GetMapping(&quot;/backend&quot;)
+    public String backend(@RequestHeader(&quot;client-id&quot;) String clientId) {
+        restTemplate.getForObject(&quot;http://localhost:8080/delay&quot;, String.class);
+        return &quot;Greetings &quot; + clientId;
+    }
+
+    @GetMapping(&quot;/delay&quot;)
+    public void addDelay() throws Exception {
+        long delay = ThreadLocalRandom.current().nextInt(1, 5);
+        TimeUnit.SECONDS.sleep(delay);
+        return;
+    }
+
+    @GetMapping(&quot;/frontend&quot;)
+    public String frontend() {
+        return restTemplate
+                .getForObject(&quot;http://localhost:8080/backend&quot;, String.class);
+    }
+}
+</code></pre>
+
+<p>The application bootstrap with <code>@SpringBootApplication</code> annotation makes launching the servers super simple.</p>
+
+<p><strong>TracingApplication.java.</strong></p>
+
+<pre><code>@SpringBootApplication(scanBasePackages = {&quot;mcp&quot;})
+public class TracingApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(TracingApplication.class, args);
+    }
+}
+</code></pre>
+
+<p>Configure the logger and give this node a name.</p>
+
+<p><strong>application.properties.</strong></p>
+
+<pre><code>logging.pattern.level=%d{ABSOLUTE} [%X{traceId}/%X{spanId}] %-5p [%t] %C{2} - %m%n
+logging.level.root=info
+logging.level.mcp.cloudtrace=info
+
+spring.zipkin.service.name=http-service
+spring.application.name=spring-tracing-http
+</code></pre>
+
+<h1 id="configure-the-tracing-bean">Configure the Tracing Bean</h1>
+
+<p>To start tracing, we need to configure a <code>brave.Tracing</code> bean into our application context. This will provide application-specific (this example’s) trace functionality within the zipkin trace instrumentation API. It serves as the server-specific configuration bean for our running node.</p>
+
+<p><strong>TracingConfiguration.java.</strong></p>
+
+<pre><code>@Configuration
+public class TracingConfiguration {
+    @Bean
+    Tracing tracing(@Value(&quot;${spring.application.name:spring-tracing}&quot;) String serviceName,
+                    Reporter&lt;Span&gt; spanReporter) {
+        return Tracing
+                .newBuilder()
+                .sampler(Sampler.ALWAYS_SAMPLE)
+                .localServiceName(serviceName)
+                .propagationFactory(ExtraFieldPropagation
+                        .newFactory(B3Propagation.FACTORY, &quot;client-id&quot;))
+                .currentTraceContext(MDCCurrentTraceContext.create())
+                .spanReporter(spanReporter)
+                .build();
+    }
+
+    @Bean
+    HttpTracing httpTracing(Tracing tracing) {
+        return HttpTracing.create(tracing);
+    }
+}
+</code></pre>
+
+<p>Because we are using SLF4j - that implements it’s own version of Managed Diagnostic Context (MDC). Thus, <code>brave.context.slf4j.MDCCurrentTraceContext</code> is a ready-made Trace Context that will expose current trace and span ID’s to SLF4j as logging properties with the given names: <code>traceId, spanId, parentId</code>. If you are using log4j2 instead, then a provided class <code>brave.context.log4j2.ThreadContextCurrentTraceContext</code> will do the same for log4j2’s <code>ThreadContext</code>.</p>
+
+<h1 id="configure-trace-reporting-sending">Configure Trace Reporting (sending)</h1>
+
+<p>Spans are created in instrumentation, transported out-of-band, and eventually persisted. Zipkin uses Reporters <code>zipkin2.reporter.Reporter</code> to sends spans (or encoded spans) recorded by instrumentation out of process. There are a couple of default Reporters that do not send but can help with testing: <code>Reporter.NOOP</code> and <code>Reporter.CONSOLE</code>.</p>
+
+<h2 id="via-http">Via HTTP</h2>
+
+<p><strong>ReportToZipkinConfiguration.java.</strong></p>
+
+<pre><code>@Profile(&quot;report-to-zipkin&quot;)
+@Configuration
+class TracingReportToZipkinConfiguration {
+
+    @Bean
+    Sender sender(@Value(&quot;${mcp.zipkin.url}&quot;) String zipkinSenderUrl) {
+        return OkHttpSender.create(zipkinSenderUrl);
+    }
+
+    @Bean
+    Reporter&lt;Span&gt; spanReporter(Sender sender) {
+        return AsyncReporter.create(sender);
+    }
+}
+</code></pre>
+
+<p>In this case, we have configured an (ThreadSafe)<code>AsyncReporter</code> that will give us protection from latency or exceptions when reporting spans out of process. In order to abstract transport specifics, the <code>zipkin2.reporter.Sender</code> component is used to encode and trasmit spans out of process using HTTP.</p>
+
+<p>Indirect reporting is possible using Kafka and RabbitMQ among other modules. The next two sections takes a close look at setting up our application to report via Kafka Topics, and another via RabbitMQ queues.</p>
+
+<h2 id="via-kafka-sender">Via Kafka Sender</h2>
+
+<p>Support for Kafka topics is possible through the use of <code>zipkin2.reporter.kafka11.KafkaSender</code> sender. Create a new configuration class and add it to the <em>kafka</em> profile.</p>
+
+<p><strong>KafkaReportingConfiguration.java.</strong></p>
+
+<pre><code>@Profile(&quot;report-to-kafka&quot;)
+@Configuration
+public class TracingReportToKafkaConfiguration {
+
+    @Bean
+    Sender sender(@Value(&quot;${mcp.kafka.url}&quot;) String kafkaUrl) throws IOException {
+        return KafkaSender.create(kafkaUrl);
+    }
+
+    @Bean
+    Reporter&lt;Span&gt; spanReporter(Sender sender) {
+
+        return AsyncReporter.create(sender);
+    }
+
+}
+</code></pre>
+
+<h2 id="via-rabbitmq-sender">Via RabbitMQ Sender</h2>
+
+<p>Another common Sender is the <code>zipkin2.reporter.amqp.RabbitMQSender</code> sender. This will ship JSON encoded spans to a Queue.</p>
+
+<p>Setting up the RabbitMQSender requires a host URL, and the name of the queue which Zipkin-server is expected to consume.</p>
+
+<p><strong>RabbitMQReportingConfiguration.java.</strong></p>
+
+<pre><code>@Profile(&quot;report-to-rabbit&quot;)
+@Configuration
+public class TracingReportToRabbitConfiguration {
+    @Bean
+    Sender sender(@Value(&quot;${mcp.rabbit.url}&quot;) String rabbitmqHostUrl,
+                  @Value(&quot;${mcp.rabbit.queue}&quot;) String zipkinQueue) throws IOException {
+        return RabbitMQSender.newBuilder()
+                .queue(zipkinQueue)
+                .addresses(rabbitmqHostUrl).build();
+    }
+
+    @Bean
+    Reporter&lt;Span&gt; spanReporter(Sender sender) {
+        return AsyncReporter.create(sender);
+    }
+}
+</code></pre>
+
+<h1 id="instrumenting-the-web-stack">Instrumenting the Web stack</h1>
+
+<p>This section will specificly discuss how to enable tracing on your WebMVC and RestTemplate components.</p>
+
+<h2 id="webmvc">WebMVC</h2>
+
+<p>To instrument SpringMVC endpoints, we will need to configure an instance of the <code>brave.spring.webmvc.TracingHandlerInterceptor</code> class. To configure the interceptor, we will need to register a <code>org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter</code> that gives us hooks into SpringMVC’s <code>InterceptorRegistry</code> (or alternately use <code>WebMvcConfigurer</code> when using Spring 5.0 or more).</p>
+
+<p><strong>WebMvcConfiguration.</strong></p>
+
+<pre><code>@Configuration
+public class WebMVCTracingConfiguration extends WebMvcConfigurerAdapter {
+    private final HttpTracing httpTracing;
+
+    public WebMVCTracingConfiguration(HttpTracing httpTracing) {
+        this.httpTracing = httpTracing;
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(TracingHandlerInterceptor.create(httpTracing));
+    }
+}
+</code></pre>
+
+<p>This interceptor receives an <code>HttpTracing</code> bean which gives our <code>Tracing</code> bean the functionality to apply HTTP specific tracing instrumentation to the client/server.</p>
+
+<h2 id="resttemplate">RestTemplate</h2>
+
+<p>In order to apply Trace Context propagation to our <code>restTemplate</code> we must provide -like the server setup- an <code>org.springframework.http.client.ClientHttpRequestInterceptor</code> to do the client-side tracing work. We’ll use the <code>RestTemplateBuilder</code> component to construct an zipkin instrumented RestTemplate bean.</p>
+
+<p><strong>TraceClientConfiguration.</strong></p>
+
+<pre><code>@Configuration
+class WebClientTracingConfiguration {
+    @Bean
+    RestTemplate restTemplate(HttpTracing tracing) {
+        return new RestTemplateBuilder()
+                .additionalInterceptors(TracingClientHttpRequestInterceptor.create(tracing))
+                .build();
+    }
+}
+</code></pre>
+
+<h3 id="observing-propagated-trace-detials">Observing (propagated) trace detials</h3>
+
+<p>Lets observe some tracing ativity. With the current setup, we whould get a failry modest span graph (just the 3 hops) upon accessing the endpoint.</p>
+
+<p>Start the server with <code>http-web</code> and <code>report-to-zipkin</code> profiles active so that we can access and then visit the service span graph in the Zipkin console.</p>
+
+<p><strong>start_the_server.</strong></p>
+
+<pre><code>$ mvn spring-boot:run -Dspring.profiles.active=http-web,report-to-console
+</code></pre>
+
+<p>Now, when we call our endpoint, we should see a traceId, spanId, and our <code>client-id</code> as it would have commuted across the entire request chain.</p>
+
+<p><strong>GET frontend.</strong></p>
+
+<pre><code>$ curl -H &quot;client-id: tracing&quot; http://localhost:8080/frontend
+Greetings tracing%
+</code></pre>
+
+<p>Lets take a look at the span graph. You’ll need to access Zipkin webUI via <code>http://localhost:9411/zipkin/</code>:</p>
+
+<p><img src="./graphics/http-trace-graph-x3.png" alt="http-frontend-span" /></p>
+
+<p>This is a single request we made to <code>/frontend</code> it will simply call <code>/backend</code> which in turn calls <code>/delay</code> in the same server. However simple this is, the same concept is illustrated - instrumentation across all components in a trace will give us variety of detials (e.g. timing) that our service call takes in it’s trajectory back to the origin.</p>
+
+<h1 id="instrumenting-the-grpc-stack">Instrumenting the gRPC stack</h1>
+
+<p>Two new modules will get created <code>grpc-client</code> and <code>grpc-server</code> which will have the standard spring-boot and zipkin dependencies, but most of all include several dependencies related to the gRPC project.</p>
+
+<p>The details of dependency management is outside of the scope of this article. For the actual dependencies, check out [trace-grpc-server/pom.xml] and copy all the <code>lognet</code> and <code>grpc</code> dependencies.</p>
+
+<h2 id="lognet-s-grpc-starter">Lognet’s GRPC-starter</h2>
+
+<p>To expose gRPC effortlessly, use <a href="https://github.com/LogNet/grpc-spring-boot-starter">LogNet’s grpc-spring-boot-starter</a>. This module helps by generating gRPC service stubs during build process, in the <code>generate-sources</code> goal. It also has the spring-boot hooks to make configuring a gRPC service seemless.</p>
+
+<p>To begin, we’ll configure a protobuf <code>.proto</code> service definition so that we can code the server.</p>
+
+<p><strong>greeting.proto.</strong></p>
+
+<pre><code>syntax = &quot;proto3&quot;;
+
+option java_multiple_files = true;
+package mcp;
+
+message Greeting {
+    string hello = 1;
+}
+
+message Greet {
+    string name = 1;
+}
+
+message Empty {
+
+}
+
+service GreetingService {
+    rpc greeting(Greet) returns (Greeting);
+}
+</code></pre>
+
+<p>You can generate stubs by simply invoking</p>
+
+<p><strong>stub_maker.sh.</strong></p>
+
+<pre><code>$ mvn generate-sources
+</code></pre>
+
+<p><strong>GrpcService.java.</strong></p>
+
+<pre><code>@GRpcService
+public class GrpcService extends GreetingServiceGrpc.GreetingServiceImplBase {
+    private final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(GrpcService.class);
+    private final RestTemplate restTemplate;
+
+    public GrpcService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+    @Override
+    public void greeting(Greet request, StreamObserver&lt;Greeting&gt; responseObserver) {
+        log.info(&quot;Greetings, &quot; + request.getName());
+        responseObserver.onNext(
+                Greeting
+                        .newBuilder()
+                        .setHello(&quot;hello &quot; + request.getName())
+                        .build());
+        restTemplate.getForObject(&quot;http://localhost:8080/delay&quot;, String.class);
+        responseObserver.onCompleted();
+    }
+}
+</code></pre>
+
+<p>Apply the <code>org.lognet.GRpcService</code> annotation to mark this bean for service registration at startup.</p>
+
+<h2 id="instrumenting-grpc-server">Instrumenting gRPC Server</h2>
+
+<p>To intercept service calls and instrument tracing, wire in a <code>brave.grpc.GrpcTracing</code> bean to obtain an instance of <code>io.grpc.ServerInterceptor</code>. Use the <code>org.lognet.GRpcGlobalInterceptor</code> annotation to mark the interceptor bean as global. This will expose tracing to all GRPC endpoints (visible on the ApplicationContext) in this service.</p>
+
+<p><strong>GrpcServerConfiguration.java.</strong></p>
+
+<pre><code>0@Configuration
+public class TracingGrpcServerConfiguration {
+    @Bean
+    public GrpcTracing grpcTracing(Tracing tracing) {
+        return GrpcTracing.create(tracing);
+    }
+
+    @Bean
+    @GRpcGlobalInterceptor
+    public ServerInterceptor grpcServerInterceptor(GrpcTracing grpcTracing) {
+        return grpcTracing.newServerInterceptor();
+    }
+}
+</code></pre>
+
+<p>The command to run this new service. We will run this application standalone since it shouldnt live in the same VM as the HTTP server. Therefore, in a new terminal:</p>
+
+<p><strong>grpcstart.sh.</strong></p>
+
+<pre><code>~/projects/spring-tracing/trace-grpc-service $ mvn spring-boot:run -Dspring.profiles.active=grpc-web,report-to-zipkin
+... logging ...
+...
+</code></pre>
+
+<p>Should this succeed, there will be a grpc server listening on default port <code>6565</code>.</p>
+
+<h2 id="instrumenting-grpc-client">Instrumenting gRPC Client</h2>
+
+<p>There is already a pretty succinct document for tracing gRPC services on the <a href="http://github.com/openzipkin/grpc-sender">openzipkin grpc sender</a>.</p>
+
+<p>Our grpc client will be used by another project (the web server) to access the gRPC greeting service. This client of course will have it’s own module to separate concerns.</p>
+
+<p><strong>GrpcClient.java.</strong></p>
+
+<pre><code>@Component
+public class GreetingClient {
+    private final ManagedChannel managedChannel;
+
+    public GreetingClient(ManagedChannel managedChannel) {
+        this.managedChannel = managedChannel;
+    }
+
+    @PostConstruct
+    private void initializeClient() {
+        greetingServiceBlockingStub = GreetingServiceGrpc.newBlockingStub(managedChannel);
+    }
+
+    private GreetingServiceGrpc.GreetingServiceBlockingStub
+            greetingServiceBlockingStub;
+
+    public Greeting greeting(String name) {
+
+        Greet greeting = Greet
+                .newBuilder()
+                .setName(name)
+                .build();
+
+        return greetingServiceBlockingStub.greeting(greeting);
+    }
+}
+</code></pre>
+
+<p>We need to change an endpoint in order to make use of the grpc client. Rather than make the new controller, we will need to modify the backend endpoint in our HTTP/REST controller:</p>
+
+<p><strong>TracingGrpcRestController.java.</strong></p>
+
+<pre><code>    @GetMapping(&quot;/backend&quot;)
+    public String backend(HttpServletRequest req) {
+        String clientId = Optional
+                .ofNullable(req.getHeader(&quot;client-id&quot;))
+                .orElse(&quot;none&quot;);
+
+        return greetingClient.greeting(clientId).getHello();
+    }
+</code></pre>
+
+<p>On the client side, we must wire an <code>io.grpc.ManagedChannel</code> with an interceptor from our <code>grpcTracing</code> bean ( as with the server ).</p>
+
+<p><strong>GrpcClientTraceConfiguration.java.</strong></p>
+
+<pre><code>    @Bean
+    public ManagedChannel managedChannel(ManagedChannelBuilder channelBuilder) {
+        return channelBuilder
+                .build();
+    }
+    @Bean
+    public ManagedChannelBuilder managedChannelBuilder(GrpcTracing grpcTracing) {
+        return ManagedChannelBuilder.forAddress(&quot;localhost&quot;, 6565)
+                .intercept(grpcTracing.newClientInterceptor())
+                .usePlaintext(true);
+    }
+</code></pre>
+
+<p>This completes the configuration for our Grpc service/client.</p>
+
+<p>Note: Dont forget to restart the service so that the new grpc backend is exposed (port 8080).</p>
+
+<p>Now when we test <code>/frontend</code> and as a result of instrumenting all the endpoints. We can observe the span graph when viewing the Zipkin UI:</p>
+
+<p><img src="./graphics/grpc-web-spans.png" alt="grpc-spans" /></p>
+
+<p>The final span graph shows us the route detail to our updated HTTP Rest service.</p>
+
+<h1 id="afterwords">Afterwords</h1>
+
+<p>We can apply this capability to any of our (Java) microservices, but fear not! Zipkin is polyglot by nature and works with many other platforms. If you have pologlot concerns in your service paths, then check out any of the links in the next section. Should we/ require tracability across services that are not bound to JVM, its good to know that a multi-platform solution exists.</p>
+
+<h2 id="reading-list">Reading List</h2>
+
+<ul>
+<li><p><a href="https://zipkin.io/pages/instrumenting.html">https://zipkin.io/pages/instrumenting.html</a></p></li>
+
+<li><p><a href="https://cloud.spring.io/spring-cloud-static/spring-cloud-sleuth/1.1.3.RELEASE/">https://cloud.spring.io/spring-cloud-static/spring-cloud-sleuth/1.1.3.RELEASE/</a></p></li>
+
+<li><p>B3-propigation</p>
+
+<ul>
+<li><a href="https://github.com/openzipkin/b3-propagation">https://github.com/openzipkin/b3-propagation</a></li>
+</ul></li>
+
+<li><p>Context propagation/Brave-slf4j</p>
+
+<ul>
+<li><a href="https://github.com/openzipkin/brave/tree/master/context/slf4j">https://github.com/openzipkin/brave/tree/master/context/slf4j</a></li>
+</ul></li>
+
+<li><p>Tracing JDBC:</p>
+
+<ul>
+<li><a href="https://github.com/openzipkin/brave/issues/201">https://github.com/openzipkin/brave/issues/201</a></li>
+</ul></li>
+
+<li><p>Zipkin Reporting (Java):</p>
+
+<ul>
+<li><a href="https://github.com/openzipkin/zipkin-reporter-java">https://github.com/openzipkin/zipkin-reporter-java</a></li>
+</ul></li>
+
+<li><p>Kafka:</p>
+
+<ul>
+<li><a href="https://kafka.apache.org/quickstart">https://kafka.apache.org/quickstart</a></li>
+</ul></li>
+
+<li><p>Using OpenZipkin Brave:</p>
+
+<ul>
+<li><a href="https://cwiki.apache.org/confluence/display/CXF20DOC/Using+OpenZipkin+Brave">https://cwiki.apache.org/confluence/display/CXF20DOC/Using+OpenZipkin+Brave</a></li>
+</ul></li>
+
+<li><p>p6spy(jdbc):</p>
+
+<ul>
+<li><a href="https://github.com/openzipkin/brave/tree/master/instrumentation/p6spy">https://github.com/openzipkin/brave/tree/master/instrumentation/p6spy</a></li>
+</ul></li>
+
+<li><p>Instrumenting in JS land:</p>
+
+<ul>
+<li><p><a href="https://google.github.io/tracing-framework/instrumenting-code.html">https://google.github.io/tracing-framework/instrumenting-code.html</a></p></li>
+
+<li><p><a href="https://github.com/openzipkin/zipkin-js">https://github.com/openzipkin/zipkin-js</a></p></li>
+
+<li><p><a href="https://github.com/RisingStack/trace-nodejs">https://github.com/RisingStack/trace-nodejs</a></p></li>
+</ul></li>
+
+<li><p>Capgemini-trace-example:</p>
+
+<ul>
+<li><a href="https://github.com/Capgemini/spring-boot-capgemini/tree/master/examples/spring-capgemini-trace-sample">https://github.com/Capgemini/spring-boot-capgemini/tree/master/examples/spring-capgemini-trace-sample</a></li>
+</ul></li>
+
+<li><p>Sleuth:</p>
+
+<ul>
+<li><a href="https://cloud.spring.io/spring-cloud-sleuth/single/spring-cloud-sleuth.html">https://cloud.spring.io/spring-cloud-sleuth/single/spring-cloud-sleuth.html</a></li>
+</ul></li>
+
+<li><p>StackDriver Trace:</p>
+
+<ul>
+<li><a href="https://cloud.google.com/trace/">https://cloud.google.com/trace/</a></li>
+</ul></li>
+</ul>
+
+    </div>
+    
+    <footer>
+      <hr>
+      <p>
+  Published
+  
+    
+      by <span itemprop="author">Mario Gray</span>
+    
+  
+  <time itemprop="datePublished" datetime="2018-04-16T00:00:00&#43;00:00">
+    16 Apr, 2018
+  </time>
+  
+    in <span itemprop="articleSection"><a href="/categories/java/">java</a>, <a href="/categories/spring/">spring</a>, <a href="/categories/tracing/">tracing</a> and <a href="/categories/zipkin/">zipkin</a></span>
+  
+  
+    and tagged <a href="/tags/b3/">b3</a>, <a href="/tags/java/">java</a>, <a href="/tags/spring/">spring</a>, <a href="/tags/trace/">trace</a>, <a href="/tags/tracing/">tracing</a> and <a href="/tags/zipkin/">zipkin</a>
+  
+  using <span itemprop="wordCount">2221</span> words.
+</p>
+
+      
+
+
+  <aside>
+    <header>Related Content</header>
+    <ul>
+      
+        <li><a href="/post/spring-kafka/">Sending and consuming messages with Spring and KafKa</a>
+        <time datetime="5M">5 minutes</time>
+      
+        <li><a href="/post/spring-test-slices/">Spring Test Slices</a>
+        <time datetime="5M">5 minutes</time>
+      
+        <li><a href="/post/riff-intro/">Intro to RIFF Is For Functions</a>
+        <time datetime="5M">5 minutes</time>
+      
+    </ul>
+  </aside>
+
+
+    </footer>
+  </article>
+</main>
+    <footer>
+  
+  <p class="muted">
+    This page was generated using
+    <a target="_blank" rel="noopener" href="https://comfusion.github.io/after-dark/">After Dark</a>
+    for
+    <a target="_blank" rel="noopener" href="https://gohugo.io/">Hugo</a>.
+  </p>
+
+
+</footer>
+  </body>
+</html>

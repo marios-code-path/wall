@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Java on # sudo init 5 - A Developer&#39;s web log</title>
+    <link>https://www.sudoinit5.com/categories/java/</link>
+    <description>Recent content in Java on # sudo init 5 - A Developer&#39;s web log</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Mon, 16 Apr 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://www.sudoinit5.com/categories/java/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Configuring Zipkin Tracing with Spring Boot</title>
+      <link>https://www.sudoinit5.com/post/spring-tracing-zipkin/</link>
+      <pubDate>Mon, 16 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.sudoinit5.com/post/spring-tracing-zipkin/</guid>
+      <description>Tracing Motivation The more distributed a system the harder it is to debug errors, find latency, and to understand the potentially cascading impact of a bug. External monitoring only tells you the overall response time and number of invocations but doesn’t give us a way to understand internal invocations. Structured log entries can be correllated, eventually, to paint a picture of the movement of a request through a system, but structured logs are not easy to query.</description>
+    </item>
+    
+  </channel>
+</rss>

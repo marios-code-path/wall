@@ -1,95 +1,105 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>#sudo init 5</title>
-    <link>https://sudoinit5.github.io/</link>
-    <description>Recent content on #sudo init 5</description>
+    <title># sudo init 5 - A Developer&#39;s web log</title>
+    <link>https://www.sudoinit5.com/</link>
+    <description>Recent content on # sudo init 5 - A Developer&#39;s web log</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
+    <lastBuildDate>Sat, 14 Jul 2018 00:00:00 -0700</lastBuildDate>
     
-	<atom:link href="https://sudoinit5.github.io/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.sudoinit5.com/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title></title>
-      <link>https://sudoinit5.github.io/post/introtoriffisforfunctions/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <title>Setup and customize Authentication against a WebFlux Application</title>
+      <link>https://www.sudoinit5.com/post/spring-reactive-authentication/</link>
+      <pubDate>Sat, 14 Jul 2018 00:00:00 -0700</pubDate>
       
-      <guid>https://sudoinit5.github.io/post/introtoriffisforfunctions/</guid>
-      <description>Motivation Functions as a Service are a new paradigm for application composition and deployment. Functions are a smaller deployable unit than microservices and especially traditional monoliths. Project Riff is a new Pivotal project that runs functions in a cloud environment like Pivotal Container Services (Kubernetes). Lets get started by setting up a new Riff environment and then creating some functions.
-Preparing the environment minikube is the tool that we’ll use to run Kubernetes locally.</description>
+      <guid>https://www.sudoinit5.com/post/spring-reactive-authentication/</guid>
+      <description>Configuring Authentication against a WebFlux app This demonstration examines Spring Security WebFlux&amp;rsquo;s Authentication mechanisms. We will look at Authentication request escalation, as well as user-domain customizations.
+Authentication flow-control How do we determine when a request must provide an authentication context? Spring does this with help from an AuthenticationEntryPoint that identifies un-authenticated requests and returns with a response to the user to perform some authentication action.
+Configure ServerHttpSecurity to use HTTP-BASIC by calling it&amp;rsquo;s httpBasic() method.</description>
     </item>
     
     <item>
-      <title></title>
-      <link>https://sudoinit5.github.io/post/springtestslices/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <title>Configuring Authorization with Reactive Spring Security 5</title>
+      <link>https://www.sudoinit5.com/post/spring-reactive-authorization/</link>
+      <pubDate>Thu, 05 Jul 2018 00:00:00 -0700</pubDate>
       
-      <guid>https://sudoinit5.github.io/post/springtestslices/</guid>
+      <guid>https://www.sudoinit5.com/post/spring-reactive-authorization/</guid>
+      <description>Configuring Authorization against a Webflux App Effective security can insulate our applications from ill effects of malicious, and accidental intent in many aspects of programming. Things like network security can only go so far in isolating harm to distributed computing applications. Prevent malicious hackers from gaining access to your systems by ensuring the tools meet the standards for your appcation.
+Spring Security WebFlux is the framework that lets us declare security constructs to our ordinary WebFluxapplications.</description>
+    </item>
+    
+    <item>
+      <title>Spring Reactive WebSocket Hot Publisher</title>
+      <link>https://www.sudoinit5.com/post/spring-reactive-ws-hot-server/</link>
+      <pubDate>Wed, 09 May 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/post/spring-reactive-ws-hot-server/</guid>
+      <description>This Demo This is the multi-casting Flux variation of the standard WebSocket Service seen here
+WebSocket Server Spring’s reactive [WebSocket] API is a part of Spring 5’s WebFlux API which bring reactive flow control to our projects via project reactor. We will introduce a single WebSocket handler, and show whats needed to get started using Spring’s WebSocketServer support.
+You’ll want to start a new Spring project using start.spring.io[this link] to autogenerate a maven based POM.</description>
+    </item>
+    
+    <item>
+      <title>Spring Reactive WebSocket Cold Publisher</title>
+      <link>https://www.sudoinit5.com/post/spring-reactive-ws-cold-server/</link>
+      <pubDate>Tue, 08 May 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/post/spring-reactive-ws-cold-server/</guid>
+      <description>This Demo This demo will stand up Spring application service that exposes a WebSocket service through the Spring 5’s reactive WebSockets API. Typically, for inter-service comms, use a more traditional messaging system to deliver and expect events between services for example - messaging brokers such as Kafka, RabbitMq, etc.. WebSockets is an IETF standard and W3C API that provides a convenient way to issue and consume data streams across the Internet.</description>
+    </item>
+    
+    <item>
+      <title>Reactive Websocket Client with Spring</title>
+      <link>https://www.sudoinit5.com/post/spring-reactive-ws-client/</link>
+      <pubDate>Sun, 06 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.sudoinit5.com/post/spring-reactive-ws-client/</guid>
+      <description>This Demo This demo client will connect and receive events from any URL that emits an open websocket stream. We have an existing server to stand up that can supply the socket events. A reactive client means that we can respond to backpressure, and weild the Observer pattern to our client connections.
+The Client (SANS web) We can use our favorite Spring Application Initializr start dot spring dot io to generate the application.</description>
+    </item>
+    
+    <item>
+      <title>Configuring Zipkin Tracing with Spring Boot</title>
+      <link>https://www.sudoinit5.com/post/spring-tracing-zipkin/</link>
+      <pubDate>Mon, 16 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.sudoinit5.com/post/spring-tracing-zipkin/</guid>
+      <description>Tracing Motivation The more distributed a system the harder it is to debug errors, find latency, and to understand the potentially cascading impact of a bug. External monitoring only tells you the overall response time and number of invocations but doesn’t give us a way to understand internal invocations. Structured log entries can be correllated, eventually, to paint a picture of the movement of a request through a system, but structured logs are not easy to query.</description>
+    </item>
+    
+    <item>
+      <title>Sending and consuming messages with Spring and KafKa</title>
+      <link>https://www.sudoinit5.com/post/spring-kafka/</link>
+      <pubDate>Fri, 13 Apr 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/post/spring-kafka/</guid>
+      <description>Spring Kafka Writer and Readers What is Kafka Apache Kafka is an open-source stream-processing software platform developed by the Apache Software Foundation written in Scala and Java. You&amp;rsquo;ll find more information about Kafka at it&amp;rsquo;s Homepage.
+Intro to Spring For Apache Kafka The Spring for Apache Kafka (spring-kafka) project applies core Spring concepts to the development of Kafka-based messaging solutions. It provides a &amp;ldquo;template&amp;rdquo; as a high-level abstraction for sending messages.</description>
+    </item>
+    
+    <item>
+      <title>Spring Test Slices</title>
+      <link>https://www.sudoinit5.com/post/spring-test-slices/</link>
+      <pubDate>Tue, 13 Mar 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/post/spring-test-slices/</guid>
       <description>Spring Test Slices Simplify testing by isolating the logical layers above and below that thing under test. These are the invariants. In a Spring Boot application, autoconfiguration produces a large monolithic application context.
 Test slices allow us to segment the application context in terms of logical layers. As an example, the @WebMvcTest slice only includes components related to the web tier, like @Controller-annotated components.
 The Basic Test As an example, let&amp;rsquo;s look at the structure of a unit test that looks something like the default unit test generated by the Spring Initializr.</description>
     </item>
     
     <item>
-      <title></title>
-      <link>https://sudoinit5.github.io/post/springwsclient/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <title>Intro to RIFF Is For Functions</title>
+      <link>https://www.sudoinit5.com/post/riff-intro/</link>
+      <pubDate>Mon, 12 Feb 2018 00:00:00 -0800</pubDate>
       
-      <guid>https://sudoinit5.github.io/post/springwsclient/</guid>
-      <description>This Demo This demo client will connect and receive events from any URL that emits an open websocket stream. We have an existing server to stand up that can supply the socket events. A reactive client means that we can respond to backpressure, and weild the Observer pattern to our client connections.
-The Client (SANS web) We can use our favorite Spring Application Initializr start dot spring dot io to generate the application.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://sudoinit5.github.io/post/springwsserver/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://sudoinit5.github.io/post/springwsserver/</guid>
-      <description>This Demo This demo will stand up Spring application service that exposes a WebSocket service through the Spring 5’s reactive WebSockets API. Typically, for inter-service comms, use a more traditional messaging system to deliver and expect events between services for example - messaging brokers such as Kafka, RabbitMq, etc.. WebSockets is an IETF standard and W3C API that provides a convenient way to issue and consume data streams across the Internet.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://sudoinit5.github.io/post/reactive-authentication/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://sudoinit5.github.io/post/reactive-authentication/</guid>
-      <description>Reactive Spring Security Authentication This demonstration examines Spring Security WebFlux&amp;rsquo;s Authentication mechanisms. We will look at Authentication request escalation, as well as user-domain customizations.
-Authentication flow-control How do we determine when a request must provide an authentication context? Spring does this with help from an AuthenticationEntryPoint that identifies un-authenticated requests and returns with a response to the user to perform some authentication action.
-Configure ServerHttpSecurity to use HTTP-BASIC by calling it&amp;rsquo;s httpBasic() method.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://sudoinit5.github.io/post/spring-kafka/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://sudoinit5.github.io/post/spring-kafka/</guid>
-      <description>Spring Kafka Writer and Readers What is Kafka Apache Kafka is an open-source stream-processing software platform developed by the Apache Software Foundation written in Scala and Java. You&amp;rsquo;ll find more information about Kafka at it&amp;rsquo;s Homepage.
-Intro to Spring For Apache Kafka The Spring for Apache Kafka (spring-kafka) project applies core Spring concepts to the development of Kafka-based messaging solutions. It provides a &amp;ldquo;template&amp;rdquo; as a high-level abstraction for sending messages.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://sudoinit5.github.io/post/spring-reactive-authorization/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://sudoinit5.github.io/post/spring-reactive-authorization/</guid>
-      <description>Configuring Reactive Spring Security WebFlux Effective security can insulate our applications from ill effects of malicious, and accidental intent in many aspects of programming. Things like network security can only go so far in isolating harm to distributed computing applications. Prevent malicious hackers from gaining access to your systems by ensuring the tools meet the standards for your appcation.
-Spring Security WebFlux is the framework that lets us declare security constructs to our ordinary WebFluxapplications.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://sudoinit5.github.io/post/spring-reactive-ws-multicast/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://sudoinit5.github.io/post/spring-reactive-ws-multicast/</guid>
-      <description>This Demo This is the multi-casting Flux variation of the standard WebSocket Service seen here
-WebSocket Server Spring’s reactive [WebSocket] API is a part of Spring 5’s WebFlux API which bring reactive flow control to our projects via project reactor. We will introduce a single WebSocket handler, and show whats needed to get started using Spring’s WebSocketServer support.
-You’ll want to start a new Spring project using start.spring.io[this link] to autogenerate a maven based POM.</description>
+      <guid>https://www.sudoinit5.com/post/riff-intro/</guid>
+      <description>Motivation of Functions Functions as a Service are a new paradigm for application composition and deployment. Functions are a smaller deployable unit than microservices and especially traditional monoliths. Project Riff is a new Pivotal project that runs functions in a cloud environment like Pivotal Container Services (Kubernetes). Lets get started by setting up a new Riff environment and then creating some functions.
+Preparing the environment minikube is the tool that we’ll use to run Kubernetes locally.</description>
     </item>
     
   </channel>

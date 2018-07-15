@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Websocket on # sudo init 5 - A Developer&#39;s web log</title>
+    <link>https://www.sudoinit5.com/categories/websocket/</link>
+    <description>Recent content in Websocket on # sudo init 5 - A Developer&#39;s web log</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Wed, 09 May 2018 00:00:00 -0700</lastBuildDate>
+    
+	<atom:link href="https://www.sudoinit5.com/categories/websocket/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Spring Reactive WebSocket Hot Publisher</title>
+      <link>https://www.sudoinit5.com/post/spring-reactive-ws-hot-server/</link>
+      <pubDate>Wed, 09 May 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/post/spring-reactive-ws-hot-server/</guid>
+      <description>This Demo This is the multi-casting Flux variation of the standard WebSocket Service seen here
+WebSocket Server Spring’s reactive [WebSocket] API is a part of Spring 5’s WebFlux API which bring reactive flow control to our projects via project reactor. We will introduce a single WebSocket handler, and show whats needed to get started using Spring’s WebSocketServer support.
+You’ll want to start a new Spring project using start.spring.io[this link] to autogenerate a maven based POM.</description>
+    </item>
+    
+    <item>
+      <title>Spring Reactive WebSocket Cold Publisher</title>
+      <link>https://www.sudoinit5.com/post/spring-reactive-ws-cold-server/</link>
+      <pubDate>Tue, 08 May 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/post/spring-reactive-ws-cold-server/</guid>
+      <description>This Demo This demo will stand up Spring application service that exposes a WebSocket service through the Spring 5’s reactive WebSockets API. Typically, for inter-service comms, use a more traditional messaging system to deliver and expect events between services for example - messaging brokers such as Kafka, RabbitMq, etc.. WebSockets is an IETF standard and W3C API that provides a convenient way to issue and consume data streams across the Internet.</description>
+    </item>
+    
+    <item>
+      <title>Reactive Websocket Client with Spring</title>
+      <link>https://www.sudoinit5.com/post/spring-reactive-ws-client/</link>
+      <pubDate>Sun, 06 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.sudoinit5.com/post/spring-reactive-ws-client/</guid>
+      <description>This Demo This demo client will connect and receive events from any URL that emits an open websocket stream. We have an existing server to stand up that can supply the socket events. A reactive client means that we can respond to backpressure, and weild the Observer pattern to our client connections.
+The Client (SANS web) We can use our favorite Spring Application Initializr start dot spring dot io to generate the application.</description>
+    </item>
+    
+  </channel>
+</rss>
