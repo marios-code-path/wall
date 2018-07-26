@@ -6,10 +6,20 @@
     <description>Recent content in Functional on # sudo init 5 - A Developer&#39;s web log</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Sat, 14 Jul 2018 00:00:00 -0700</lastBuildDate>
+    <lastBuildDate>Sat, 21 Jul 2018 00:00:00 -0700</lastBuildDate>
     
 	<atom:link href="https://www.sudoinit5.com/tags/functional/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Setup and Customize a Login Page With Reactive Spring Security.</title>
+      <link>https://www.sudoinit5.com/post/spring-reactive-auth-forms/</link>
+      <pubDate>Sat, 21 Jul 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/post/spring-reactive-auth-forms/</guid>
+      <description>Configuring Form Login Against a WebFlux App This demonstration examines Spring Security WebFlux&amp;rsquo;s Authentication mechanisms. We will look at authentication with HTML forms using Mustache, http-basic login, and customized logout configurations.
+A ServerHttpSecurity Configuration Normally, start with the website specifics, but we will begin with security configuration since this is a security-related article. With @EnableWebFluxSecurity on, we can build the SecurityWebFilterChain by issuing commands to the ServerHttpSecurity DSL object.</description>
+    </item>
     
     <item>
       <title>Setup and customize Authentication against a WebFlux Application</title>

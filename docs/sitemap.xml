@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://www.sudoinit5.com/post/spring-reactive-auth-forms/</loc>
+    <lastmod>2018-07-21T00:00:00-07:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://www.sudoinit5.com/post/spring-reactive-authentication/</loc>
     <lastmod>2018-07-14T00:00:00-07:00</lastmod>
   </url>
@@ -49,7 +54,7 @@
   
   <url>
     <loc>https://www.sudoinit5.com/</loc>
-    <lastmod>2018-07-14T00:00:00-07:00</lastmod>
+    <lastmod>2018-07-21T00:00:00-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -61,7 +66,7 @@
   
   <url>
     <loc>https://www.sudoinit5.com/categories/appsec/</loc>
-    <lastmod>2018-07-14T00:00:00-07:00</lastmod>
+    <lastmod>2018-07-21T00:00:00-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -73,7 +78,7 @@
   
   <url>
     <loc>https://www.sudoinit5.com/categories/</loc>
-    <lastmod>2018-07-14T00:00:00-07:00</lastmod>
+    <lastmod>2018-07-21T00:00:00-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -109,7 +114,7 @@
   
   <url>
     <loc>https://www.sudoinit5.com/tags/demo/</loc>
-    <lastmod>2018-07-14T00:00:00-07:00</lastmod>
+    <lastmod>2018-07-21T00:00:00-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -126,8 +131,14 @@
   </url>
   
   <url>
+    <loc>https://www.sudoinit5.com/tags/forms/</loc>
+    <lastmod>2018-07-21T00:00:00-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://www.sudoinit5.com/tags/functional/</loc>
-    <lastmod>2018-07-14T00:00:00-07:00</lastmod>
+    <lastmod>2018-07-21T00:00:00-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -139,7 +150,7 @@
   
   <url>
     <loc>https://www.sudoinit5.com/tags/java/</loc>
-    <lastmod>2018-07-14T00:00:00-07:00</lastmod>
+    <lastmod>2018-07-21T00:00:00-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -181,7 +192,7 @@
   
   <url>
     <loc>https://www.sudoinit5.com/post/</loc>
-    <lastmod>2018-07-14T00:00:00-07:00</lastmod>
+    <lastmod>2018-07-21T00:00:00-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -193,7 +204,7 @@
   
   <url>
     <loc>https://www.sudoinit5.com/categories/reactive/</loc>
-    <lastmod>2018-07-14T00:00:00-07:00</lastmod>
+    <lastmod>2018-07-21T00:00:00-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -205,13 +216,13 @@
   
   <url>
     <loc>https://www.sudoinit5.com/categories/security/</loc>
-    <lastmod>2018-07-14T00:00:00-07:00</lastmod>
+    <lastmod>2018-07-21T00:00:00-07:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://www.sudoinit5.com/tags/spring/</loc>
-    <lastmod>2018-07-14T00:00:00-07:00</lastmod>
+    <lastmod>2018-07-21T00:00:00-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -271,7 +282,7 @@
   
   <url>
     <loc>https://www.sudoinit5.com/tags/web/</loc>
-    <lastmod>2018-07-14T00:00:00-07:00</lastmod>
+    <lastmod>2018-07-21T00:00:00-07:00</lastmod>
     <priority>0</priority>
   </url>
   
