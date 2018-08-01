@@ -236,7 +236,7 @@ article header img {
 
 <meta itemprop="datePublished" content="2018-07-25T00:00:00-07:00" />
 <meta itemprop="dateModified" content="2018-07-21T00:00:00-07:00" />
-<meta itemprop="wordCount" content="1244">
+<meta itemprop="wordCount" content="1412">
 
 
 
@@ -249,7 +249,7 @@ article header img {
   <circle cx="16" cy="16" r="14" />
   <path d="M16 8 L16 16 20 20" />
 </svg>
-<span>6 minute read</span>
+<span>7 minute read</span>
 <svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
   <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
 </svg>
@@ -281,7 +281,8 @@ article header img {
 <li><a href="#mustache-web-content">Mustache Web Content</a></li>
 <li><a href="#configuring-mustache-behaviour">Configuring Mustache Behaviour</a></li>
 </ul></li>
-<li><a href="#routing-to-views">Routing to views</a></li>
+<li><a href="#routing-to-views">Routing to Views</a></li>
+<li><a href="#route-filtering-csrf">Route Filtering &amp; CSRF</a></li>
 <li><a href="#data-model-for-views">Data Model for Views</a></li>
 <li><a href="#application-execution-entry">Application execution Entry</a></li>
 </ul></li>
@@ -589,7 +590,7 @@ into the <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/spr
     spring.mustache.expose-request-attributes=true
 </code></pre>
 
-<h2 id="routing-to-views">Routing to views</h2>
+<h2 id="routing-to-views">Routing to Views</h2>
 
 <p>We need to wire up our views with routing logic, so lets add this with the functional style <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/reactive/function/server/RouterFunction.html">RouterFunction</a>.</p>
 
@@ -623,6 +624,30 @@ into the <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/spr
                 .andRoute(RequestPredicates.GET(&quot;/bye&quot;),
                         req -&gt; ServerResponse.ok().render(&quot;bye&quot;)
                 )
+</code></pre>
+
+<h2 id="route-filtering-csrf">Route Filtering &amp; CSRF</h2>
+
+<p>During <code>ServerHttpSecurity</code> configuration, we added the line for <code>csrf()</code> that has the effect of implementing request/response filtering. The effect of this Filter - <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/server/csrf/CsrfWebFilter.html">CsrfWebFilter</a> is to create, store and validate csrf tokens where seen or needed. We can expose the CSRF token by including the form entry &lsquo;_csrf&rsquo; and accessing our view model to extract the token value.
+Remember that the parameter and headers names may be changed by additional configuration to the <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/config/web/server/ServerHttpSecurity.CsrfSpec.html">CsrfSpec</a> during configuration.</p>
+
+<p>This filter allows us to access the CSRF token per request, or as needed if you are explicit about the paths that must be matched. CSRF tokens are stored as the classname <code>org.springframework.security.web.csrf</code> within the request attributes map. We can access this and determine how to expose it to the view by calling the token <code>parameterName()</code> method (then placing the token as that name in the model map).</p>
+
+<pre><code class="language-java">                .filter((req, resHandler) -&gt;
+                        req.exchange()
+                                .getAttributeOrDefault(
+                                        CsrfToken.class.getName(),
+                                        Mono.empty().ofType(CsrfToken.class)
+                                )
+                                .flatMap(csrfToken -&gt; {
+                                    req.exchange()
+                                            .getAttributes()
+                                            .put(csrfToken.getParameterName(), csrfToken);
+                                    return resHandler.handle(req);
+                                })
+
+                );
+    }
 </code></pre>
 
 <h2 id="data-model-for-views">Data Model for Views</h2>
@@ -693,7 +718,7 @@ public class FormLoginApp {
   
     and tagged <a href="/tags/demo/">demo</a>, <a href="/tags/forms/">forms</a>, <a href="/tags/functional/">functional</a>, <a href="/tags/java/">java</a>, <a href="/tags/spring/">spring</a> and <a href="/tags/web/">web</a>
   
-  using <span itemprop="wordCount">1244</span> words.
+  using <span itemprop="wordCount">1412</span> words.
 </p>
 
       
