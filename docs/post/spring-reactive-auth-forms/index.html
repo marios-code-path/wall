@@ -236,7 +236,7 @@ article header img {
 
 <meta itemprop="datePublished" content="2018-07-25T00:00:00-07:00" />
 <meta itemprop="dateModified" content="2018-07-21T00:00:00-07:00" />
-<meta itemprop="wordCount" content="1429">
+<meta itemprop="wordCount" content="1244">
 
 
 
@@ -249,7 +249,7 @@ article header img {
   <circle cx="16" cy="16" r="14" />
   <path d="M16 8 L16 16 20 20" />
 </svg>
-<span>7 minute read</span>
+<span>6 minute read</span>
 <svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
   <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
 </svg>
@@ -268,27 +268,24 @@ article header img {
     <summary>Table of Contents</summary>
     <nav id="TableOfContents">
 <ul>
-<li><a href="#configuring-form-login-against-a-webflux-app">Configuring Form Login Against a WebFlux App</a>
+<li><a href="#customized-webflux-form-authentication">Customized WebFlux Form Authentication</a>
 <ul>
-<li><a href="#a-serverhttpsecurity-configuration">A ServerHttpSecurity Configuration</a>
+<li><a href="#the-serverhttpsecurity-configuration">The ServerHttpSecurity Configuration</a>
 <ul>
 <li><a href="#csrf-configuration">CSRF Configuration</a></li>
-<li><a href="#login-logout-configuration">Login/logout Configuration</a></li>
-<li><a href="#configuring-users">Configuring Users</a></li>
+<li><a href="#customizing-login-logout">Customizing Login/logout</a></li>
 </ul></li>
-<li><a href="#the-mustache-website">The Mustache Website</a>
+<li><a href="#authenticating-users">Authenticating Users</a></li>
+<li><a href="#view-configuration-with-mustache">View Configuration with Mustache</a>
 <ul>
-<li><a href="#configuring-mustache-views">Configuring mustache views</a></li>
+<li><a href="#mustache-web-content">Mustache Web Content</a></li>
+<li><a href="#configuring-mustache-behaviour">Configuring Mustache Behaviour</a></li>
 </ul></li>
-<li><a href="#reactive-mustache">Reactive Mustache</a></li>
-</ul></li>
-<li><a href="#routing-to-views">Routing to views</a>
-<ul>
+<li><a href="#routing-to-views">Routing to views</a></li>
 <li><a href="#data-model-for-views">Data Model for Views</a></li>
-<li><a href="#csrf-and-view-filtering">CSRF, and View Filtering</a></li>
 <li><a href="#application-execution-entry">Application execution Entry</a></li>
-<li><a href="#conclusion">Conclusion</a></li>
 </ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
 </ul>
 </nav>
   </details>
@@ -311,13 +308,14 @@ article header img {
     <div itemprop="articleBody">
       
 
-<h1 id="configuring-form-login-against-a-webflux-app">Configuring Form Login Against a WebFlux App</h1>
+<h1 id="customized-webflux-form-authentication">Customized WebFlux Form Authentication</h1>
 
-<p>This demonstration examines Spring Security WebFlux&rsquo;s Authentication mechanisms. We will look at authentication with HTML forms using Mustache, http-basic login, and customized logout configurations.</p>
+<p>This demonstration examines Spring Security WebFlux&rsquo;s Authentication mechanisms. We will look at authentication with HTML forms using Mustache, User Authentication, and customized form-based login / logout configurations.</p>
 
-<h2 id="a-serverhttpsecurity-configuration">A ServerHttpSecurity Configuration</h2>
+<h2 id="the-serverhttpsecurity-configuration">The ServerHttpSecurity Configuration</h2>
 
-<p>Normally, start with the website specifics, but we will begin with security configuration since this is a security-related article. With <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/config/annotation/web/reactive/EnableWebFluxSecurity.html">@EnableWebFluxSecurity</a> on, we can build the <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/server/SecurityWebFilterChain.html">SecurityWebFilterChain</a> by issuing commands to the <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/config/web/server/ServerHttpSecurity.html">ServerHttpSecurity</a> DSL object.</p>
+<p><a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/server/SecurityWebFilterChain.html">SecurityWebFilterChain</a> is the governing chain of [WebFilter]&rsquo;s that allows us to lock down reactive WebFlux applications.
+With <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/config/annotation/web/reactive/EnableWebFluxSecurity.html">@EnableWebFluxSecurity</a> turned on, we can build this object by issuing commands to the <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/config/web/server/ServerHttpSecurity.html">ServerHttpSecurity</a> DSL object.</p>
 
 <p>SecurityConfiguration.java:</p>
 
@@ -328,42 +326,76 @@ article header img {
 
         @Bean
         public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
+            return http
+                    .authorizeExchange()
+        // ...
 </code></pre>
 
-<p>Next, we can open all of the public-facing endpoints by using a PathMatcher to match our public routes, by applying permitAll to open permissions there.</p>
+<p>First, by calling <code>authorizeExchange()</code> method to expose <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/config/web/server/ServerHttpSecurity.AuthorizeExchangeSpec.html">AuthorizeExchangeSpec</a> lets us proceed with authentication details.
+With this, we can apply a matcher and permission model to our endpoints.  For this example, we want to open several endpoints to everyone. This is where <code>permitAll()</code> can be applied to a multi-argument <code>pathMatchers()</code> expression.</p>
 
 <p>SecurityConfiguration.java:</p>
 
-<pre><code class="language-java">            return http
-                    .authorizeExchange()
-                    .pathMatchers(&quot;/login&quot;,
+<pre><code class="language-java">                    .pathMatchers(&quot;/login&quot;,
                             &quot;/bye&quot;,
                             &quot;/favicon.ico&quot;,
                             &quot;/images/**&quot;)
-                    .permitAll()
+                        .permitAll()
 </code></pre>
 
 <p>For this example, we want every endpoint thats not publicly available to require a logged-in user. Wire in a <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/util/PathMatcher.html">PathMatcher</a> for all other URL&rsquo;s, and apply the <code>authenticated()</code> operator to whatever matches.</p>
 
-<h3 id="csrf-configuration">CSRF Configuration</h3>
-
-<p>Another component for when configuring SecurityWebFilterChain is the <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/config/web/server/ServerHttpSecurity.CsrfSpec.html">CsrfSpec</a> enabled by calling <code>csrf()</code> method.  This lets us configure <a href="https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet">CSRF</a> tokens and handlers, or exclude CSRF entirely.</p>
-
-<p>To configure CSRF metadata behaviour, create a bean of type <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/server/csrf/ServerCsrfTokenRepository.html">ServerCsrfTokenRepository</a> and set header and/or parameter attrubte names as needed. In this demo we will use the default options, so &lsquo;_csrf&rsquo; becomes our parameter namd, and &lsquo;X-CSRF-TOKEN&rsquo; is our header.</p>
-
 <p>SecurityConfiguration.java:</p>
 
 <pre><code class="language-java">                    .pathMatchers(&quot;/**&quot;)
-                    .authenticated()
-                    .and()
-                    .csrf()
+                        .authenticated()
+                        .and()
 </code></pre>
 
-<h3 id="login-logout-configuration">Login/logout Configuration</h3>
+<h3 id="csrf-configuration">CSRF Configuration</h3>
+
+<p>Another component for configuring SecurityWebFilterChain is the <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/config/web/server/ServerHttpSecurity.CsrfSpec.html">CsrfSpec</a> enabled by calling <code>csrf()</code> method.  This lets us configure <a href="https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet">CSRF</a> tokens and request matchers, or exclude CSRF entirely.</p>
+
+<p>In this demo we will use the default options, so <code>'_csrf'</code> becomes our parameter namd, and <code>'X-CSRF-TOKEN'</code> is our header.</p>
+
+<p>SecurityConfiguration.java:</p>
+
+<pre><code class="language-JAVA">                    .csrf()
+                        //.csrfTokenRepository(customCsrfTokenRepository)
+                        //.requireCsrfProtectionMatcher(customCsrfMatcher)
+                        .and()
+</code></pre>
+
+<p>Note: Currently supported token repository exists are:</p>
+
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><a href="WebSessionServerCsrfTokenRepository">WebSessionServerCsrfTokenRepository</a></td>
+<td>Store CSRF token in a Web Session</td>
+</tr>
+
+<tr>
+<td><a href="https://docs.spring.io/spring-security/site/docs/5.1.0.BUILD-SNAPSHOT/api/org/springframework/security/web/server/csrf/CookieServerCsrfTokenRepository.html">CookieServerCsrfTokenRepository</a></td>
+<td>Store CSRF token in custom cookie</td>
+</tr>
+</tbody>
+</table>
+
+<p>Later, we will customize how CSRF tokens get included to our web page through custom filtering.</p>
+
+<h3 id="customizing-login-logout">Customizing Login/logout</h3>
 
 <p>Spring Security provides login/logout pages on demand whenever one is not already configured. This is provided by the <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/server/ui/LoginPageGeneratingWebFilter.html">LoginPageGeneratingWebFilter</a> and <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/server/ui/LogoutPageGeneratingWebFilter.html">LogoutPageGeneratingWebFilter</a> that get wired in if no login/logout page was specified.</p>
 
-<p>To override this, we can issue loginPage(&ldquo;/&rdquo;) and it&rsquo;s success/error Handlers within the <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/config/web/server/ServerHttpSecurity.FormLoginSpec.html">FormLoginSpec</a>. We want to redirect successes to the home page by using <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/server/authentication/RedirectServerAuthenticationSuccessHandler.html">RedirectServerAuthenticationSuccessHandler</a>.  Then For logout successes, we&rsquo;ll send the user to the &ldquo;/bye&rdquo; endpoint by configuring the <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/server/authentication/logout/RedirectServerLogoutSuccessHandler.html">RedirectServerLogoutSuccessHandler</a> in a separate method since it&rsquo;s contructor doesnt support parameters.</p>
+<p>To override this, expose <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/config/web/server/ServerHttpSecurity.FormLoginSpec.html">FormLoginSpec</a> by calling <code>HttpServerSecurity's</code> <code>formLogin()</code> method. We can then issue the path the our custom login page and declare form-login success/error Handlers. We want to redirect successes to the home page by using <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/server/authentication/RedirectServerAuthenticationSuccessHandler.html">RedirectServerAuthenticationSuccessHandler</a>.  Then For logout successes, we&rsquo;ll send the user to the &ldquo;/bye&rdquo; endpoint by configuring the <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/server/authentication/logout/RedirectServerLogoutSuccessHandler.html">RedirectServerLogoutSuccessHandler</a> in a separate method since it&rsquo;s contructor doesnt support parameters.</p>
 
 <p>SecurityConfiguration.java:</p>
 
@@ -388,11 +420,13 @@ article header img {
     }
 </code></pre>
 
-<p>Both handlers do somilar things - namely redirect on success. Its just that we have to expelicitly construct the <code>logoutSuccessHandler</code> since it&rsquo;s constructor only allows no-args.</p>
+<p>Both handlers do similar things - namely redirect on success. Expelicitly constructing the <code>logoutSuccessHandler</code> since it&rsquo;s constructor only allows no-args.</p>
 
-<h3 id="configuring-users">Configuring Users</h3>
+<p>Next, we will look at how user/pass pairs are authenticated. This is done by a subclass of <a href="https://docs.spring.io/spring-security/site/docs/5.1.0.BUILD-SNAPSHOT/api/org/springframework/security/authentication/ReactiveAuthenticationManager.html">ReactiveAuthenticationManager</a>.</p>
 
-<p>The <a href="https://docs.spring.io/spring-security/site/docs/5.0.3.RELEASE/api/org/springframework/security/authentication/UserDetailsRepositoryReactiveAuthenticationManager.html">UserDetailsRepositoryReactiveAuthenticationManager</a>
+<h2 id="authenticating-users">Authenticating Users</h2>
+
+<p><a href="https://docs.spring.io/spring-security/site/docs/5.0.3.RELEASE/api/org/springframework/security/authentication/UserDetailsRepositoryReactiveAuthenticationManager.html">UserDetailsRepositoryReactiveAuthenticationManager</a>
 bean is provided automatically if there are no other configured <a href="http://ReactiveAuthenticationManager">ReactiveAuthenticationManager</a> <code>@Bean</code> definitions. This authentication manager defers principal/credential operations to a <a href="https://docs.spring.io/spring-security/site/docs/5.1.0.M1/api/org/springframework/security/core/userdetails/ReactiveUserDetailsService.html">ReactiveUserDetailsService</a> implementation.</p>
 
 <p>Spring comes with ready-made implemenations for storing and looking up users in the <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/core/userdetails/MapReactiveUserDetailsService.html">MapReactiveUserDetailsService</a>. We&rsquo;ll complete this section using the map reactive implementation, and by having our users come from the handly <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/core/userdetails/User.html">User</a> object since no other details are necessary for <a href="https://www.sudoinit5.com/post/spring-reactive-authentication/#customizing-the-user">customizing the user</a>.</p>
@@ -428,11 +462,47 @@ bean is provided automatically if there are no other configured <a href="http://
     }
 </code></pre>
 
-<h2 id="the-mustache-website">The Mustache Website</h2>
+<h2 id="view-configuration-with-mustache">View Configuration with Mustache</h2>
 
-<p>The website uses just 3 pages to describe a game. The game text is tanken from Infocom&rsquo;s Zork text-based adventure. In this demo we will have a user login, and finally do something to escalate permission. We will walk throuigh componentry needed to accomplish this task. Spring Security provides a reactive way for describing security constraints within your web app.</p>
+<p>To enable <a href="https://mustache.github.io/">Mustache</a> Views, we need to wire in an appropriate <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/servlet/config/annotation/ViewResolverRegistry.html">ViewResolver</a> so view names are rendered with the Mustache template View.</p>
 
-<p>Lets take a look at how we want thise site to get rendered. First lets take a look at WebFlux MVC which lets us expose <a href="https://mustache.github.io/">Mustache</a> views. We have a entry view we want to surface, so by creating these templates, we have a full view complement.</p>
+<p>First, include the <code>spring-boot-starter-mustache</code> dependency in your pom.xml.</p>
+
+<p>pom.xml:</p>
+
+<pre><code class="language-xml">    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-mustache&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+</code></pre>
+
+<p>Now, create a [WebFluxConfigurer]() to enable Mustache View rendering.</p>
+
+<p>WebConfig.java:</p>
+
+<pre><code class="language-html">    @Configuration
+    class WebConfig implements WebFluxConfigurer {
+
+        private final MustacheViewResolver resolver;
+
+        // The resolver is provided by MustacheAutoConfiguration class
+        WebConfig(MustacheViewResolver resolver) {
+            this.resolver = resolver;
+        }
+
+        // order matters; cache will find first and render.
+        @Override
+        public void configureViewResolvers(ViewResolverRegistry registry) {
+            registry.viewResolver(resolver);
+        }
+
+    }
+</code></pre>
+
+<p>This configuration will populate a <a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/web/reactive/result/view/MustacheViewResolver.html()">MustacheViewResolver</a>
+into the <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/reactive/config/ViewResolverRegistry.html">ViewResolverRegistry</a>.</p>
+
+<h3 id="mustache-web-content">Mustache Web Content</h3>
 
 <p>Mustache lets us use includes for re-usable content. We will create 3 common fragements for our views.</p>
 
@@ -459,16 +529,16 @@ bean is provided automatically if there are no other configured <a href="http://
 
 <p>Next we can define the meat of our content. We just need a login, game, and logout page.</p>
 
-<p>index.html:</p>
+<p>game.html:</p>
 
-<pre><code class="language-html">    {{&gt;frag/header}}
-    &lt;h1&gt;West of House&lt;/h1&gt;
-    &lt;div&gt;Hello, {{user.username}}. You are standing in an open field west of a white house, with a boarded front door.&lt;br/&gt;
-        There is a small mailbox here.&lt;/div&gt;
-    &lt;br/&gt;
-    &amp;gt;&lt;image src=&quot;/images/cursor.gif&quot; /&gt;
-    {{&gt;frag/logout}}
-    {{&gt;frag/footer}}
+<pre><code class="language-html">{{&gt;frag/header}}
+&lt;h1&gt;West of House&lt;/h1&gt;
+&lt;div&gt;Hello, {{user.username}}. You are standing in an open field west of a white house, with a boarded front door.&lt;br/&gt;
+    There is a small mailbox here.&lt;/div&gt;
+&lt;br/&gt;
+&amp;gt;&lt;image src=&quot;https://rawgit.com/marios-code-path/reactive-authentication/master/form-login/src/main/resources/images/cursor.gif&quot; /&gt;
+{{&gt;frag/logout}}
+{{&gt;frag/footer}}
 </code></pre>
 
 <p>login-form.html:</p>
@@ -508,7 +578,7 @@ bean is provided automatically if there are no other configured <a href="http://
     {{&gt;frag/footer}}
 </code></pre>
 
-<h3 id="configuring-mustache-views">Configuring mustache views</h3>
+<h3 id="configuring-mustache-behaviour">Configuring Mustache Behaviour</h3>
 
 <p>To let Mustache view resolver know where to find our templates, how to handle view objects, we set the specific options for this.  Using <code>expose-request-attributes</code> allows us to access our request&rsquo;s view attributes from within the template.</p>
 
@@ -519,32 +589,7 @@ bean is provided automatically if there are no other configured <a href="http://
     spring.mustache.expose-request-attributes=true
 </code></pre>
 
-<h2 id="reactive-mustache">Reactive Mustache</h2>
-
-<p>Lets configure the class into Spring WebFlux that lets us return mustache views. We can add MustacheViewResolver to our WebFlux Configuration. This makes it so that the viewResolver selects MustacheView&rsquo;s as the type compiled and shown on screen.</p>
-
-<p>WebConfig.java:</p>
-
-<pre><code class="language-html">    @Configuration
-    class WebConfig implements WebFluxConfigurer {
-
-        private final MustacheViewResolver resolver;
-
-        // The resolver is provided by MustacheAutoConfiguration class
-        WebConfig(MustacheViewResolver resolver) {
-            this.resolver = resolver;
-        }
-
-        // order matters; cache will find first and render.
-        @Override
-        public void configureViewResolvers(ViewResolverRegistry registry) {
-            registry.viewResolver(resolver);
-        }
-
-    }
-</code></pre>
-
-<h1 id="routing-to-views">Routing to views</h1>
+<h2 id="routing-to-views">Routing to views</h2>
 
 <p>We need to wire up our views with routing logic, so lets add this with the functional style <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/reactive/function/server/RouterFunction.html">RouterFunction</a>.</p>
 
@@ -562,7 +607,7 @@ bean is provided automatically if there are no other configured <a href="http://
         }
 </code></pre>
 
-<p>Next we will have a route to the login page.  Since we already overrided the default location in ServerHttpSecurity, we must provide the route to our new login page. Also included in this example is our logout landing page. it can be any URL you select, for this example we have a single page to tell the user &lsquo;goodbye&rsquo;.</p>
+<p>Next we will have a route to the login page.  Since we already overrode the default location in <code>ServerHttpSecurity</code>, we must provide the route to our new login page. Also included in this example is our logout landing page. it can be any URL you select, for this example we have a single page to tell the user &lsquo;goodbye&rsquo;.</p>
 
 <p>WebRoutes.java:</p>
 
@@ -602,30 +647,6 @@ bean is provided automatically if there are no other configured <a href="http://
                 )
 </code></pre>
 
-<h2 id="csrf-and-view-filtering">CSRF, and View Filtering</h2>
-
-<p>During ServerHttpSecurity configuration, we added the line for <code>csrf()</code> that has the effect of implementing request/response filtering. The effect of this Filter - <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/server/csrf/CsrfWebFilter.html">CsrfWebFilter</a> is to create, store and validate csrf tokens where seen or needed. We can expose the CSRF token by including the form entry &lsquo;_csrf&rsquo; and accessing our view model to extract the token value.
-Remember that the parameter and headers names may be changed by additional configuration to the <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/config/web/server/ServerHttpSecurity.CsrfSpec.html">CsrfSpec</a> during configuration.</p>
-
-<p>This filter allows us to access the CSRF token per request, or as needed if you are explicit about the paths that must be matched. CSRF tokens are stored as the classname <code>org.springframework.security.web.csrf</code> within the request attributes map. We can access this and determine how to expose it to the view by calling the token <code>parameterName()</code> method (then placing the token as that name in the map).</p>
-
-<pre><code class="language-java">                .filter((req, resHandler) -&gt;
-                        req.exchange()
-                                .getAttributeOrDefault(
-                                        CsrfToken.class.getName(),
-                                        Mono.empty().ofType(CsrfToken.class)
-                                )
-                                .flatMap(csrfToken -&gt; {
-                                    req.exchange()
-                                            .getAttributes()
-                                            .put(csrfToken.getParameterName(), csrfToken);
-                                    return resHandler.handle(req);
-                                })
-
-                );
-    }
-</code></pre>
-
 <h2 id="application-execution-entry">Application execution Entry</h2>
 
 <p>This simple app requires no additional configuration beyond <a href="http://enable-web-flux-annotation">EnableWebFlux</a> and <a href="http://spring-boot-applkication">SpringBootApplication</a> annotations.</p>
@@ -648,7 +669,7 @@ public class FormLoginApp {
 <pre><code class="language-bash">    mvn spring-boot:run
 </code></pre>
 
-<h2 id="conclusion">Conclusion</h2>
+<h1 id="conclusion">Conclusion</h1>
 
 <p>This simple web was made to demonstratekey concepts in obtaining successful authentication from a user that is browser-bound. We looked at wiring up CSRF, Mustache views, login/logout customization, and Routing/Filtering in the WebFlux environment.</p>
 
@@ -672,7 +693,7 @@ public class FormLoginApp {
   
     and tagged <a href="/tags/demo/">demo</a>, <a href="/tags/forms/">forms</a>, <a href="/tags/functional/">functional</a>, <a href="/tags/java/">java</a>, <a href="/tags/spring/">spring</a> and <a href="/tags/web/">web</a>
   
-  using <span itemprop="wordCount">1429</span> words.
+  using <span itemprop="wordCount">1244</span> words.
 </p>
 
       
@@ -682,7 +703,7 @@ public class FormLoginApp {
     <header>Related Content</header>
     <ul>
       
-        <li><a href="/post/spring-reactive-authentication/">Setup and customize Authentication against a WebFlux Application</a>
+        <li><a href="/post/spring-reactive-auth-basic/">Setup and customize Authentication against a WebFlux Application</a>
         <time datetime="4M">4 minutes</time>
       
         <li><a href="/post/spring-kafka/">Sending and consuming messages with Spring and KafKa</a>

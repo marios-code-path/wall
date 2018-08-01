@@ -17,16 +17,18 @@
       <pubDate>Sat, 21 Jul 2018 00:00:00 -0700</pubDate>
       
       <guid>https://www.sudoinit5.com/post/spring-reactive-auth-forms/</guid>
-      <description>Configuring Form Login Against a WebFlux App This demonstration examines Spring Security WebFlux&amp;rsquo;s Authentication mechanisms. We will look at authentication with HTML forms using Mustache, http-basic login, and customized logout configurations.
-A ServerHttpSecurity Configuration Normally, start with the website specifics, but we will begin with security configuration since this is a security-related article. With @EnableWebFluxSecurity on, we can build the SecurityWebFilterChain by issuing commands to the ServerHttpSecurity DSL object.</description>
+      <description>Customized WebFlux Form Authentication This demonstration examines Spring Security WebFlux&amp;rsquo;s Authentication mechanisms. We will look at authentication with HTML forms using Mustache, User Authentication, and customized form-based login / logout configurations.
+The ServerHttpSecurity Configuration SecurityWebFilterChain is the governing chain of [WebFilter]&amp;rsquo;s that allows us to lock down reactive WebFlux applications. With @EnableWebFluxSecurity turned on, we can build this object by issuing commands to the ServerHttpSecurity DSL object.
+SecurityConfiguration.java:
+@EnableWebFluxSecurity @Slf4j @Configuration public class SecurityConfiguration { @Bean public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) { return http .</description>
     </item>
     
     <item>
       <title>Setup and customize Authentication against a WebFlux Application</title>
-      <link>https://www.sudoinit5.com/post/spring-reactive-authentication/</link>
+      <link>https://www.sudoinit5.com/post/spring-reactive-auth-basic/</link>
       <pubDate>Sat, 14 Jul 2018 00:00:00 -0700</pubDate>
       
-      <guid>https://www.sudoinit5.com/post/spring-reactive-authentication/</guid>
+      <guid>https://www.sudoinit5.com/post/spring-reactive-auth-basic/</guid>
       <description>Configuring Authentication against a WebFlux app This demonstration examines Spring Security WebFlux&amp;rsquo;s Authentication mechanisms. We will look at Authentication request escalation, as well as user-domain customizations.
 Authentication flow-control How do we determine when a request must provide an authentication context? Spring does this with help from an AuthenticationEntryPoint that identifies un-authenticated requests and returns with a response to the user to perform some authentication action.
 Configure ServerHttpSecurity to use HTTP-BASIC by calling it&amp;rsquo;s httpBasic() method.</description>

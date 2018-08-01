@@ -243,7 +243,7 @@ article header img {
   <circle cx="16" cy="16" r="14" />
   <path d="M16 8 L16 16 20 20" />
 </svg>
-<span>7 minute read</span>
+<span>6 minute read</span>
 <svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
   <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
 </svg>
@@ -257,8 +257,10 @@ article header img {
     <blockquote itemprop="headline">Spring Security provides a intuitive and concise API for managing Authentication aspects within your app.</blockquote>
   
   <div itemprop="description">
-    Configuring Form Login Against a WebFlux App This demonstration examines Spring Security WebFlux&rsquo;s Authentication mechanisms. We will look at authentication with HTML forms using Mustache, http-basic login, and customized logout configurations.
-A ServerHttpSecurity Configuration Normally, start with the website specifics, but we will begin with security configuration since this is a security-related article. With @EnableWebFluxSecurity on, we can build the SecurityWebFilterChain by issuing commands to the ServerHttpSecurity DSL object.
+    Customized WebFlux Form Authentication This demonstration examines Spring Security WebFlux&rsquo;s Authentication mechanisms. We will look at authentication with HTML forms using Mustache, User Authentication, and customized form-based login / logout configurations.
+The ServerHttpSecurity Configuration SecurityWebFilterChain is the governing chain of [WebFilter]&rsquo;s that allows us to lock down reactive WebFlux applications. With @EnableWebFluxSecurity turned on, we can build this object by issuing commands to the ServerHttpSecurity DSL object.
+SecurityConfiguration.java:
+@EnableWebFluxSecurity @Slf4j @Configuration public class SecurityConfiguration { @Bean public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) { return http .
   </div>
   
     <nav class="readmore"><a itemprop="url" href="/post/spring-reactive-auth-forms/">Read More&nbsp;&raquo;</a></nav>
@@ -273,7 +275,7 @@ A ServerHttpSecurity Configuration Normally, start with the website specifics, b
     <article itemscope itemtype="http://schema.org/CreativeWork">
   <header>
     <h2 itemprop="name">
-      <a href="/post/spring-reactive-authentication/">Setup and customize Authentication against a WebFlux Application</a>
+      <a href="/post/spring-reactive-auth-basic/">Setup and customize Authentication against a WebFlux Application</a>
     </h2>
     
       <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
@@ -299,7 +301,7 @@ Authentication flow-control How do we determine when a request must provide an a
 Configure ServerHttpSecurity to use HTTP-BASIC by calling it&rsquo;s httpBasic() method.
   </div>
   
-    <nav class="readmore"><a itemprop="url" href="/post/spring-reactive-authentication/">Read More&nbsp;&raquo;</a></nav>
+    <nav class="readmore"><a itemprop="url" href="/post/spring-reactive-auth-basic/">Read More&nbsp;&raquo;</a></nav>
   
   <meta itemprop="inLanguage" content="en-US">
   <meta itemprop="datePublished" content="2018-07-14T00:00:00-07:00">
