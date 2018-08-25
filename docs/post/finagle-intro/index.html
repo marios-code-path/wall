@@ -4,8 +4,9 @@
     <meta name="generator" content="Hugo 0.43" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title># sudo init 5 - A Developer&#39;s web log</title>
-    <meta name="description" content="Mario&#39;s take on distributed computing">
+    <title> | # sudo init 5 - A Developer&#39;s web log</title>
+    <meta name="description" content="ope&#43;&#43;&#43; date = 2018-07-30 publishDate = 2018-08-04 title = &ldquo;Intro to Finagle services with Scala and SBT.&rdquo; description = &ldquo;Finagle lets you develop and deploy services easily.&rdquo; toc = true categories = [&ldquo;scala&rdquo;,&ldquo;twitter&rdquo;,&ldquo;finagle&rdquo;] tags = [&ldquo;functional&rdquo;,&ldquo;scala&rdquo;,&ldquo;services&rdquo;,&ldquo;demo&rdquo;] &#43;&#43;&#43;
+Why Finagle Finagle is a Service building framework that lets developers write non-blocking services with ease. In this example, we will go through the steps to deploy a basic Finagle Service that takes advantage of the Twitter services eco-system in TwitterServer, Guice and of coure Scala.">
     <meta name="keywords" content="appsec, client, container, faas, java, kafka, kubernetes, messaging, mq, reactive, security, spring, tdd, test, test slice, tracing, web, websocket, websocket client, zipkin, ">
     
     
@@ -16,10 +17,13 @@
   <meta name="author" content="Mario Gray">
 
 
-    <meta property="og:title" content="# sudo init 5 - A Developer&#39;s web log" />
-<meta property="og:description" content="Mario&#39;s take on distributed computing" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://www.sudoinit5.com/" />
+    <meta property="og:title" content="" />
+<meta property="og:description" content="ope&#43;&#43;&#43; date = 2018-07-30 publishDate = 2018-08-04 title = &ldquo;Intro to Finagle services with Scala and SBT.&rdquo; description = &ldquo;Finagle lets you develop and deploy services easily.&rdquo; toc = true categories = [&ldquo;scala&rdquo;,&ldquo;twitter&rdquo;,&ldquo;finagle&rdquo;] tags = [&ldquo;functional&rdquo;,&ldquo;scala&rdquo;,&ldquo;services&rdquo;,&ldquo;demo&rdquo;] &#43;&#43;&#43;
+Why Finagle Finagle is a Service building framework that lets developers write non-blocking services with ease. In this example, we will go through the steps to deploy a basic Finagle Service that takes advantage of the Twitter services eco-system in TwitterServer, Guice and of coure Scala." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.sudoinit5.com/post/finagle-intro/" />
+
+
 
 
 
@@ -37,25 +41,20 @@
     <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://source.unsplash.com/category/technology/2000x1322"/>
 
-<meta name="twitter:title" content="# sudo init 5 - A Developer&#39;s web log"/>
-<meta name="twitter:description" content="Mario&#39;s take on distributed computing"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="ope&#43;&#43;&#43; date = 2018-07-30 publishDate = 2018-08-04 title = &ldquo;Intro to Finagle services with Scala and SBT.&rdquo; description = &ldquo;Finagle lets you develop and deploy services easily.&rdquo; toc = true categories = [&ldquo;scala&rdquo;,&ldquo;twitter&rdquo;,&ldquo;finagle&rdquo;] tags = [&ldquo;functional&rdquo;,&ldquo;scala&rdquo;,&ldquo;services&rdquo;,&ldquo;demo&rdquo;] &#43;&#43;&#43;
+Why Finagle Finagle is a Service building framework that lets developers write non-blocking services with ease. In this example, we will go through the steps to deploy a basic Finagle Service that takes advantage of the Twitter services eco-system in TwitterServer, Guice and of coure Scala."/>
 
     
 
+
+
   <meta property="og:image" content="https://source.unsplash.com/category/technology/2000x1322">
-
-
 
 
     
 
     <meta name="theme-color" content="#000">
-
-    
-      
-
-
-
 
     
     
@@ -64,9 +63,7 @@
 
     
     
-      <link href="https://www.sudoinit5.com/index.xml" rel="alternate" type="application/rss+xml" title="# sudo init 5 - A Developer&#39;s web log">
-    
-    <link rel="canonical" href="https://www.sudoinit5.com/">
+    <link rel="canonical" href="https://www.sudoinit5.com/post/finagle-intro/">
     
     
     <link rel="icon" sizes="any" href="data:image/svg+xml,%3Csvg%20viewBox='0%200%2046%2045'%20xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EAfter%20Dark%3C/title%3E%3Cpath%20d='M.708%2045L23%20.416%2045.292%2045H.708zM35%2038L23%2019%2011%2038h24z'%20fill='%23000'/%3E%3C/svg%3E">
@@ -226,24 +223,31 @@ article header img {
   <nav itemscope itemtype="http://schema.org/SiteNavigationElement">
     
     
-      <a itemprop="url" class="" href="/post/"><span itemprop="name">Posts</span></a>
+      <a itemprop="url" class="active" href="/post/"><span itemprop="name">Posts</span></a>
     
   </nav>
 
 
 </header>
     <main>
-  <header>
-    <h1># sudo init 5 - A Developer&#39;s web log</h1>
-  </header>
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/finagle-intro/"></a>
-    </h2>
+  <article itemscope itemtype="http://schema.org/BlogPosting">
     
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+<meta itemprop="name" content="">
+<meta itemprop="description" content="ope&#43;&#43;&#43; date = 2018-07-30 publishDate = 2018-08-04 title = &ldquo;Intro to Finagle services with Scala and SBT.&rdquo; description = &ldquo;Finagle lets you develop and deploy services easily.&rdquo; toc = true categories = [&ldquo;scala&rdquo;,&ldquo;twitter&rdquo;,&ldquo;finagle&rdquo;] tags = [&ldquo;functional&rdquo;,&ldquo;scala&rdquo;,&ldquo;services&rdquo;,&ldquo;demo&rdquo;] &#43;&#43;&#43;
+Why Finagle Finagle is a Service building framework that lets developers write non-blocking services with ease. In this example, we will go through the steps to deploy a basic Finagle Service that takes advantage of the Twitter services eco-system in TwitterServer, Guice and of coure Scala.">
+
+
+
+<meta itemprop="wordCount" content="698">
+
+
+
+<meta itemprop="keywords" content="" />
+
+    <header>
+      <h1 itemprop="headline"></h1>
+      <p class="muted">
+        <svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
   <circle cx="16" cy="16" r="14" />
   <path d="M16 8 L16 16 20 20" />
 </svg>
@@ -254,36 +258,164 @@ article header img {
 
   Published: <time datetime="0001-01-01T00:00:00&#43;00:00">1 Jan, 0001</time>
 
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-    ope+++ date = 2018-07-30 publishDate = 2018-08-04 title = &ldquo;Intro to Finagle services with Scala and SBT.&rdquo; description = &ldquo;Finagle lets you develop and deploy services easily.&rdquo; toc = true categories = [&ldquo;scala&rdquo;,&ldquo;twitter&rdquo;,&ldquo;finagle&rdquo;] tags = [&ldquo;functional&rdquo;,&ldquo;scala&rdquo;,&ldquo;services&rdquo;,&ldquo;demo&rdquo;] +++
-Why Finagle Finagle is a Service building framework that lets developers write non-blocking services with ease. In this example, we will go through the steps to deploy a basic Finagle Service that takes advantage of the Twitter services eco-system in TwitterServer, Guice and of coure Scala.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/finagle-intro/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="0001-01-01T00:00:00&#43;00:00">
-  <meta itemprop="dateModified" content="0001-01-01T00:00:00&#43;00:00">
-  
-</article>
 
+      </p>
+      
+      
+    </header>
+    
+
+    <div itemprop="articleBody">
+      
+
+<p>ope+++
+date = 2018-07-30
+publishDate = 2018-08-04
+title = &ldquo;Intro to Finagle services with Scala and SBT.&rdquo;
+description = &ldquo;Finagle lets you develop and deploy services easily.&rdquo;
+toc = true
+categories = [&ldquo;scala&rdquo;,&ldquo;twitter&rdquo;,&ldquo;finagle&rdquo;]
+tags = [&ldquo;functional&rdquo;,&ldquo;scala&rdquo;,&ldquo;services&rdquo;,&ldquo;demo&rdquo;]
++++</p>
+
+<h1 id="why-finagle">Why Finagle</h1>
+
+<p><a href="https://twitter.github.io/finagle/">Finagle</a> is a Service building framework that lets developers write non-blocking services with ease. In this example, we will go through the steps to deploy a basic Finagle Service that takes advantage of the Twitter services eco-system in TwitterServer, Guice and of coure Scala.</p>
+
+<h2 id="jvm-functions-in-scala">JVM Functions in Scala</h2>
+
+<p>Finagle is written in Scala, and works best in applications - scala or java - that want to take the <a href="https://monkey.org/~marius/funsrv.pdf">functional services</a> approach. You can prefer to choose ordinary Java or some other JVM language.</p>
+
+<h2 id="build-dependencies">Build Dependencies</h2>
+
+<p>We will highlight two important building blocks for our program. First Lets examine this  <a href="http://sbt">SBT</a> build for the dependencies used in this example.</p>
+
+<pre><code class="language-c">name := &quot;example-service&quot;
+version := &quot;1.0&quot;
+libraryDependencies += &quot;com.twitter&quot; %% &quot;finagle-http&quot; % &quot;18.8.0&quot;
+</code></pre>
+
+<h2 id="quick-finagle-http-service">Quick Finagle HTTP Service</h2>
+
+<p>Finagle lets you develop services in a conventional, programatic and functional way. You may stand up a single HTTP server by extending the base trait <a href="https://twitter.github.io/finagle/guide/ServicesAndFilters.html">Service</a> and specifying your <code>Req</code> (request) and <code>Res</code> (Result) types in generic form. To see this in action, we will demonstrate HTTP service by constructing a simple <code>Service[http.Request, http.Response]</code>.</p>
+
+<p>A generic Finagle service uses the <a href="https://twitter.github.io/finagle/guide/ServicesAndFilters.html">Service</a> trait to expose service functionality such that any <code>Service[Req, Res]</code> named <code>A</code> may consume its input <code>Req</code>, and respond with <code>Res</code>. This can be seen in the sample code below, where we use <a href="http://www.github.com/">http.Request</a> and <code>http.Response</code> as the input/output types. Because Finagle is an <a href="http://link-to-some-rpc-doc">RPC</a> system, we must implement the <code>apply(Req): Future[Res]</code> methods where the response is a <a href="http://Future">Future</a> of the returned <code>Res</code> type <code>http.Response</code>.</p>
+
+<pre><code class="language-scala">package example
+
+import com.twitter.finagle.http.{Response, Status}
+import com.twitter.finagle.{Service, http}
+import com.twitter.util.Future
+
+object MyService extends MyService
+
+class MyService extends Service[http.Request, http.Response] {
+
+  val seed = Seq(76, 69, 71, 48, 83, 42)
+
+  def apply(req: http.Request): Future[http.Response] = {
+    val response = Response(req.version, Status.Ok)
+    val sample = (seed ++
+      Seq(
+        req.getLongParam(name = &quot;next&quot;, default = 100)
+      )).min
+
+    response.setContentString(s&quot;Minimum target sample is: ${sample}&quot;)
+
+    Future.value(
+      response
+    )
+  }
+
+}
+</code></pre>
+
+<h2 id="the-finagle-http-server">The Finagle HTTP Server</h2>
+
+<p>Finagle allows us to define our <a href="http://twitter-finagle-server">Server</a> through the same <code>Req</code> / <code>Res</code> input/output types we defined in our Service./
+Finagle comes pre-packaged with a couple protocol-specific servers that we could use to harness our Service&rsquo;s functionality. We will observe Finagle <a href="http://twitter-finagle-http">Http</a> server capabilities, and use it to expose our Service.</p>
+
+<p>In this example, our <code>MyService</code> service does not know about routing specifics. Of course this means that as configured, our server will respond to all HTTP URI&rsquo;s on port 8080. This may make sense in a proxy-routed service environment. Of course, this is a very lean example, and as such we&rsquo;ll take no turns to get a simple server working.</p>
+
+<p>Finally, because we are running on our own synchronous main method, make sure we need to block on something for the HTTP server to have a chance to respond to requests. We can block on the HTTP Server by calling <a href="http://await">com.twitter.util.concurrent.Await</a> <code>.ready</code> method and giving our <a href="http://awaitable">Awaitable</a> a chance to complete, or be interruped ( by control-c ).</p>
+
+<pre><code class="language-scala">package example
+
+import com.twitter.finagle.http.{Request, Response}
+import com.twitter.finagle.{Http, Service}
+import com.twitter.util.Await
+
+object FinagleApp extends App {
+
+  val service: Service[Request, Response] = MyService
+
+  val server = Http.server
+    .serve(addr = &quot;:8080&quot;, service)
+
+  Await.ready(server)
+}
+</code></pre>
+
+<p>Execute this probject using sbt.</p>
+
+<pre><code class="language-s">$ sbt &quot;runMain example.MyServer&quot;
+
+</code></pre>
+
+<p>Console output of stats are not as useful as sending them to a real metrics server ( promethius, APM etc ) but this example shows just the complete and unfettered statistics details.</p>
+
+<h3 id="service-binding-and-program-execution">Service binding and program execution</h3>
+
+<p>Calling one of the overloaded <code>serve()</code> methods on <a href="http://http-finagle-server">Http.server</a> starts the server as configured. In this case, we simply provide a <a href="http://socket-address">SocketAddress</a> or a contravariant that can produce this type of object.
+The final arugment to this method gives our service implementation which will handle any request seen by this server.</p>
+
+<h2 id="conclusion-links">Conclusion &amp; Links</h2>
+
+<p>This was just a very brief overview of a powerful API. Our next mission is to provide a deeper gaze at the tooling around Finagle - Finch, Finatra, TwitterServer.</p>
+
+<ul>
+<li><a href="https://blog.twitter.com/engineering/en_us/a/2011/finagle-a-protocol-agnostic-rpc-system.html">https://blog.twitter.com/engineering/en_us/a/2011/finagle-a-protocol-agnostic-rpc-system.html</a></li>
+</ul>
+
+<h3 id="backpressure-warning-math-lots-of-math">Backpressure (Warning: MATH, LOTS OF MATH)</h3>
+
+<ul>
+<li><a href="http://anrg.usc.edu/www/papers/IPSN10_Moeller_Sridharan_Krishnamachari_Gnawali.pdf">http://anrg.usc.edu/www/papers/IPSN10_Moeller_Sridharan_Krishnamachari_Gnawali.pdf</a></li>
+</ul>
+
+<h3 id="gutfrage-s-finagle-docs">Gutfrage&rsquo;s Finagle Docs</h3>
+
+<ul>
+<li><a href="https://gutefrage.github.io/the-finagle-docs/">https://gutefrage.github.io/the-finagle-docs/</a></li>
+</ul>
+
+    </div>
+    
+    <footer>
+      <hr>
+      <p>
+  Published
   
+    
+      by <span itemprop="author">Mario Gray</span>
+    
+  
+  <time itemprop="datePublished" datetime="0001-01-01T00:00:00&#43;00:00">
+    1 Jan, 0001
+  </time>
+  
+  
+  using <span itemprop="wordCount">698</span> words.
+</p>
+
+      
+
+
+
+    </footer>
+  </article>
 </main>
     <footer>
-  <nav>
-  <p>
-    
-      <a href="/">&laquo; Previous</a> |
-    
-    <span>Page 2 of 2</span>
-    
-  </p>
-</nav>
-
   
   <p class="muted">
     This page was generated using

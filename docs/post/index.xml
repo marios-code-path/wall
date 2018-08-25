@@ -114,5 +114,15 @@ The Basic Test As an example, let&amp;rsquo;s look at the structure of a unit te
 Preparing the environment minikube is the tool that we’ll use to run Kubernetes locally.</description>
     </item>
     
+    <item>
+      <title></title>
+      <link>https://www.sudoinit5.com/post/finagle-intro/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.sudoinit5.com/post/finagle-intro/</guid>
+      <description>ope+++ date = 2018-07-30 publishDate = 2018-08-04 title = &amp;ldquo;Intro to Finagle services with Scala and SBT.&amp;rdquo; description = &amp;ldquo;Finagle lets you develop and deploy services easily.&amp;rdquo; toc = true categories = [&amp;ldquo;scala&amp;rdquo;,&amp;ldquo;twitter&amp;rdquo;,&amp;ldquo;finagle&amp;rdquo;] tags = [&amp;ldquo;functional&amp;rdquo;,&amp;ldquo;scala&amp;rdquo;,&amp;ldquo;services&amp;rdquo;,&amp;ldquo;demo&amp;rdquo;] +++
+Why Finagle Finagle is a Service building framework that lets developers write non-blocking services with ease. In this example, we will go through the steps to deploy a basic Finagle Service that takes advantage of the Twitter services eco-system in TwitterServer, Guice and of coure Scala.</description>
+    </item>
+    
   </channel>
 </rss>
