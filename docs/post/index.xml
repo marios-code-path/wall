@@ -6,10 +6,20 @@
     <description>Recent content in Posts on # sudo init 5 - A Developer&#39;s web log</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Sat, 21 Jul 2018 00:00:00 -0700</lastBuildDate>
+    <lastBuildDate>Mon, 30 Jul 2018 00:00:00 -0700</lastBuildDate>
     
 	<atom:link href="https://www.sudoinit5.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Intro to Finagle services with Scala and SBT.</title>
+      <link>https://www.sudoinit5.com/post/finagle-intro/</link>
+      <pubDate>Mon, 30 Jul 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/post/finagle-intro/</guid>
+      <description>Why Finagle Finagle is a Service building framework that lets developers write non-blocking services with ease. In this example, we will go through the steps to deploy a basic Finagle Service that takes advantage of the Twitter services eco-system in TwitterServer, Guice and of coure Scala.
+JVM Functions in Scala Finagle is written in Scala, and works best in applications - scala or java - that want to take the functional services approach.</description>
+    </item>
     
     <item>
       <title>Setup and Customize a Login Page With Reactive Spring Security.</title>
@@ -112,16 +122,6 @@ The Basic Test As an example, let&amp;rsquo;s look at the structure of a unit te
       <guid>https://www.sudoinit5.com/post/riff-intro/</guid>
       <description>Motivation of Functions Functions as a Service are a new paradigm for application composition and deployment. Functions are a smaller deployable unit than microservices and especially traditional monoliths. Project Riff is a new Pivotal project that runs functions in a cloud environment like Pivotal Container Services (Kubernetes). Lets get started by setting up a new Riff environment and then creating some functions.
 Preparing the environment minikube is the tool that we’ll use to run Kubernetes locally.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://www.sudoinit5.com/post/finagle-intro/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://www.sudoinit5.com/post/finagle-intro/</guid>
-      <description>ope+++ date = 2018-07-30 publishDate = 2018-08-04 title = &amp;ldquo;Intro to Finagle services with Scala and SBT.&amp;rdquo; description = &amp;ldquo;Finagle lets you develop and deploy services easily.&amp;rdquo; toc = true categories = [&amp;ldquo;scala&amp;rdquo;,&amp;ldquo;twitter&amp;rdquo;,&amp;ldquo;finagle&amp;rdquo;] tags = [&amp;ldquo;functional&amp;rdquo;,&amp;ldquo;scala&amp;rdquo;,&amp;ldquo;services&amp;rdquo;,&amp;ldquo;demo&amp;rdquo;] +++
-Why Finagle Finagle is a Service building framework that lets developers write non-blocking services with ease. In this example, we will go through the steps to deploy a basic Finagle Service that takes advantage of the Twitter services eco-system in TwitterServer, Guice and of coure Scala.</description>
     </item>
     
   </channel>

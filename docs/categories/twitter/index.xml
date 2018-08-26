@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Twitter on # sudo init 5 - A Developer&#39;s web log</title>
+    <link>https://www.sudoinit5.com/categories/twitter/</link>
+    <description>Recent content in Twitter on # sudo init 5 - A Developer&#39;s web log</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Mon, 30 Jul 2018 00:00:00 -0700</lastBuildDate>
+    
+	<atom:link href="https://www.sudoinit5.com/categories/twitter/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Intro to Finagle services with Scala and SBT.</title>
+      <link>https://www.sudoinit5.com/post/finagle-intro/</link>
+      <pubDate>Mon, 30 Jul 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/post/finagle-intro/</guid>
+      <description>Why Finagle Finagle is a Service building framework that lets developers write non-blocking services with ease. In this example, we will go through the steps to deploy a basic Finagle Service that takes advantage of the Twitter services eco-system in TwitterServer, Guice and of coure Scala.
+JVM Functions in Scala Finagle is written in Scala, and works best in applications - scala or java - that want to take the functional services approach.</description>
+    </item>
+    
+  </channel>
+</rss>
