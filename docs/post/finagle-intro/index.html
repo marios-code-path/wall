@@ -236,7 +236,7 @@ article header img {
 
 <meta itemprop="datePublished" content="2018-08-04T00:00:00-07:00" />
 <meta itemprop="dateModified" content="2018-07-30T00:00:00-07:00" />
-<meta itemprop="wordCount" content="739">
+<meta itemprop="wordCount" content="745">
 
 
 
@@ -268,9 +268,8 @@ article header img {
     <summary>Table of Contents</summary>
     <nav id="TableOfContents">
 <ul>
-<li><a href="#why-finagle">Why Finagle</a>
+<li><a href="#what-is-finagle">What is Finagle</a>
 <ul>
-<li><a href="#jvm-functions-in-scala">JVM Functions in Scala</a></li>
 <li><a href="#build-dependencies">Build Dependencies</a></li>
 <li><a href="#quick-finagle-http-service">Quick Finagle HTTP Service</a></li>
 <li><a href="#the-finagle-http-server">The Finagle HTTP Server</a>
@@ -305,17 +304,19 @@ article header img {
     <div itemprop="articleBody">
       
 
-<h1 id="why-finagle">Why Finagle</h1>
+<h1 id="what-is-finagle">What is Finagle</h1>
 
-<p><a href="https://twitter.github.io/finagle/">Finagle</a> is a Service building framework that lets developers write non-blocking services with ease. In this example, we will go through the steps to deploy a basic Finagle Service that takes advantage of the Twitter services eco-system in TwitterServer, Guice and of coure Scala.</p>
+<p><a href="https://twitter.github.io/finagle/">Finagle</a> is an extensible <a href="https://en.wikipedia.org/wiki/Remote_procedure_call">RPC</a> system for the JVM, that lets developers write non-blocking, high-concurrency services with ease. Much of what Finagle will let us do is explained in the <a href="https://twitter.github.io/finagle/">doc</a>.</p>
 
-<h2 id="jvm-functions-in-scala">JVM Functions in Scala</h2>
+<blockquote>
+<p>Finagle implements uniform client and server APIs for several protocols, and is designed for high performance and concurrency. Most of Finagle’s code is protocol agnostic, simplifying the implementation of new protocols.</p>
+</blockquote>
 
-<p>Finagle is written in Scala, and works best in applications - scala or java - that want to take the <a href="https://monkey.org/~marius/funsrv.pdf">functional services</a> approach. You can prefer to choose ordinary Java or some other JVM language.</p>
+<p>In this example, we will go through the steps to deploy a basic Finagle HTTP Service with <a href="https://www.scala-lang.org/">Scala</a> and <a href="https://www.scala-sbt.org/">SBT</a>.</p>
 
 <h2 id="build-dependencies">Build Dependencies</h2>
 
-<p>We will highlight two important building blocks for our program. First Lets examine this  <a href="https://www.scala-sbt.org/">SBT</a> build for the dependencies used in this example.</p>
+<p>First, Lets examine this <a href="https://www.scala-sbt.org/">SBT</a> build for the dependencies used in this example. We only need to include &ldquo;finagle-http&rdquo; dependency at version 18. This is using <a href="https://twitter.github.io/finagle/guide/changelog.html">Finagle 6</a>.</p>
 
 <pre><code class="language-c">name := &quot;example-service&quot;
 version := &quot;1.0&quot;
@@ -326,7 +327,7 @@ libraryDependencies += &quot;com.twitter&quot; %% &quot;finagle-http&quot; % &qu
 
 <p>Finagle lets you develop services in a programmatic way. You may stand up a single HTTP server by extending the base trait <a href="https://twitter.github.io/finagle/guide/ServicesAndFilters.html">Service</a> and specifying your <code>Req</code> (request) and <code>Res</code> (Result) types in generic form. To see this in action, we will demonstrate HTTP service by constructing a simple <code>Service[http.Request, http.Response]</code> where request and response are HTTP I/O types.</p>
 
-<p>A generic Finagle service uses the <a href="https://twitter.github.io/finagle/guide/ServicesAndFilters.html">Service</a> trait to expose service functionality such that any <code>Service[Req, Res]</code> named <code>A</code> may consume its input <code>Req</code>, and respond with <code>Res</code>. This can be seen in the sample code below, where we use <a href="https://twitter.github.io/finagle/docs/com/twitter/finagle/http/Request.html">http.Request</a> and <a href="https://twitter.github.io/finagle/docs/com/twitter/finagle/http/Response.html">http.Response</a> as the input/output types. Because Finagle is an <a href="https://en.wikipedia.org/wiki/Remote_procedure_call">RPC</a> system, we must implement the <code>apply(Req): Future[Res]</code> methods where the response is a <a href="https://twitter.github.io/util/docs/com/twitter/util/Future.html">com.twitter.util.Future</a> of the response.</p>
+<p>A generic Finagle service uses the <a href="https://twitter.github.io/finagle/guide/ServicesAndFilters.html">Service</a> trait to expose service functionality such that any <code>Service[Req, Res]</code> named <code>A</code> may consume its input <code>Req</code>, and respond with <code>Res</code>. This can be seen in the sample code below, where we use <a href="https://twitter.github.io/finagle/docs/com/twitter/finagle/http/Request.html">http.Request</a> and <a href="https://twitter.github.io/finagle/docs/com/twitter/finagle/http/Response.html">http.Response</a> as the input/output types. Because Finagle is an <a href="https://en.wikipedia.org/wiki/Remote_procedure_call">RPC</a> system, we must implement the <code>apply(Req): Future[Res]</code> methods where the return type is a <a href="https://twitter.github.io/util/docs/com/twitter/util/Future.html">com.twitter.util.Future</a> of the response.</p>
 
 <pre><code class="language-scala">package example
 
@@ -362,7 +363,7 @@ class MyService extends Service[http.Request, http.Response] {
 <p>Finagle allows us to define our listening <a href="https://twitter.github.io/finagle/docs/com/twitter/finagle/server/index.html">Server</a> with the same <code>Req</code> / <code>Res</code> types we defined in our Service.
 Finagle comes pre-packaged with a couple protocol-specific servers that we could use to harness our Service&rsquo;s functionality. We will observe Finagle <a href="https://twitter.github.io/finagle/guide/Quickstart.html">Http</a> server capabilities, and use it to expose our Service.</p>
 
-<p>In this example, our Server will not not know about routing specifics. Of course this means that as configured, our server will respond to all HTTP URI&rsquo;s on port 8080. This may make sense in a proxy-routed service environment. Of course, this is a very lean example, and as such we&rsquo;ll take no turns in standing up a simple listening HTTP server.</p>
+<p>In this example, our Server will not not know about routing specifics. Of course this means that as configured, our server will respond to all HTTP URI&rsquo;s on port 8080. This may make sense in a proxy-routed service environment. Of course, this is a very lean example, and as such we&rsquo;ll take no corners in standing up a simple listening HTTP server.</p>
 
 <pre><code class="language-scala">package example
 
@@ -449,7 +450,7 @@ Minimum target sample is: 6
   
     and tagged <a href="/tags/demo/">demo</a>, <a href="/tags/functional/">functional</a>, <a href="/tags/scala/">scala</a> and <a href="/tags/services/">services</a>
   
-  using <span itemprop="wordCount">739</span> words.
+  using <span itemprop="wordCount">745</span> words.
 </p>
 
       

@@ -17,8 +17,9 @@
       <pubDate>Mon, 30 Jul 2018 00:00:00 -0700</pubDate>
       
       <guid>https://www.sudoinit5.com/post/finagle-intro/</guid>
-      <description>Why Finagle Finagle is a Service building framework that lets developers write non-blocking services with ease. In this example, we will go through the steps to deploy a basic Finagle Service that takes advantage of the Twitter services eco-system in TwitterServer, Guice and of coure Scala.
-JVM Functions in Scala Finagle is written in Scala, and works best in applications - scala or java - that want to take the functional services approach.</description>
+      <description>What is Finagle Finagle is an extensible RPC system for the JVM, that lets developers write non-blocking, high-concurrency services with ease. Much of what Finagle will let us do is explained in the doc.
+ Finagle implements uniform client and server APIs for several protocols, and is designed for high performance and concurrency. Most of Finagle’s code is protocol agnostic, simplifying the implementation of new protocols.
+ In this example, we will go through the steps to deploy a basic Finagle HTTP Service with Scala and SBT.</description>
     </item>
     
   </channel>
