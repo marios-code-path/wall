@@ -4,28 +4,29 @@
     <meta name="generator" content="Hugo 0.43" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Services | # sudo init 5 - A Developer&#39;s web log</title>
-    <meta name="description" content="Mario&#39;s take on distributed computing">
-    <meta name="keywords" content="appsec, client, container, faas, finagle, java, kafka, kubernetes, messaging, mq, reactive, scala, security, spring, tdd, test, test slice, tracing, twitter, web, websocket, websocket client, zipkin, ">
+    <title>Getting started with Filters in Finagle | # sudo init 5 - A Developer&#39;s web log</title>
+    <meta name="description" content="Finagle lets you develop and deploy services easily.">
+    <meta name="keywords" content="functional, scala, services, filter, demo">
     
     
     
-    
-      <meta name="robots" content="noindex">
     
     
 
   <meta name="author" content="Mario Gray">
 
 
-    <meta property="og:title" content="Services" />
-<meta property="og:description" content="Mario&#39;s take on distributed computing" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://www.sudoinit5.com/tags/services/" />
+    <meta property="og:title" content="Getting started with Filters in Finagle" />
+<meta property="og:description" content="Finagle lets you develop and deploy services easily." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.sudoinit5.com/post/finagle-filters/" />
 
 
 
-<meta property="og:updated_time" content="2018-08-25T00:00:00-07:00"/>
+<meta property="article:published_time" content="2018-08-27T00:00:00-07:00"/>
+
+<meta property="article:modified_time" content="2018-08-25T00:00:00-07:00"/>
+
 
 
 
@@ -39,14 +40,14 @@
     <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://source.unsplash.com/category/technology/2000x1322"/>
 
-<meta name="twitter:title" content="Services"/>
-<meta name="twitter:description" content="Mario&#39;s take on distributed computing"/>
+<meta name="twitter:title" content="Getting started with Filters in Finagle"/>
+<meta name="twitter:description" content="Finagle lets you develop and deploy services easily."/>
 
     
 
+
+
   <meta property="og:image" content="https://source.unsplash.com/category/technology/2000x1322">
-
-
 
 
     
@@ -60,9 +61,7 @@
 
     
     
-      <link href="https://www.sudoinit5.com/tags/services/index.xml" rel="alternate" type="application/rss+xml" title="# sudo init 5 - A Developer&#39;s web log">
-    
-    <link rel="canonical" href="https://www.sudoinit5.com/tags/services/">
+    <link rel="canonical" href="https://www.sudoinit5.com/post/finagle-filters/">
     
     
     <link rel="icon" sizes="any" href="data:image/svg+xml,%3Csvg%20viewBox='0%200%2046%2045'%20xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EAfter%20Dark%3C/title%3E%3Cpath%20d='M.708%2045L23%20.416%2045.292%2045H.708zM35%2038L23%2019%2011%2038h24z'%20fill='%23000'/%3E%3C/svg%3E">
@@ -222,24 +221,31 @@ article header img {
   <nav itemscope itemtype="http://schema.org/SiteNavigationElement">
     
     
-      <a itemprop="url" class="" href="/post/"><span itemprop="name">Posts</span></a>
+      <a itemprop="url" class="active" href="/post/"><span itemprop="name">Posts</span></a>
     
   </nav>
 
 
 </header>
     <main>
-  <header>
-    <h1>Services</h1>
-  </header>
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/finagle-filters/">Getting started with Filters in Finagle</a>
-    </h2>
+  <article itemscope itemtype="http://schema.org/BlogPosting">
     
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+<meta itemprop="name" content="Getting started with Filters in Finagle">
+<meta itemprop="description" content="Finagle lets you develop and deploy services easily.">
+
+
+<meta itemprop="datePublished" content="2018-08-27T00:00:00-07:00" />
+<meta itemprop="dateModified" content="2018-08-25T00:00:00-07:00" />
+<meta itemprop="wordCount" content="771">
+
+
+
+<meta itemprop="keywords" content="functional,scala,services,filter,demo," />
+
+    <header>
+      <h1 itemprop="headline">Getting started with Filters in Finagle</h1>
+      <p class="muted">
+        <svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
   <circle cx="16" cy="16" r="14" />
   <path d="M16 8 L16 16 20 20" />
 </svg>
@@ -250,75 +256,261 @@ article header img {
 
   Published: <time datetime="2018-08-27T00:00:00-07:00">27 Aug, 2018</time>
 
+
+      </p>
+      
+        <blockquote itemprop="description">Finagle lets you develop and deploy services easily.</blockquote>
+      
+      
+    </header>
+    
+  <details>
+    <summary>Table of Contents</summary>
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#what-is-finagle">What is Finagle</a></li>
+<li><a href="#build-with-sbt">Build with SBT</a></li>
+<li><a href="#services">Services</a></li>
+<li><a href="#filters">Filters</a></li>
+<li><a href="#filter-example">Filter Example</a>
+<ul>
+<li><a href="#conclusion-links">Conclusion &amp; Links</a>
+<ul>
+<li><a href="#backpressure-warning-math-lots-of-math">Backpressure (Warning: MATH, LOTS OF MATH)</a></li>
+<li><a href="#gutfrage-s-finagle-docs">Gutfrage&rsquo;s Finagle Docs</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </details>
+  <script>
+    const el = document.querySelector('details summary')
+    el.onclick = () => {
+      (function(l,o,a,d,e,r){e=o.createElement(a),r=o.getElementsByTagName(a)[0];e.async=1;e.src=d;r.parentNode.insertBefore(e,r)})(window,document,'script','/js/smoothscroll.js');
+      el.onclick = null
+    }
+    document.querySelectorAll('#TableOfContents a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.querySelector(
+          link.href.slice(link.href.indexOf('#'))
+        ).scrollIntoView({ behavior: 'smooth' })
+      })
+    })
+  </script>
+
+
+    <div itemprop="articleBody">
+      
+
+<h1 id="what-is-finagle">What is Finagle</h1>
+
+<p>In this example, we will go through the steps to deploy a Filtered HTTP Service with <a href="https://www.scala-lang.org/">Scala</a> and <a href="https://www.scala-sbt.org/">SBT</a>.</p>
+
+<p><a href="https://twitter.github.io/finagle/">Finagle</a> is an extensible <a href="https://en.wikipedia.org/wiki/Remote_procedure_call">RPC</a> system for the JVM, that lets developers write non-blocking, high-concurrency services with ease. Much of what Finagle will let us do is summarized in the <a href="https://twitter.github.io/finagle/">doc</a>.</p>
+
+<blockquote>
+<p>Finagle implements uniform client and server APIs for several protocols, and is designed for high performance and concurrency. Most of Finagle’s code is protocol agnostic, simplifying the implementation of new protocols.</p>
+</blockquote>
+
+<h1 id="build-with-sbt">Build with SBT</h1>
+
+<p>This example, and others like it will rely on a quick and simple build tool. Lets examine this <a href="https://www.scala-sbt.org/">SBT</a> build for the dependencies used in this example. We only need to include &ldquo;finagle-http&rdquo; dependency at version 18. This is using <a href="https://twitter.github.io/finagle/guide/changelog.html">Finagle 6</a>.</p>
+
+<pre><code class="language-c">name := &quot;sample-filters&quot;
+version := &quot;1.0&quot;
+libraryDependencies += &quot;com.twitter&quot; %% &quot;finagle-http&quot; % &quot;18.8.0&quot;
+libraryDependencies += &quot;ch.qos.logback&quot; % &quot;logback-classic&quot; % &quot;1.1.3&quot;
+</code></pre>
+
+<h1 id="services">Services</h1>
+
+<p>We will define an HTTP service that returns the minimum value of a sequence of integers. The user inputs a &lsquo;next&rsquo; integer, then the service emits the smallest of all values.</p>
+
+<pre><code class="language-scala">package example
+
+import com.twitter.finagle.http.{Response, Status}
+import com.twitter.finagle.{Service, http}
+import com.twitter.util.Future
+
+object SampleService extends SampleService
+
+class SampleService extends Service[http.Request, http.Response] {
+
+  val seed = Seq(76, 69, 71, 48, 83, 42)
+
+  def apply(req: http.Request): Future[http.Response] = {
+    val response = Response(req.version, Status.Ok)
+    val sample: Seq[Int] = seed ++ Seq(req.getIntParam(&quot;next&quot;,100))
+
+    response.setContentString(s&quot;Minimum target sample is: ${sample.min}&quot;)
+
+    Future.value(
+      response
+    )
+  }
+
+}
+</code></pre>
+
+<h1 id="filters">Filters</h1>
+
+<p>Filters lets us change the input and output types for a given service, wrap service logic (eg with logging) and even simplify the relationship between a services configured states through composition. Lets see what Twitter docs say about Filters:</p>
+
+<pre><code class="language-java"> * A [[Filter]] acts as a decorator/transformer of a [[Service service]].
+ * It may apply transformations to the input and output of that service:
+ * {{{
+ *           (*  MyService  *)
+ * [ReqIn -&gt; (ReqOut -&gt; RepIn) -&gt; RepOut]
+ * }}}
+</code></pre>
+
+<p>Given a <code>Service</code> provides the translation between two types <code>ReqOut</code> and <code>ReqIn</code>, a <code>Filter</code> allows turn those types into new invariant types, thus <code>ReqIn</code> and <code>RepOut</code>. Filters maintain API consistency with ordinary <code>Service</code>s through <a href="https://twitter.github.io/finagle/docs/com/twitter/finagle/Service.html">Service</a> trait, with that we also get an overloaded compositional method <a href="https://twitter.github.io/finagle/docs/com/twitter/finagle/Service.html#close():com.twitter.util.Future[Unit]">andThen()</a> that allows us to glue together filters and services.</p>
+
+<p>To visualize what this means, lets take a look at the good docs: <img src="https://twitter.github.io/finagle/guide/_images/filter2.png" alt="Filter Viualization" /></p>
+
+<h1 id="filter-example">Filter Example</h1>
+
+<p>As a practial example, I have defined an example filter to log HTTP requests.  This is a simple re-use of the existing <a href="https://twitter.github.io/finagle/docs/com/twitter/finagle/http/filter/LoggingFilter.html">LoggingFilter</a> which takes a <a href="https://twitter.github.io/finagle/docs/com/twitter/finagle/http/filter/CommonLogFormatter.html">CommonLogFormatter</a> for configured log formatting.</p>
+
+<pre><code class="language-scala">package example
+
+import com.twitter.finagle.http.filter.{CommonLogFormatter, LoggingFilter}
+import com.twitter.finagle.http.{Request, Response}
+import com.twitter.finagle.{Http, Service}
+import com.twitter.logging.Logger
+import com.twitter.util.{Await, Duration}
+
+object MyLoggingFilter
+  extends LoggingFilter[Request]({
+    val log = Logger(&quot;access&quot;)
+    log.setUseParentHandlers(true)
+    log
+  }, new CommonLogFormatter)
+
+object SampleApp extends App {
+  val service: Service[Request, Response] = MyLoggingFilter.andThen(SampleService)
+
+  val server = Http.server
+    .serve(addr = &quot;:8080&quot;, service)
+
+  Await.ready(server)
+}
+
+</code></pre>
+
+<p>In order to take advantage of the behaviour modificaion that this filter allows, we&rsquo;ll need to compose our final exposed service. We can do this with the <code>andThen</code> method used to glue <code>Service</code>s together.  The returened composition will have the same input and outputs as our original service, with the added bonus of HTTP logging.</p>
+
+<p>This example uses the Http singleton object to instantiate a listening HTTP 1.1 server.
+Finally, because we are running on our own synchronous main method, make sure we need to block on something for the HTTP server to have a chance to respond to requests. We can block on the HTTP Server by calling <a href="https://twitter.github.io/util/docs/com/twitter/util/Await$.html">com.twitter.util.concurrent.Await</a> <code>.ready</code> method and giving our <a href="https://twitter.github.io/util/docs/com/twitter/util/Awaitable.html">Awaitable</a> a chance to complete, or be interruped ( by control-c ).</p>
+
+<p>We can now execute this probject using SBT.</p>
+
+<pre><code class="language-s">$ sbt sbt &quot;runMain example.SampleApp&quot;
+[info] Loading settings from build.sbt ...
+...
+[info] Running example.SampleApp 
+Aug 27, 2018 5:13:05 PM com.twitter.finagle.Init$ $anonfun$once$1
+INFO: Finagle version 18.8.0 (rev=b12759650084cd4eaa890045f1f921127b368d20) built at ...
+</code></pre>
+
+<p>Console output of service show just the build time for Finagle. Because we setup a LogginFilter, we can visit the running Service and observe it&rsquo;s log output once we have accessed an serviceendpoint.</p>
+
+<pre><code class="language-s">$ curl http://localhost:8080
+Minimum target sample is: 42
+
+$ curl http://localhost:8080\?next=6
+Minimum target sample is: 6
+</code></pre>
+
+<p>Whereas our logs will read with the results:</p>
+
+<pre><code class="language-s">...
+INFO: Finagle version 18.8.0 (rev=b12759650084cd4eaa890045f1f921127b368d20) built at 20180806-152739
+Aug 27, 2018 5:14:11 PM com.twitter.finagle.filter.LoggingFilter log
+INFO: 0:0:0:0:0:0:0:1 - - [28/Aug/2018:00:14:11 +0000] &quot;GET / HTTP/1.1&quot; 200 28 13 &quot;curl/7.54.0&quot;
+Aug 27, 2018 5:14:18 PM com.twitter.finagle.filter.LoggingFilter log
+INFO: 0:0:0:0:0:0:0:1 - - [28/Aug/2018:00:14:18 +0000] &quot;GET /?next=42 HTTP/1.1&quot; 200 28 3 &quot;curl/7.54.0&quot;\
+</code></pre>
+
+<h2 id="conclusion-links">Conclusion &amp; Links</h2>
+
+<p>This was just a very brief overview of how Filters assist in composing our Services API.</p>
+
+<ul>
+<li><a href="https://blog.twitter.com/engineering/en_us/a/2011/finagle-a-protocol-agnostic-rpc-system.html">https://blog.twitter.com/engineering/en_us/a/2011/finagle-a-protocol-agnostic-rpc-system.html</a></li>
+</ul>
+
+<h3 id="backpressure-warning-math-lots-of-math">Backpressure (Warning: MATH, LOTS OF MATH)</h3>
+
+<ul>
+<li><a href="http://anrg.usc.edu/www/papers/IPSN10_Moeller_Sridharan_Krishnamachari_Gnawali.pdf">http://anrg.usc.edu/www/papers/IPSN10_Moeller_Sridharan_Krishnamachari_Gnawali.pdf</a></li>
+</ul>
+
+<h3 id="gutfrage-s-finagle-docs">Gutfrage&rsquo;s Finagle Docs</h3>
+
+<ul>
+<li><a href="https://gutefrage.github.io/the-finagle-docs/">https://gutefrage.github.io/the-finagle-docs/</a></li>
+</ul>
+
+    </div>
+    
+    <footer>
+      <hr>
+      <p>
+  Published
+  
+    
+      by <span itemprop="author">Mario Gray</span>
+    
+  
+  <time itemprop="datePublished" datetime="2018-08-27T00:00:00-07:00">
+    27 Aug, 2018
+  </time>
+  
+    in <span itemprop="articleSection"><a href="/categories/finagle/">finagle</a>, <a href="/categories/scala/">scala</a> and <a href="/categories/twitter/">twitter</a></span>
+  
+  
+    and tagged <a href="/tags/demo/">demo</a>, <a href="/tags/filter/">filter</a>, <a href="/tags/functional/">functional</a>, <a href="/tags/scala/">scala</a> and <a href="/tags/services/">services</a>
+  
+  using <span itemprop="wordCount">771</span> words.
 </p>
-    
-  </header>
-  
-    <blockquote itemprop="headline">Finagle lets you develop and deploy services easily.</blockquote>
-  
-  <div itemprop="description">
-    What is Finagle In this example, we will go through the steps to deploy a Filtered HTTP Service with Scala and SBT.
-Finagle is an extensible RPC system for the JVM, that lets developers write non-blocking, high-concurrency services with ease. Much of what Finagle will let us do is summarized in the doc.
- Finagle implements uniform client and server APIs for several protocols, and is designed for high performance and concurrency.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/finagle-filters/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2018-08-27T00:00:00-07:00">
-  <meta itemprop="dateModified" content="2018-08-25T00:00:00-07:00">
-  
-</article>
 
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/finagle-intro/">Intro to Finagle services with Scala and SBT.</a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>4 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
+      
 
-  Published: <time datetime="2018-08-04T00:00:00-07:00">4 Aug, 2018</time>
 
-</p>
-    
-  </header>
-  
-    <blockquote itemprop="headline">Finagle lets you develop and deploy services easily.</blockquote>
-  
-  <div itemprop="description">
-    What is Finagle Finagle is an extensible RPC system for the JVM, that lets developers write non-blocking, high-concurrency services with ease. Much of what Finagle will let us do is explained in the doc.
- Finagle implements uniform client and server APIs for several protocols, and is designed for high performance and concurrency. Most of Finagle’s code is protocol agnostic, simplifying the implementation of new protocols.
- In this example, we will go through the steps to deploy a basic Finagle HTTP Service with Scala and SBT.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/finagle-intro/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2018-08-04T00:00:00-07:00">
-  <meta itemprop="dateModified" content="2018-07-30T00:00:00-07:00">
-  
-</article>
+  <aside>
+    <header>Related Content</header>
+    <ul>
+      
+        <li><a href="/post/finagle-intro/">Intro to Finagle services with Scala and SBT.</a>
+        <time datetime="4M">4 minutes</time>
+      
+        <li><a href="/post/spring-reactive-auth-forms/">Setup and Customize a Login Page With Reactive Spring Security.</a>
+        <time datetime="7M">7 minutes</time>
+      
+        <li><a href="/post/spring-reactive-auth-basic/">Setup and customize Authentication against a WebFlux Application</a>
+        <time datetime="4M">4 minutes</time>
+      
+        <li><a href="/post/spring-reactive-ws-client/">Reactive Websocket Client with Spring</a>
+        <time datetime="3M">3 minutes</time>
+      
+        <li><a href="/post/spring-kafka/">Sending and consuming messages with Spring and KafKa</a>
+        <time datetime="5M">5 minutes</time>
+      
+        <li><a href="/post/spring-reactive-authorization/">Configuring Authorization with Reactive Spring Security 5</a>
+        <time datetime="3M">3 minutes</time>
+      
+        <li><a href="/post/riff-intro/">Intro to RIFF Is For Functions</a>
+        <time datetime="5M">5 minutes</time>
+      
+    </ul>
+  </aside>
 
-  
+
+    </footer>
+  </article>
 </main>
     <footer>
-  <nav>
-  <p>
-    
-    <span>Page 1 of 1</span>
-    
-  </p>
-</nav>
-
   
   <p class="muted">
     This page was generated using
