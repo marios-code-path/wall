@@ -317,70 +317,61 @@ article header img {
 <h2 id="build-dependencies">Build Dependencies</h2>
 
 <p>First, Lets examine this <a href="https://www.scala-sbt.org/">SBT</a> build for the dependencies used in this example. We only need to include &ldquo;finagle-http&rdquo; dependency at version 18. This is using <a href="https://twitter.github.io/finagle/guide/changelog.html">Finagle 6</a>.</p>
-
-<pre><code class="language-c">name := &quot;example-service&quot;
-version := &quot;1.0&quot;
-libraryDependencies += &quot;com.twitter&quot; %% &quot;finagle-http&quot; % &quot;18.8.0&quot;
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">name :<span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;example-service&#34;</span>
+version :<span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1.0&#34;</span>
+libraryDependencies <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;com.twitter&#34;</span> <span style="color:#f92672">%%</span> <span style="color:#e6db74">&#34;finagle-http&#34;</span> <span style="color:#f92672">%</span> <span style="color:#e6db74">&#34;18.8.0&#34;</span></code></pre></div>
 <h2 id="quick-finagle-http-service">Quick Finagle HTTP Service</h2>
 
 <p>Finagle lets you develop services in a programmatic way. You may stand up a single HTTP server by extending the base trait <a href="https://twitter.github.io/finagle/guide/ServicesAndFilters.html">Service</a> and specifying your <code>Req</code> (request) and <code>Res</code> (Result) types in generic form. To see this in action, we will demonstrate HTTP service by constructing a simple <code>Service[http.Request, http.Response]</code> where request and response are HTTP I/O types.</p>
 
 <p>A generic Finagle service uses the <a href="https://twitter.github.io/finagle/guide/ServicesAndFilters.html">Service</a> trait to expose service functionality such that any <code>Service[Req, Res]</code> named <code>A</code> may consume its input <code>Req</code>, and respond with <code>Res</code>. This can be seen in the sample code below, where we use <a href="https://twitter.github.io/finagle/docs/com/twitter/finagle/http/Request.html">http.Request</a> and <a href="https://twitter.github.io/finagle/docs/com/twitter/finagle/http/Response.html">http.Response</a> as the input/output types. Because Finagle is an <a href="https://en.wikipedia.org/wiki/Remote_procedure_call">RPC</a> system, we must implement the <code>apply(Req): Future[Res]</code> methods where the return type is a <a href="https://twitter.github.io/util/docs/com/twitter/util/Future.html">com.twitter.util.Future</a> of the response.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">package</span> example
 
-<pre><code class="language-scala">package example
+<span style="color:#66d9ef">import</span> com.twitter.finagle.http.<span style="color:#f92672">{</span><span style="color:#a6e22e">Response</span><span style="color:#f92672">,</span> <span style="color:#a6e22e">Status</span><span style="color:#f92672">}</span>
+<span style="color:#66d9ef">import</span> com.twitter.finagle.<span style="color:#f92672">{</span><span style="color:#a6e22e">Service</span><span style="color:#f92672">,</span> http<span style="color:#f92672">}</span>
+<span style="color:#66d9ef">import</span> com.twitter.util.Future
 
-import com.twitter.finagle.http.{Response, Status}
-import com.twitter.finagle.{Service, http}
-import com.twitter.util.Future
+<span style="color:#66d9ef">object</span> <span style="color:#a6e22e">MyService</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">MyService</span>
 
-object MyService extends MyService
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyService</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Service</span><span style="color:#f92672">[</span><span style="color:#66d9ef">http.Request</span>, <span style="color:#66d9ef">http.Response</span><span style="color:#f92672">]</span> <span style="color:#f92672">{</span>
 
-class MyService extends Service[http.Request, http.Response] {
+  <span style="color:#66d9ef">val</span> seed <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Seq</span><span style="color:#f92672">(</span><span style="color:#ae81ff">76</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">69</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">71</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">48</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">83</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">42</span><span style="color:#f92672">)</span>
 
-  val seed = Seq(76, 69, 71, 48, 83, 42)
+  <span style="color:#66d9ef">def</span> apply<span style="color:#f92672">(</span>req<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">http.Request</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Future</span><span style="color:#f92672">[</span><span style="color:#66d9ef">http.Response</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">val</span> response <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Response</span><span style="color:#f92672">(</span>req<span style="color:#f92672">.</span>version<span style="color:#f92672">,</span> <span style="color:#a6e22e">Status</span><span style="color:#f92672">.</span><span style="color:#a6e22e">Ok</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">val</span> sample <span style="color:#66d9ef">=</span> <span style="color:#f92672">(</span>seed <span style="color:#f92672">++</span>
+      <span style="color:#a6e22e">Seq</span><span style="color:#f92672">(</span>
+        req<span style="color:#f92672">.</span>getLongParam<span style="color:#f92672">(</span>name <span style="color:#66d9ef">=</span> <span style="color:#e6db74">&#34;next&#34;</span><span style="color:#f92672">,</span> default <span style="color:#66d9ef">=</span> <span style="color:#ae81ff">100</span><span style="color:#f92672">)</span>
+      <span style="color:#f92672">)).</span>min
 
-  def apply(req: http.Request): Future[http.Response] = {
-    val response = Response(req.version, Status.Ok)
-    val sample = (seed ++
-      Seq(
-        req.getLongParam(name = &quot;next&quot;, default = 100)
-      )).min
+    response<span style="color:#f92672">.</span>setContentString<span style="color:#f92672">(</span><span style="color:#e6db74">s&#34;Minimum target sample is: </span><span style="color:#e6db74">${</span>sample<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">)</span>
 
-    response.setContentString(s&quot;Minimum target sample is: ${sample}&quot;)
-
-    Future.value(
+    <span style="color:#a6e22e">Future</span><span style="color:#f92672">.</span>value<span style="color:#f92672">(</span>
       response
-    )
-  }
+    <span style="color:#f92672">)</span>
+  <span style="color:#f92672">}</span>
 
-}
-</code></pre>
-
+<span style="color:#f92672">}</span></code></pre></div>
 <h2 id="the-finagle-http-server">The Finagle HTTP Server</h2>
 
 <p>Finagle allows us to define our listening <a href="https://twitter.github.io/finagle/docs/com/twitter/finagle/server/index.html">Server</a> with the same <code>Req</code> / <code>Res</code> types we defined in our Service.
 Finagle comes pre-packaged with a couple protocol-specific servers that we could use to harness our Service&rsquo;s functionality. We will observe Finagle <a href="https://twitter.github.io/finagle/guide/Quickstart.html">Http</a> server capabilities, and use it to expose our Service.</p>
 
 <p>In this example, our Server will not not know about routing specifics. Of course this means that as configured, our server will respond to all HTTP URI&rsquo;s on port 8080. This may make sense in a proxy-routed service environment. Of course, this is a very lean example, and as such we&rsquo;ll take no corners in standing up a simple listening HTTP server.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">package</span> example
 
-<pre><code class="language-scala">package example
+<span style="color:#66d9ef">import</span> com.twitter.finagle.<span style="color:#f92672">{</span><span style="color:#a6e22e">Http</span><span style="color:#f92672">,</span> <span style="color:#a6e22e">Service</span><span style="color:#f92672">,</span> http<span style="color:#f92672">}</span>
+<span style="color:#66d9ef">import</span> com.twitter.util.Await
 
-import com.twitter.finagle.{Http, Service, http}
-import com.twitter.util.Await
+<span style="color:#66d9ef">object</span> <span style="color:#a6e22e">ServerApp</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">App</span> <span style="color:#f92672">{</span>
 
-object ServerApp extends App {
+  <span style="color:#66d9ef">val</span> service<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Service</span><span style="color:#f92672">[</span><span style="color:#66d9ef">http.Request</span>, <span style="color:#66d9ef">http.Response</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">MinService</span>
 
-  val service: Service[http.Request, http.Response] = MinService
+  <span style="color:#66d9ef">val</span> server <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Http</span><span style="color:#f92672">.</span>server
+    <span style="color:#f92672">.</span>serve<span style="color:#f92672">(</span>addr <span style="color:#66d9ef">=</span> <span style="color:#e6db74">&#34;:8080&#34;</span><span style="color:#f92672">,</span> service<span style="color:#f92672">)</span>
 
-  val server = Http.server
-    .serve(addr = &quot;:8080&quot;, service)
-
-  Await.ready(server)
-}
-</code></pre>
-
+  <span style="color:#a6e22e">Await</span><span style="color:#f92672">.</span>ready<span style="color:#f92672">(</span>server<span style="color:#f92672">)</span>
+<span style="color:#f92672">}</span></code></pre></div>
 <h3 id="service-binding-and-program-execution">Service binding and program execution</h3>
 
 <p>Calling one of the overloaded <code>serve()</code> methods on <a href="http://http-finagle-server">Http.server</a> starts the server as configured. In this case, we simply provide a <a href="http://socket-address">SocketAddress</a> or a covariant that can produce this type of object.
@@ -390,26 +381,20 @@ The final arugment to this method gives our service implementation which will ha
 Finally, because we are running on our own synchronous main method, make sure we need to block on something for the HTTP server to have a chance to respond to requests. We can block on the HTTP Server by calling <a href="https://twitter.github.io/util/docs/com/twitter/util/Await$.html">com.twitter.util.concurrent.Await</a> <code>.ready</code> method and giving our <a href="https://twitter.github.io/util/docs/com/twitter/util/Awaitable.html">Awaitable</a> a chance to complete, or be interruped ( by control-c ).</p>
 
 <p>We can now execute this probject using SBT.</p>
-
-<pre><code class="language-s">$ sbt &quot;runMain example.ServerApp&quot;
-[info] Loading settings from build.sbt ...
-...
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-s" data-lang="s"><span style="color:#f92672">$</span> sbt <span style="color:#e6db74">&#34;runMain example.ServerApp&#34;</span>
+[info] Loading settings from build.sbt <span style="color:#66d9ef">...</span>
+<span style="color:#66d9ef">...</span>
 [info] Running example.ServerApp
-Aug 25, 2018 5:02:12 PM com.twitter.finagle.Init$ $anonfun$once$1
-INFO: Finagle version 18.8.0 (rev=b12759650084cd4eaa890045f1f921127b368d20) built at 20180806-152739
-</code></pre>
-
+Aug <span style="color:#ae81ff">25</span>, <span style="color:#ae81ff">2018</span> <span style="color:#ae81ff">5</span><span style="color:#f92672">:</span><span style="color:#ae81ff">02</span><span style="color:#f92672">:</span><span style="color:#ae81ff">12</span> PM com.twitter.finagle.Init<span style="color:#f92672">$</span> <span style="color:#f92672">$</span>anonfun<span style="color:#f92672">$</span>once<span style="color:#f92672">$</span><span style="color:#ae81ff">1</span>
+INFO<span style="color:#f92672">:</span> Finagle version <span style="color:#ae81ff">18.8.0</span> (rev<span style="color:#f92672">=</span>b12759650084cd4eaa890045f1f921127b368d20) built at <span style="color:#ae81ff">20180806-152739</span></code></pre></div>
 <p>Console output of service show just the build time for Finagle. This example doesnt configure logging. For that, see the <a href="http://www.google.com/404">next artice</a>.</p>
 
 <p>To show output for our service, execute the curl command to the configured port and host. Optionally include the parameter &lsquo;next&rsquo; to add some variance to it&rsquo;s output.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-s" data-lang="s"><span style="color:#f92672">$</span> curl http<span style="color:#f92672">://</span>localhost<span style="color:#f92672">:</span><span style="color:#ae81ff">8080</span>
+Minimum target sample is<span style="color:#f92672">:</span> <span style="color:#ae81ff">42</span>
 
-<pre><code class="language-s">$ curl http://localhost:8080
-Minimum target sample is: 42
-
-$ curl http://localhost:8080\?next=6
-Minimum target sample is: 6
-</code></pre>
-
+<span style="color:#f92672">$</span> curl http<span style="color:#f92672">://</span>localhost<span style="color:#f92672">:</span><span style="color:#ae81ff">8080</span>\<span style="color:#f92672">?</span><span style="color:#66d9ef">next</span><span style="color:#f92672">=</span><span style="color:#ae81ff">6</span>
+Minimum target sample is<span style="color:#f92672">:</span> <span style="color:#ae81ff">6</span></code></pre></div>
 <h2 id="conclusion-links">Conclusion &amp; Links</h2>
 
 <p>This was just a very brief overview of a powerful API. Our next mission is to provide a deeper gaze at the tooling around Finagle - Finch, Finatra, TwitterServer.</p>

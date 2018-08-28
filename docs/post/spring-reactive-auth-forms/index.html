@@ -319,40 +319,31 @@ article header img {
 With <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/config/annotation/web/reactive/EnableWebFluxSecurity.html">@EnableWebFluxSecurity</a> turned on, we can build this object by issuing commands to the <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/config/web/server/ServerHttpSecurity.html">ServerHttpSecurity</a> DSL object.</p>
 
 <p>SecurityConfiguration.java:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#a6e22e">@EnableWebFluxSecurity</span>
+    <span style="color:#a6e22e">@Slf4j</span>
+    <span style="color:#a6e22e">@Configuration</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SecurityConfiguration</span> <span style="color:#f92672">{</span>
 
-<pre><code class="language-java">    @EnableWebFluxSecurity
-    @Slf4j
-    @Configuration
-    public class SecurityConfiguration {
-
-        @Bean
-        public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
-            return http
-                    .authorizeExchange()
-        // ...
-</code></pre>
-
+        <span style="color:#a6e22e">@Bean</span>
+        <span style="color:#66d9ef">public</span> SecurityWebFilterChain <span style="color:#a6e22e">securityWebFilterChain</span><span style="color:#f92672">(</span>ServerHttpSecurity http<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">return</span> http
+                    <span style="color:#f92672">.</span><span style="color:#a6e22e">authorizeExchange</span><span style="color:#f92672">()</span>
+        <span style="color:#f92672">//</span> <span style="color:#f92672">...</span></code></pre></div>
 <p>First, by calling <code>authorizeExchange()</code> method to expose <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/config/web/server/ServerHttpSecurity.AuthorizeExchangeSpec.html">AuthorizeExchangeSpec</a> lets us proceed with authentication details.
 With this, we can apply a matcher and permission model to our endpoints.  For this example, we want to open several endpoints to everyone. This is where <code>permitAll()</code> can be applied to a multi-argument <code>pathMatchers()</code> expression.</p>
 
 <p>SecurityConfiguration.java:</p>
-
-<pre><code class="language-java">                    .pathMatchers(&quot;/login&quot;,
-                            &quot;/bye&quot;,
-                            &quot;/favicon.ico&quot;,
-                            &quot;/images/**&quot;)
-                        .permitAll()
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">                    <span style="color:#f92672">.</span><span style="color:#a6e22e">pathMatchers</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/login&#34;</span><span style="color:#f92672">,</span>
+                            <span style="color:#e6db74">&#34;/bye&#34;</span><span style="color:#f92672">,</span>
+                            <span style="color:#e6db74">&#34;/favicon.ico&#34;</span><span style="color:#f92672">,</span>
+                            <span style="color:#e6db74">&#34;/images/**&#34;</span><span style="color:#f92672">)</span>
+                        <span style="color:#f92672">.</span><span style="color:#a6e22e">permitAll</span><span style="color:#f92672">()</span></code></pre></div>
 <p>For this example, we want every endpoint thats not publicly available to require a logged-in user. Wire in a <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/util/PathMatcher.html">PathMatcher</a> for all other URL&rsquo;s, and apply the <code>authenticated()</code> operator to whatever matches.</p>
 
 <p>SecurityConfiguration.java:</p>
-
-<pre><code class="language-java">                    .pathMatchers(&quot;/**&quot;)
-                        .authenticated()
-                        .and()
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">                    <span style="color:#f92672">.</span><span style="color:#a6e22e">pathMatchers</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/**&#34;</span><span style="color:#f92672">)</span>
+                        <span style="color:#f92672">.</span><span style="color:#a6e22e">authenticated</span><span style="color:#f92672">()</span>
+                        <span style="color:#f92672">.</span><span style="color:#a6e22e">and</span><span style="color:#f92672">()</span></code></pre></div>
 <h3 id="csrf-configuration">CSRF Configuration</h3>
 
 <p>Another component for configuring SecurityWebFilterChain is the <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/config/web/server/ServerHttpSecurity.CsrfSpec.html">CsrfSpec</a> enabled by calling <code>csrf()</code> method.  This lets us configure <a href="https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet">CSRF</a> tokens and request matchers, or exclude CSRF entirely.</p>
@@ -360,13 +351,10 @@ With this, we can apply a matcher and permission model to our endpoints.  For th
 <p>In this demo we will use the default options, so <code>'_csrf'</code> becomes our parameter namd, and <code>'X-CSRF-TOKEN'</code> is our header.</p>
 
 <p>SecurityConfiguration.java:</p>
-
-<pre><code class="language-JAVA">                    .csrf()
-                        //.csrfTokenRepository(customCsrfTokenRepository)
-                        //.requireCsrfProtectionMatcher(customCsrfMatcher)
-                        .and()
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JAVA" data-lang="JAVA">                    <span style="color:#f92672">.</span><span style="color:#a6e22e">csrf</span><span style="color:#f92672">()</span>
+                        <span style="color:#75715e">//.csrfTokenRepository(customCsrfTokenRepository)
+</span><span style="color:#75715e"></span>                        <span style="color:#75715e">//.requireCsrfProtectionMatcher(customCsrfMatcher)
+</span><span style="color:#75715e"></span>                        <span style="color:#f92672">.</span><span style="color:#a6e22e">and</span><span style="color:#f92672">()</span></code></pre></div>
 <p>Note: Currently supported token repository exists are:</p>
 
 <table>
@@ -399,28 +387,25 @@ With this, we can apply a matcher and permission model to our endpoints.  For th
 <p>To override this, expose <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/config/web/server/ServerHttpSecurity.FormLoginSpec.html">FormLoginSpec</a> by calling <code>HttpServerSecurity's</code> <code>formLogin()</code> method. We can then issue the path the our custom login page and declare form-login success/error Handlers. We want to redirect successes to the home page by using <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/server/authentication/RedirectServerAuthenticationSuccessHandler.html">RedirectServerAuthenticationSuccessHandler</a>.  Then For logout successes, we&rsquo;ll send the user to the &ldquo;/bye&rdquo; endpoint by configuring the <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/server/authentication/logout/RedirectServerLogoutSuccessHandler.html">RedirectServerLogoutSuccessHandler</a> in a separate method since it&rsquo;s contructor doesnt support parameters.</p>
 
 <p>SecurityConfiguration.java:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">                    <span style="color:#f92672">.</span><span style="color:#a6e22e">and</span><span style="color:#f92672">()</span>
+                    <span style="color:#f92672">.</span><span style="color:#a6e22e">formLogin</span><span style="color:#f92672">()</span>
+                        <span style="color:#f92672">.</span><span style="color:#a6e22e">loginPage</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/login&#34;</span><span style="color:#f92672">)</span>
+                        <span style="color:#f92672">.</span><span style="color:#a6e22e">authenticationSuccessHandler</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> RedirectServerAuthenticationSuccessHandler<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/&#34;</span><span style="color:#f92672">))</span>
+                    <span style="color:#f92672">.</span><span style="color:#a6e22e">and</span><span style="color:#f92672">()</span>
+                    <span style="color:#f92672">.</span><span style="color:#a6e22e">logout</span><span style="color:#f92672">()</span>
+                        <span style="color:#f92672">.</span><span style="color:#a6e22e">logoutUrl</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/logout&#34;</span><span style="color:#f92672">)</span>
+                        <span style="color:#f92672">.</span><span style="color:#a6e22e">logoutSuccessHandler</span><span style="color:#f92672">(</span>logoutSuccessHandler<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/bye&#34;</span><span style="color:#f92672">))</span>
+                    <span style="color:#f92672">.</span><span style="color:#a6e22e">and</span><span style="color:#f92672">()</span>
+                    <span style="color:#f92672">.</span><span style="color:#a6e22e">build</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
 
-<pre><code class="language-java">                    .and()
-                    .formLogin()
-                        .loginPage(&quot;/login&quot;)
-                        .authenticationSuccessHandler(new RedirectServerAuthenticationSuccessHandler(&quot;/&quot;))
-                    .and()
-                    .logout()
-                        .logoutUrl(&quot;/logout&quot;)
-                        .logoutSuccessHandler(logoutSuccessHandler(&quot;/bye&quot;))
-                    .and()
-                    .build();
-        }
+        <span style="color:#66d9ef">public</span> ServerLogoutSuccessHandler <span style="color:#a6e22e">logoutSuccessHandler</span><span style="color:#f92672">(</span>String uri<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            RedirectServerLogoutSuccessHandler successHandler <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> RedirectServerLogoutSuccessHandler<span style="color:#f92672">();</span>
+            successHandler<span style="color:#f92672">.</span><span style="color:#a6e22e">setLogoutSuccessUrl</span><span style="color:#f92672">(</span>URI<span style="color:#f92672">.</span><span style="color:#a6e22e">create</span><span style="color:#f92672">(</span>uri<span style="color:#f92672">));</span>
+            <span style="color:#66d9ef">return</span> successHandler<span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span>
 
-        public ServerLogoutSuccessHandler logoutSuccessHandler(String uri) {
-            RedirectServerLogoutSuccessHandler successHandler = new RedirectServerLogoutSuccessHandler();
-            successHandler.setLogoutSuccessUrl(URI.create(uri));
-            return successHandler;
-        }
-
-    }
-</code></pre>
-
+    <span style="color:#f92672">}</span></code></pre></div>
 <p>Both handlers do similar things - namely redirect on success. Expelicitly constructing the <code>logoutSuccessHandler</code> since it&rsquo;s constructor only allows no-args.</p>
 
 <p>Next, we will look at how user/pass pairs are authenticated. This is done by a subclass of <a href="https://docs.spring.io/spring-security/site/docs/5.1.0.BUILD-SNAPSHOT/api/org/springframework/security/authentication/ReactiveAuthenticationManager.html">ReactiveAuthenticationManager</a>.</p>
@@ -433,36 +418,33 @@ bean is provided automatically if there are no other configured <a href="http://
 <p>Spring comes with ready-made implemenations for storing and looking up users in the <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/core/userdetails/MapReactiveUserDetailsService.html">MapReactiveUserDetailsService</a>. We&rsquo;ll complete this section using the map reactive implementation, and by having our users come from the handly <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/core/userdetails/User.html">User</a> object since no other details are necessary for <a href="https://www.sudoinit5.com/post/spring-reactive-authentication/#customizing-the-user">customizing the user</a>.</p>
 
 <p>UserDetailBeans.java:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#a6e22e">@Configuration</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserDetailServiceBeans</span> <span style="color:#f92672">{</span>
 
-<pre><code class="language-java">    @Configuration
-    public class UserDetailServiceBeans {
+        <span style="color:#a6e22e">@Bean</span>
+        <span style="color:#66d9ef">public</span> MapReactiveUserDetailsService <span style="color:#a6e22e">mapReactiveUserDetailsService</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> MapReactiveUserDetailsService<span style="color:#f92672">(</span>users<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
 
-        @Bean
-        public MapReactiveUserDetailsService mapReactiveUserDetailsService() {
-            return new MapReactiveUserDetailsService(users);
-        }
+        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> PasswordEncoder pw <span style="color:#f92672">=</span>     PasswordEncoderFactories<span style="color:#f92672">.</span><span style="color:#a6e22e">createDelegatingPasswordEncoder</span><span style="color:#f92672">();</span>
 
-        private static final PasswordEncoder pw =     PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> UserDetails <span style="color:#a6e22e">user</span><span style="color:#f92672">(</span>String u<span style="color:#f92672">,</span> String<span style="color:#f92672">...</span> roles<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
 
-        private static UserDetails user(String u, String... roles) {
+            <span style="color:#66d9ef">return</span> User
+                    <span style="color:#f92672">.</span><span style="color:#a6e22e">withUsername</span><span style="color:#f92672">(</span>u<span style="color:#f92672">)</span>
+                    <span style="color:#f92672">.</span><span style="color:#a6e22e">passwordEncoder</span><span style="color:#f92672">(</span>pw:<span style="color:#f92672">:</span>encode<span style="color:#f92672">)</span>
+                    <span style="color:#f92672">.</span><span style="color:#a6e22e">password</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;pw&#34;</span><span style="color:#f92672">)</span>
+                    <span style="color:#f92672">.</span><span style="color:#a6e22e">authorities</span><span style="color:#f92672">(</span>roles<span style="color:#f92672">)</span>
+                    <span style="color:#f92672">.</span><span style="color:#a6e22e">build</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
 
-            return User
-                    .withUsername(u)
-                    .passwordEncoder(pw::encode)
-                    .password(&quot;pw&quot;)
-                    .authorities(roles)
-                    .build();
-        }
-
-        private static final Collection&lt;UserDetails&gt; users = new ArrayList&lt;&gt;(
-                Arrays.asList(
-                        user(&quot;thor&quot;, &quot;ROLE_USER&quot;),
-                        user(&quot;loki&quot;, &quot;ROLE_USER&quot;),
-                        user(&quot;odin&quot;, &quot;ROLE_ADMIN&quot;, &quot;ROLE_USER&quot;)
-                ));
-    }
-</code></pre>
-
+        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> Collection<span style="color:#f92672">&lt;</span>UserDetails<span style="color:#f92672">&gt;</span> users <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;&gt;(</span>
+                Arrays<span style="color:#f92672">.</span><span style="color:#a6e22e">asList</span><span style="color:#f92672">(</span>
+                        user<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;thor&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;ROLE_USER&#34;</span><span style="color:#f92672">),</span>
+                        user<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;loki&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;ROLE_USER&#34;</span><span style="color:#f92672">),</span>
+                        user<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;odin&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;ROLE_ADMIN&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;ROLE_USER&#34;</span><span style="color:#f92672">)</span>
+                <span style="color:#f92672">));</span>
+    <span style="color:#f92672">}</span></code></pre></div>
 <h2 id="view-configuration-with-mustache">View Configuration with Mustache</h2>
 
 <p>To enable <a href="https://mustache.github.io/">Mustache</a> Views, we need to wire in an appropriate <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/servlet/config/annotation/ViewResolverRegistry.html">ViewResolver</a> so view names are rendered with the Mustache template View.</p>
@@ -470,18 +452,14 @@ bean is provided automatically if there are no other configured <a href="http://
 <p>First, include the <code>spring-boot-starter-mustache</code> dependency in your pom.xml.</p>
 
 <p>pom.xml:</p>
-
-<pre><code class="language-xml">    &lt;dependency&gt;
-        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-        &lt;artifactId&gt;spring-boot-starter-mustache&lt;/artifactId&gt;
-    &lt;/dependency&gt;
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">    <span style="color:#f92672">&lt;dependency&gt;</span>
+        <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+        <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-mustache<span style="color:#f92672">&lt;/artifactId&gt;</span>
+    <span style="color:#f92672">&lt;/dependency&gt;</span></code></pre></div>
 <p>Now, create a [WebFluxConfigurer]() to enable Mustache View rendering.</p>
 
 <p>WebConfig.java:</p>
-
-<pre><code class="language-html">    @Configuration
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">    @Configuration
     class WebConfig implements WebFluxConfigurer {
 
         private final MustacheViewResolver resolver;
@@ -497,9 +475,7 @@ bean is provided automatically if there are no other configured <a href="http://
             registry.viewResolver(resolver);
         }
 
-    }
-</code></pre>
-
+    }</code></pre></div>
 <p>This configuration will populate a <a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/web/reactive/result/view/MustacheViewResolver.html()">MustacheViewResolver</a>
 into the <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/reactive/config/ViewResolverRegistry.html">ViewResolverRegistry</a>.</p>
 
@@ -508,88 +484,67 @@ into the <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/spr
 <p>Mustache lets us use includes for re-usable content. We will create 3 common fragements for our views.</p>
 
 <p>frag/header.html:</p>
-
-<pre><code class="language-html">    &lt;!doctype html&gt;
-    &lt;html lang=&quot;en&quot;&gt;
-    &lt;body&gt;
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">    <span style="color:#75715e">&lt;!doctype html&gt;</span>
+    &lt;<span style="color:#f92672">html</span> <span style="color:#a6e22e">lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en&#34;</span>&gt;
+    &lt;<span style="color:#f92672">body</span>&gt;</code></pre></div>
 <p>frag/footer.html:</p>
-
-<pre><code class="language-html">    &lt;/body&gt;
-    &lt;/html&gt;
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">    &lt;/<span style="color:#f92672">body</span>&gt;
+    &lt;/<span style="color:#f92672">html</span>&gt;</code></pre></div>
 <p>frag/logout.html:</p>
-
-<pre><code class="language-html">    &lt;form class=&quot;form-inline&quot; action=&quot;/logout&quot; method=&quot;post&quot;&gt;
-        &lt;input type=&quot;hidden&quot; name=&quot;_csrf&quot; value=&quot;{{_csrf.token}}&quot; /&gt;
-        &lt;button class=&quot;btn btn-lg btn-primary btn-block&quot; type=&quot;submit&quot;&gt;Escape!&lt;/button&gt;
-    &lt;/form&gt;
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">    &lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-inline&#34;</span> <span style="color:#a6e22e">action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/logout&#34;</span> <span style="color:#a6e22e">method</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;post&#34;</span>&gt;
+        &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;hidden&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;_csrf&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{{_csrf.token}}&#34;</span> /&gt;
+        &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;btn btn-lg btn-primary btn-block&#34;</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;submit&#34;</span>&gt;Escape!&lt;/<span style="color:#f92672">button</span>&gt;
+    &lt;/<span style="color:#f92672">form</span>&gt;</code></pre></div>
 <p>Next we can define the meat of our content. We just need a login, game, and logout page.</p>
 
 <p>game.html:</p>
-
-<pre><code class="language-html">{{&gt;frag/header}}
-&lt;h1&gt;West of House&lt;/h1&gt;
-&lt;div&gt;Hello, {{user.username}}. You are standing in an open field west of a white house, with a boarded front door.&lt;br/&gt;
-    There is a small mailbox here.&lt;/div&gt;
-&lt;br/&gt;
-&amp;gt;&lt;image src=&quot;https://rawgit.com/marios-code-path/reactive-authentication/master/form-login/src/main/resources/images/cursor.gif&quot; /&gt;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">{{&gt;frag/header}}
+&lt;<span style="color:#f92672">h1</span>&gt;West of House&lt;/<span style="color:#f92672">h1</span>&gt;
+&lt;<span style="color:#f92672">div</span>&gt;Hello, {{user.username}}. You are standing in an open field west of a white house, with a boarded front door.&lt;<span style="color:#f92672">br</span>/&gt;
+    There is a small mailbox here.&lt;/<span style="color:#f92672">div</span>&gt;
+&lt;<span style="color:#f92672">br</span>/&gt;
+&amp;gt;&lt;<span style="color:#f92672">image</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://rawgit.com/marios-code-path/reactive-authentication/master/form-login/src/main/resources/images/cursor.gif&#34;</span> /&gt;
 {{&gt;frag/logout}}
-{{&gt;frag/footer}}
-</code></pre>
-
+{{&gt;frag/footer}}</code></pre></div>
 <p>login-form.html:</p>
-
-<pre><code class="language-html">    {{&gt;frag/header}}
-    &lt;h1&gt;Welcome to Sp0rk. This version created 21-JUL-2018&lt;/h1&gt;
-    &lt;div id=&quot;main-content&quot; class=&quot;container&quot;&gt;
-        &lt;div class=&quot;row&quot;&gt;
-            &lt;div class=&quot;col-md-6&quot;&gt;
-                &lt;form class=&quot;form-inline&quot; action=&quot;/login&quot; method=&quot;post&quot;&gt;
-                    &lt;div class=&quot;form-group&quot;&gt;
-                        &lt;label for=&quot;username&quot;&gt;What is your name?&lt;/label&gt;
-                        &lt;input type=&quot;text&quot; name=&quot;username&quot; id=&quot;username&quot; class=&quot;form-control&quot; placeholder=&quot;My name is...&quot;&gt;
-                    &lt;/div&gt;
-                    &lt;div class=&quot;form-group&quot;&gt;
-                        &lt;label for=&quot;password&quot;&gt;What is the passcode?&lt;/label&gt;
-                        &lt;input type=&quot;password&quot; name=&quot;password&quot; id=&quot;password&quot; class=&quot;form-control&quot; placeholder=&quot;Passphrase&quot;&gt;
-                    &lt;/div&gt;
-                    &lt;br/&gt;
-                    &lt;input type=&quot;hidden&quot; name=&quot;_csrf&quot; value=&quot;{{_csrf.token}}&quot; /&gt;
-                    &lt;button class=&quot;btn btn-lg btn-primary btn-block&quot; type=&quot;submit&quot;&gt;Who R U&lt;/button&gt;
-                &lt;/form&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-    {{&gt;frag/footer}}
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">    {{&gt;frag/header}}
+    &lt;<span style="color:#f92672">h1</span>&gt;Welcome to Sp0rk. This version created 21-JUL-2018&lt;/<span style="color:#f92672">h1</span>&gt;
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;main-content&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;container&#34;</span>&gt;
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;row&#34;</span>&gt;
+            &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;col-md-6&#34;</span>&gt;
+                &lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-inline&#34;</span> <span style="color:#a6e22e">action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/login&#34;</span> <span style="color:#a6e22e">method</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;post&#34;</span>&gt;
+                    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-group&#34;</span>&gt;
+                        &lt;<span style="color:#f92672">label</span> <span style="color:#a6e22e">for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;username&#34;</span>&gt;What is your name?&lt;/<span style="color:#f92672">label</span>&gt;
+                        &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;username&#34;</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;username&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-control&#34;</span> <span style="color:#a6e22e">placeholder</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;My name is...&#34;</span>&gt;
+                    &lt;/<span style="color:#f92672">div</span>&gt;
+                    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-group&#34;</span>&gt;
+                        &lt;<span style="color:#f92672">label</span> <span style="color:#a6e22e">for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;password&#34;</span>&gt;What is the passcode?&lt;/<span style="color:#f92672">label</span>&gt;
+                        &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;password&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;password&#34;</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;password&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-control&#34;</span> <span style="color:#a6e22e">placeholder</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Passphrase&#34;</span>&gt;
+                    &lt;/<span style="color:#f92672">div</span>&gt;
+                    &lt;<span style="color:#f92672">br</span>/&gt;
+                    &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;hidden&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;_csrf&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{{_csrf.token}}&#34;</span> /&gt;
+                    &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;btn btn-lg btn-primary btn-block&#34;</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;submit&#34;</span>&gt;Who R U&lt;/<span style="color:#f92672">button</span>&gt;
+                &lt;/<span style="color:#f92672">form</span>&gt;
+            &lt;/<span style="color:#f92672">div</span>&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;/<span style="color:#f92672">div</span>&gt;
+    {{&gt;frag/footer}}</code></pre></div>
 <p>bye.html:</p>
-
-<pre><code class="language-html">    {{&gt;frag/header}}
-    &lt;h1&gt;Leaving the Great Underground Empire&lt;/h1&gt;
-    &lt;div&gt;
-        See you later, dungeon-master!&lt;br/&gt;
-    &lt;/div&gt;
-    &lt;br/&gt;
-    {{&gt;frag/footer}}
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">    {{&gt;frag/header}}
+    &lt;<span style="color:#f92672">h1</span>&gt;Leaving the Great Underground Empire&lt;/<span style="color:#f92672">h1</span>&gt;
+    &lt;<span style="color:#f92672">div</span>&gt;
+        See you later, dungeon-master!&lt;<span style="color:#f92672">br</span>/&gt;
+    &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;<span style="color:#f92672">br</span>/&gt;
+    {{&gt;frag/footer}}</code></pre></div>
 <h3 id="configuring-mustache-behaviour">Configuring Mustache Behaviour</h3>
 
 <p>To let Mustache view resolver know where to find our templates, how to handle view objects, we set the specific options for this.  Using <code>expose-request-attributes</code> allows us to access our request&rsquo;s view attributes from within the template.</p>
 
 <p>application.properties</p>
-
-<pre><code class="language-properties">    spring.mustache.prefix=classpath:/templates/mustache/
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-properties" data-lang="properties">    spring.mustache.prefix=classpath:/templates/mustache/
     spring.mustache.suffix=.html
-    spring.mustache.expose-request-attributes=true
-</code></pre>
-
+    spring.mustache.expose-request-attributes=true</code></pre></div>
 <h2 id="routing-to-views">Routing to Views</h2>
 
 <p>We need to wire up our views with routing logic, so lets add this with the functional style <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/reactive/function/server/RouterFunction.html">RouterFunction</a>.</p>
@@ -597,59 +552,50 @@ into the <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/spr
 <p>We need a way to display icons, so first we will wire in a &lsquo;favicon.ico&rsquo; route, and send it to a <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/core/io/ClassPathResource.html">ClassPathResource</a> resource for classpath resolution. Alternately, we could imply that the file exists on the local FileSystem by using a <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/core/io/FileSystemResource.html">FileSystemResource</a>.</p>
 
 <p>WebRoutes.java:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#a6e22e">@Component</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WebRoutes</span> <span style="color:#f92672">{</span>
 
-<pre><code class="language-java">    @Component
-    public class WebRoutes {
-
-        @Bean
-        RouterFunction&lt;?&gt; iconResources() {
-            return RouterFunctions
-                    .resources(&quot;/favicon.**&quot;, new ClassPathResource(&quot;images/favicon.ico&quot;));
-        }
-</code></pre>
-
+        <span style="color:#a6e22e">@Bean</span>
+        RouterFunction<span style="color:#f92672">&lt;?&gt;</span> iconResources<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">return</span> RouterFunctions
+                    <span style="color:#f92672">.</span><span style="color:#a6e22e">resources</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/favicon.**&#34;</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">new</span> ClassPathResource<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;images/favicon.ico&#34;</span><span style="color:#f92672">));</span>
+        <span style="color:#f92672">}</span></code></pre></div>
 <p>Next we will have a route to the login page.  Since we already overrode the default location in <code>ServerHttpSecurity</code>, we must provide the route to our new login page. Also included in this example is our logout landing page. it can be any URL you select, for this example we have a single page to tell the user &lsquo;goodbye&rsquo;.</p>
 
 <p>WebRoutes.java:</p>
-
-<pre><code class="language-java">    @Bean
-    RouterFunction&lt;?&gt; viewRoutes() {
-        return RouterFunctions
-                .route(RequestPredicates.GET(&quot;/login&quot;),
-                        req -&gt; ServerResponse
-                                .ok()
-                                .render(&quot;login-form&quot;,
-                                        req.exchange().getAttributes())
-                )
-                .andRoute(RequestPredicates.GET(&quot;/bye&quot;),
-                        req -&gt; ServerResponse.ok().render(&quot;bye&quot;)
-                )
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#a6e22e">@Bean</span>
+    RouterFunction<span style="color:#f92672">&lt;?&gt;</span> viewRoutes<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> RouterFunctions
+                <span style="color:#f92672">.</span><span style="color:#a6e22e">route</span><span style="color:#f92672">(</span>RequestPredicates<span style="color:#f92672">.</span><span style="color:#a6e22e">GET</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/login&#34;</span><span style="color:#f92672">),</span>
+                        req <span style="color:#f92672">-&gt;</span> ServerResponse
+                                <span style="color:#f92672">.</span><span style="color:#a6e22e">ok</span><span style="color:#f92672">()</span>
+                                <span style="color:#f92672">.</span><span style="color:#a6e22e">render</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;login-form&#34;</span><span style="color:#f92672">,</span>
+                                        req<span style="color:#f92672">.</span><span style="color:#a6e22e">exchange</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getAttributes</span><span style="color:#f92672">())</span>
+                <span style="color:#f92672">)</span>
+                <span style="color:#f92672">.</span><span style="color:#a6e22e">andRoute</span><span style="color:#f92672">(</span>RequestPredicates<span style="color:#f92672">.</span><span style="color:#a6e22e">GET</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/bye&#34;</span><span style="color:#f92672">),</span>
+                        req <span style="color:#f92672">-&gt;</span> ServerResponse<span style="color:#f92672">.</span><span style="color:#a6e22e">ok</span><span style="color:#f92672">().</span><span style="color:#a6e22e">render</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;bye&#34;</span><span style="color:#f92672">)</span>
+                <span style="color:#f92672">)</span></code></pre></div>
 <h2 id="route-filtering-csrf">Route Filtering &amp; CSRF</h2>
 
 <p>During <code>ServerHttpSecurity</code> configuration, we added the line for <code>csrf()</code> that has the effect of implementing request/response filtering. The effect of this Filter - <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/server/csrf/CsrfWebFilter.html">CsrfWebFilter</a> is to create, store and validate csrf tokens where seen or needed. We can expose the CSRF token by including the form entry &lsquo;_csrf&rsquo; and accessing our view model to extract the token value.
 Remember that the parameter and headers names may be changed by additional configuration to the <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/config/web/server/ServerHttpSecurity.CsrfSpec.html">CsrfSpec</a> during configuration.</p>
 
 <p>This filter allows us to access the CSRF token per request, or as needed if you are explicit about the paths that must be matched. CSRF tokens are stored as the classname <code>org.springframework.security.web.csrf</code> within the request attributes map. We can access this and determine how to expose it to the view by calling the token <code>parameterName()</code> method (then placing the token as that name in the model map).</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">                <span style="color:#f92672">.</span><span style="color:#a6e22e">filter</span><span style="color:#f92672">((</span>req<span style="color:#f92672">,</span> resHandler<span style="color:#f92672">)</span> <span style="color:#f92672">-&gt;</span>
+                        req<span style="color:#f92672">.</span><span style="color:#a6e22e">exchange</span><span style="color:#f92672">()</span>
+                                <span style="color:#f92672">.</span><span style="color:#a6e22e">getAttributeOrDefault</span><span style="color:#f92672">(</span>
+                                        CsrfToken<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">.</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">(),</span>
+                                        Mono<span style="color:#f92672">.</span><span style="color:#a6e22e">empty</span><span style="color:#f92672">().</span><span style="color:#a6e22e">ofType</span><span style="color:#f92672">(</span>CsrfToken<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">)</span>
+                                <span style="color:#f92672">)</span>
+                                <span style="color:#f92672">.</span><span style="color:#a6e22e">flatMap</span><span style="color:#f92672">(</span>csrfToken <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">{</span>
+                                    req<span style="color:#f92672">.</span><span style="color:#a6e22e">exchange</span><span style="color:#f92672">()</span>
+                                            <span style="color:#f92672">.</span><span style="color:#a6e22e">getAttributes</span><span style="color:#f92672">()</span>
+                                            <span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span>csrfToken<span style="color:#f92672">.</span><span style="color:#a6e22e">getParameterName</span><span style="color:#f92672">(),</span> csrfToken<span style="color:#f92672">);</span>
+                                    <span style="color:#66d9ef">return</span> resHandler<span style="color:#f92672">.</span><span style="color:#a6e22e">handle</span><span style="color:#f92672">(</span>req<span style="color:#f92672">);</span>
+                                <span style="color:#f92672">})</span>
 
-<pre><code class="language-java">                .filter((req, resHandler) -&gt;
-                        req.exchange()
-                                .getAttributeOrDefault(
-                                        CsrfToken.class.getName(),
-                                        Mono.empty().ofType(CsrfToken.class)
-                                )
-                                .flatMap(csrfToken -&gt; {
-                                    req.exchange()
-                                            .getAttributes()
-                                            .put(csrfToken.getParameterName(), csrfToken);
-                                    return resHandler.handle(req);
-                                })
-
-                );
-    }
-</code></pre>
-
+                <span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span></code></pre></div>
 <h2 id="data-model-for-views">Data Model for Views</h2>
 
 <p>The last route will require some information about the user logged in. We can construct the model for our mustache template by incluing a <code>Map&lt;String, Object&gt;</code> as the second argument to the <code>render()</code> method.</p>
@@ -657,43 +603,34 @@ Remember that the parameter and headers names may be changed by additional confi
 <p>To get to the logged-in user, we get the principal from the <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/reactive/function/server/ServerRequest.html">ServerRequest</a> object, cast it to it&rsquo;s value type, and inject it into request attributes Map under the &lsquo;user&rsquo; key. The attributes map (model object) is then passed in to the <code>render()</code> function.</p>
 
 <p>WebRoutes.java:</p>
-
-<pre><code class="language-java">                .andRoute(RequestPredicates.GET(&quot;/&quot;),
-                        req -&gt; req.principal()
-                                .ofType(Authentication.class)
-                                .flatMap(auth -&gt; {
-                                    User user = User.class.cast(auth.getPrincipal());
-                                    req.exchange()
-                                            .getAttributes()
-                                            .putAll(Collections.singletonMap(&quot;user&quot;, user));
-                                    return ServerResponse.ok().render(&quot;game&quot;,
-                                            req.exchange().getAttributes());
-                                })
-                )
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">                <span style="color:#f92672">.</span><span style="color:#a6e22e">andRoute</span><span style="color:#f92672">(</span>RequestPredicates<span style="color:#f92672">.</span><span style="color:#a6e22e">GET</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/&#34;</span><span style="color:#f92672">),</span>
+                        req <span style="color:#f92672">-&gt;</span> req<span style="color:#f92672">.</span><span style="color:#a6e22e">principal</span><span style="color:#f92672">()</span>
+                                <span style="color:#f92672">.</span><span style="color:#a6e22e">ofType</span><span style="color:#f92672">(</span>Authentication<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">)</span>
+                                <span style="color:#f92672">.</span><span style="color:#a6e22e">flatMap</span><span style="color:#f92672">(</span>auth <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">{</span>
+                                    User user <span style="color:#f92672">=</span> User<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">.</span><span style="color:#a6e22e">cast</span><span style="color:#f92672">(</span>auth<span style="color:#f92672">.</span><span style="color:#a6e22e">getPrincipal</span><span style="color:#f92672">());</span>
+                                    req<span style="color:#f92672">.</span><span style="color:#a6e22e">exchange</span><span style="color:#f92672">()</span>
+                                            <span style="color:#f92672">.</span><span style="color:#a6e22e">getAttributes</span><span style="color:#f92672">()</span>
+                                            <span style="color:#f92672">.</span><span style="color:#a6e22e">putAll</span><span style="color:#f92672">(</span>Collections<span style="color:#f92672">.</span><span style="color:#a6e22e">singletonMap</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;user&#34;</span><span style="color:#f92672">,</span> user<span style="color:#f92672">));</span>
+                                    <span style="color:#66d9ef">return</span> ServerResponse<span style="color:#f92672">.</span><span style="color:#a6e22e">ok</span><span style="color:#f92672">().</span><span style="color:#a6e22e">render</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;game&#34;</span><span style="color:#f92672">,</span>
+                                            req<span style="color:#f92672">.</span><span style="color:#a6e22e">exchange</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getAttributes</span><span style="color:#f92672">());</span>
+                                <span style="color:#f92672">})</span>
+                <span style="color:#f92672">)</span></code></pre></div>
 <h2 id="application-execution-entry">Application execution Entry</h2>
 
 <p>This simple app requires no additional configuration beyond <a href="http://enable-web-flux-annotation">EnableWebFlux</a> and <a href="http://spring-boot-applkication">SpringBootApplication</a> annotations.</p>
 
 <p>App.java:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@SpringBootApplication</span>
+<span style="color:#a6e22e">@EnableWebFlux</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FormLoginApp</span> <span style="color:#f92672">{</span>
 
-<pre><code class="language-java">@SpringBootApplication
-@EnableWebFlux
-public class FormLoginApp {
-
-    public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(FormLoginApp.class);
-        app.run();
-    }
-}
-</code></pre>
-
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        SpringApplication app <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> SpringApplication<span style="color:#f92672">(</span>FormLoginApp<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+        app<span style="color:#f92672">.</span><span style="color:#a6e22e">run</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span></code></pre></div>
 <p>Execute the application by running it in your IDE or by executing the following comand in a bash window.</p>
-
-<pre><code class="language-bash">    mvn spring-boot:run
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">    mvn spring-boot:run</code></pre></div>
 <h1 id="conclusion">Conclusion</h1>
 
 <p>This simple web was made to demonstratekey concepts in obtaining successful authentication from a user that is browser-bound. We looked at wiring up CSRF, Mustache views, login/logout customization, and Routing/Filtering in the WebFlux environment.</p>
