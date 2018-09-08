@@ -84,6 +84,24 @@
     </item>
     
     <item>
+      <title>Dependency Injection</title>
+      <link>https://www.sudoinit5.com/tags/dependency-injection/</link>
+      <pubDate>Fri, 07 Sep 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/tags/dependency-injection/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Di</title>
+      <link>https://www.sudoinit5.com/tags/di/</link>
+      <pubDate>Fri, 07 Sep 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/tags/di/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Faas</title>
       <link>https://www.sudoinit5.com/tags/faas/</link>
       <pubDate>Mon, 12 Feb 2018 00:00:00 -0800</pubDate>
@@ -95,7 +113,7 @@
     <item>
       <title>Filter</title>
       <link>https://www.sudoinit5.com/tags/filter/</link>
-      <pubDate>Mon, 27 Aug 2018 00:00:00 -0700</pubDate>
+      <pubDate>Fri, 07 Sep 2018 00:00:00 -0700</pubDate>
       
       <guid>https://www.sudoinit5.com/tags/filter/</guid>
       <description></description>
@@ -122,9 +140,18 @@
     <item>
       <title>Functional</title>
       <link>https://www.sudoinit5.com/tags/functional/</link>
-      <pubDate>Mon, 27 Aug 2018 00:00:00 -0700</pubDate>
+      <pubDate>Fri, 07 Sep 2018 00:00:00 -0700</pubDate>
       
       <guid>https://www.sudoinit5.com/tags/functional/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Guice</title>
+      <link>https://www.sudoinit5.com/tags/guice/</link>
+      <pubDate>Fri, 07 Sep 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/tags/guice/</guid>
       <description></description>
     </item>
     
@@ -156,6 +183,15 @@
     </item>
     
     <item>
+      <title>Modules</title>
+      <link>https://www.sudoinit5.com/tags/modules/</link>
+      <pubDate>Fri, 07 Sep 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/tags/modules/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Reactive</title>
       <link>https://www.sudoinit5.com/tags/reactive/</link>
       <pubDate>Wed, 09 May 2018 00:00:00 -0700</pubDate>
@@ -176,7 +212,7 @@
     <item>
       <title>Scala</title>
       <link>https://www.sudoinit5.com/tags/scala/</link>
-      <pubDate>Mon, 27 Aug 2018 00:00:00 -0700</pubDate>
+      <pubDate>Fri, 07 Sep 2018 00:00:00 -0700</pubDate>
       
       <guid>https://www.sudoinit5.com/tags/scala/</guid>
       <description></description>
@@ -185,7 +221,7 @@
     <item>
       <title>Services</title>
       <link>https://www.sudoinit5.com/tags/services/</link>
-      <pubDate>Mon, 27 Aug 2018 00:00:00 -0700</pubDate>
+      <pubDate>Fri, 07 Sep 2018 00:00:00 -0700</pubDate>
       
       <guid>https://www.sudoinit5.com/tags/services/</guid>
       <description></description>

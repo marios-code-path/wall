@@ -6,10 +6,21 @@
     <description>Recent content in Filter on # sudo init 5 - A Developer&#39;s web log</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Mon, 27 Aug 2018 00:00:00 -0700</lastBuildDate>
+    <lastBuildDate>Fri, 07 Sep 2018 00:00:00 -0700</lastBuildDate>
     
 	<atom:link href="https://www.sudoinit5.com/tags/filter/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Finagle Modules</title>
+      <link>https://www.sudoinit5.com/post/finagle-modules/</link>
+      <pubDate>Fri, 07 Sep 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/post/finagle-modules/</guid>
+      <description>Motivation Building applications by glueing resources together the manual way is daunting. Not impossible, but daunting. Lazy resource loading aka Dependency Injection (DI) can make your application more resilient to changes, and bring additional configurability to your project.
+In this example, we will tackle managing server functionality using a few common twitter-module support guidelines.
+The Service Lets define the meat of our sample which is a service that will answer our requests.</description>
+    </item>
     
     <item>
       <title>Server Flags with Twitter Finagle</title>

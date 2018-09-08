@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://www.sudoinit5.com/post/finagle-modules/</loc>
+    <lastmod>2018-09-07T00:00:00-07:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://www.sudoinit5.com/post/finagle-flags/</loc>
     <lastmod>2018-08-27T00:00:00-07:00</lastmod>
   </url>
@@ -69,7 +74,7 @@
   
   <url>
     <loc>https://www.sudoinit5.com/</loc>
-    <lastmod>2018-08-27T00:00:00-07:00</lastmod>
+    <lastmod>2018-09-07T00:00:00-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -146,6 +151,18 @@
   </url>
   
   <url>
+    <loc>https://www.sudoinit5.com/tags/dependency-injection/</loc>
+    <lastmod>2018-09-07T00:00:00-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.sudoinit5.com/tags/di/</loc>
+    <lastmod>2018-09-07T00:00:00-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://www.sudoinit5.com/tags/faas/</loc>
     <lastmod>2018-02-12T00:00:00-08:00</lastmod>
     <priority>0</priority>
@@ -159,13 +176,13 @@
   
   <url>
     <loc>https://www.sudoinit5.com/tags/filter/</loc>
-    <lastmod>2018-08-27T00:00:00-07:00</lastmod>
+    <lastmod>2018-09-07T00:00:00-07:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://www.sudoinit5.com/categories/finagle/</loc>
-    <lastmod>2018-08-27T00:00:00-07:00</lastmod>
+    <lastmod>2018-09-07T00:00:00-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -189,7 +206,13 @@
   
   <url>
     <loc>https://www.sudoinit5.com/tags/functional/</loc>
-    <lastmod>2018-08-27T00:00:00-07:00</lastmod>
+    <lastmod>2018-09-07T00:00:00-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.sudoinit5.com/tags/guice/</loc>
+    <lastmod>2018-09-07T00:00:00-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -236,6 +259,18 @@
   </url>
   
   <url>
+    <loc>https://www.sudoinit5.com/tags/modules/</loc>
+    <lastmod>2018-09-07T00:00:00-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.sudoinit5.com/categories/modules/</loc>
+    <lastmod>2018-09-07T00:00:00-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://www.sudoinit5.com/categories/mq/</loc>
     <lastmod>2018-04-13T00:00:00-07:00</lastmod>
     <priority>0</priority>
@@ -243,7 +278,7 @@
   
   <url>
     <loc>https://www.sudoinit5.com/post/</loc>
-    <lastmod>2018-08-27T00:00:00-07:00</lastmod>
+    <lastmod>2018-09-07T00:00:00-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -267,13 +302,13 @@
   
   <url>
     <loc>https://www.sudoinit5.com/tags/scala/</loc>
-    <lastmod>2018-08-27T00:00:00-07:00</lastmod>
+    <lastmod>2018-09-07T00:00:00-07:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://www.sudoinit5.com/categories/scala/</loc>
-    <lastmod>2018-08-27T00:00:00-07:00</lastmod>
+    <lastmod>2018-09-07T00:00:00-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -285,7 +320,7 @@
   
   <url>
     <loc>https://www.sudoinit5.com/tags/services/</loc>
-    <lastmod>2018-08-27T00:00:00-07:00</lastmod>
+    <lastmod>2018-09-07T00:00:00-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -351,7 +386,7 @@
   
   <url>
     <loc>https://www.sudoinit5.com/categories/twitter/</loc>
-    <lastmod>2018-08-27T00:00:00-07:00</lastmod>
+    <lastmod>2018-09-07T00:00:00-07:00</lastmod>
     <priority>0</priority>
   </url>
   
