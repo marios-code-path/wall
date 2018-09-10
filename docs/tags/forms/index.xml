@@ -6,7 +6,7 @@
     <description>Recent content in Forms on # sudo init 5 - A Developer&#39;s web log</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Sat, 21 Jul 2018 00:00:00 -0700</lastBuildDate>
+    <lastBuildDate>Sat, 21 Jul 2018 00:00:00 +0300</lastBuildDate>
     
 	<atom:link href="https://www.sudoinit5.com/tags/forms/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Setup and Customize a Login Page With Reactive Spring Security.</title>
       <link>https://www.sudoinit5.com/post/spring-reactive-auth-forms/</link>
-      <pubDate>Sat, 21 Jul 2018 00:00:00 -0700</pubDate>
+      <pubDate>Sat, 21 Jul 2018 00:00:00 +0300</pubDate>
       
       <guid>https://www.sudoinit5.com/post/spring-reactive-auth-forms/</guid>
       <description>Customized WebFlux Form Authentication This demonstration examines Spring Security WebFlux&amp;rsquo;s Authentication mechanisms. We will look at authentication with HTML forms using Mustache, User Authentication, and customized form-based login / logout configurations.

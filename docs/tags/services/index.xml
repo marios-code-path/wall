@@ -6,26 +6,25 @@
     <description>Recent content in Services on # sudo init 5 - A Developer&#39;s web log</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Fri, 07 Sep 2018 00:00:00 -0700</lastBuildDate>
+    <lastBuildDate>Fri, 07 Sep 2018 00:00:00 +0300</lastBuildDate>
     
 	<atom:link href="https://www.sudoinit5.com/tags/services/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Finagle Modules</title>
+      <title>Service Modularity in the Finagle Framework</title>
       <link>https://www.sudoinit5.com/post/finagle-modules/</link>
-      <pubDate>Fri, 07 Sep 2018 00:00:00 -0700</pubDate>
+      <pubDate>Fri, 07 Sep 2018 00:00:00 +0300</pubDate>
       
       <guid>https://www.sudoinit5.com/post/finagle-modules/</guid>
-      <description>Motivation Building applications by glueing resources together the manual way is daunting. Not impossible, but daunting. Lazy resource loading aka Dependency Injection (DI) can make your application more resilient to changes, and bring additional configurability to your project.
-In this example, we will tackle managing server functionality using a few common twitter-module support guidelines.
-The Service Lets define the meat of our sample which is a service that will answer our requests.</description>
+      <description>Motivation Typical examples of dependency Injection DI show that the decoupling gained from removing glue code provides better testability, separation of concerns, and readability. Building applications by glueing resources together the manual way is OK, but not preferred when services need to be adapted in many ways. Dependency Injection (DI) can make your application more resilient to changes, and bring additional configurability to your project.
+Finagle, uses the Guice library as it&amp;rsquo;s foundation for building modules.</description>
     </item>
     
     <item>
       <title>Server Flags with Twitter Finagle</title>
       <link>https://www.sudoinit5.com/post/finagle-flags/</link>
-      <pubDate>Mon, 27 Aug 2018 00:00:00 -0700</pubDate>
+      <pubDate>Mon, 27 Aug 2018 00:00:00 +0300</pubDate>
       
       <guid>https://www.sudoinit5.com/post/finagle-flags/</guid>
       <description>This Example In this example, we setup and run an HTTP Service with Scala and SBT. We&amp;rsquo;ll cover the configuration of our services with the FinagleFlags API.
@@ -36,7 +35,7 @@ Build with SBT This example, and others like it will rely on a quick and simple 
     <item>
       <title>Getting started with Filters in Finagle</title>
       <link>https://www.sudoinit5.com/post/finagle-filters/</link>
-      <pubDate>Sat, 25 Aug 2018 00:00:00 -0700</pubDate>
+      <pubDate>Sat, 25 Aug 2018 00:00:00 +0300</pubDate>
       
       <guid>https://www.sudoinit5.com/post/finagle-filters/</guid>
       <description>What is Finagle In this example, we will go through the steps to deploy a Filtered HTTP Service with Scala and SBT.
@@ -47,7 +46,7 @@ Finagle is an extensible RPC system for the JVM, that lets developers write non-
     <item>
       <title>Intro to Finagle services with Scala and SBT.</title>
       <link>https://www.sudoinit5.com/post/finagle-intro/</link>
-      <pubDate>Mon, 30 Jul 2018 00:00:00 -0700</pubDate>
+      <pubDate>Mon, 30 Jul 2018 00:00:00 +0300</pubDate>
       
       <guid>https://www.sudoinit5.com/post/finagle-intro/</guid>
       <description>What is Finagle Finagle is an extensible RPC system for the JVM, that lets developers write non-blocking, high-concurrency services with ease. Much of what Finagle will let us do is explained in the doc.

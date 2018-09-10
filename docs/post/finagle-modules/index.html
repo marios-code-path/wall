@@ -4,8 +4,8 @@
     <meta name="generator" content="Hugo 0.43" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finagle Modules | # sudo init 5 - A Developer&#39;s web log</title>
-    <meta name="description" content="Modules help define service behaviour">
+    <title>Service Modularity in the Finagle Framework | # sudo init 5 - A Developer&#39;s web log</title>
+    <meta name="description" content="Using Modules to compose services.">
     <meta name="keywords" content="functional, scala, services, filter, modules, guice, dependency-injection, di">
     
     
@@ -16,16 +16,16 @@
   <meta name="author" content="Mario Gray">
 
 
-    <meta property="og:title" content="Finagle Modules" />
-<meta property="og:description" content="Modules help define service behaviour" />
+    <meta property="og:title" content="Service Modularity in the Finagle Framework" />
+<meta property="og:description" content="Using Modules to compose services." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.sudoinit5.com/post/finagle-modules/" />
 
 
 
-<meta property="article:published_time" content="2018-09-07T00:00:00-07:00"/>
+<meta property="article:published_time" content="2018-09-07T00:00:00&#43;03:00"/>
 
-<meta property="article:modified_time" content="2018-09-07T00:00:00-07:00"/>
+<meta property="article:modified_time" content="2018-09-07T00:00:00&#43;03:00"/>
 
 
 
@@ -40,8 +40,8 @@
     <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://source.unsplash.com/category/technology/2000x1322"/>
 
-<meta name="twitter:title" content="Finagle Modules"/>
-<meta name="twitter:description" content="Modules help define service behaviour"/>
+<meta name="twitter:title" content="Service Modularity in the Finagle Framework"/>
+<meta name="twitter:description" content="Using Modules to compose services."/>
 
     
 
@@ -230,36 +230,36 @@ article header img {
     <main>
   <article itemscope itemtype="http://schema.org/BlogPosting">
     
-<meta itemprop="name" content="Finagle Modules">
-<meta itemprop="description" content="Modules help define service behaviour">
+<meta itemprop="name" content="Service Modularity in the Finagle Framework">
+<meta itemprop="description" content="Using Modules to compose services.">
 
 
-<meta itemprop="datePublished" content="2018-09-07T00:00:00-07:00" />
-<meta itemprop="dateModified" content="2018-09-07T00:00:00-07:00" />
-<meta itemprop="wordCount" content="724">
+<meta itemprop="datePublished" content="2018-09-07T00:00:00&#43;03:00" />
+<meta itemprop="dateModified" content="2018-09-07T00:00:00&#43;03:00" />
+<meta itemprop="wordCount" content="952">
 
 
 
 <meta itemprop="keywords" content="functional,scala,services,filter,modules,guice,dependency-injection,di," />
 
     <header>
-      <h1 itemprop="headline">Finagle Modules</h1>
+      <h1 itemprop="headline">Service Modularity in the Finagle Framework</h1>
       <p class="muted">
         <svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
   <circle cx="16" cy="16" r="14" />
   <path d="M16 8 L16 16 20 20" />
 </svg>
-<span>4 minute read</span>
+<span>5 minute read</span>
 <svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
   <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
 </svg>
 
-  Published: <time datetime="2018-09-07T00:00:00-07:00">7 Sep, 2018</time>
+  Published: <time datetime="2018-09-07T00:00:00&#43;03:00">7 Sep, 2018</time>
 
 
       </p>
       
-        <blockquote itemprop="description">Modules help define service behaviour</blockquote>
+        <blockquote itemprop="description">Using Modules to compose services.</blockquote>
       
       
     </header>
@@ -310,62 +310,71 @@ article header img {
 
 <h1 id="motivation">Motivation</h1>
 
-<p>Building applications by glueing resources together the manual way is daunting. Not impossible, but daunting. Lazy resource loading aka Dependency Injection (DI) can make your application more resilient to changes, and bring additional configurability to your project.</p>
+<p>Typical examples of dependency Injection <a href="https://stackoverflow.com/questions/130794/what-is-dependency-injection">DI</a> show that the decoupling gained from removing glue code provides better testability, separation of concerns, and readability. Building applications by glueing resources together the manual way is OK, but not preferred when services need to be adapted in many ways. Dependency Injection (DI) can make your application more resilient to changes, and bring additional configurability to your project.</p>
 
-<p>In this example, we will tackle managing server functionality using a few common twitter-module support guidelines.</p>
+<p>Finagle, uses the Guice library as it&rsquo;s foundation for building modules. In this example, we will tackle managing server functionality using a few key module-writing guidelines. We will tackle:</p>
+
+<ul>
+<li>Service composition</li>
+<li>Module composition</li>
+<li>Command-line flags composition</li>
+</ul>
 
 <h1 id="the-service">The Service</h1>
 
-<p>Lets define the meat of our sample which is a service that will answer our requests. This service simply returns a random string prefixed by the letter <code>T</code> , or a reversed random string with that prefix.  The constructor arguments are what we will use to highlight configuration with modules.</p>
+<p>Lets define the meat of our sample which is a service that will answer our requests. This service will repeat or reverse values sent by the HTTP param <code>&quot;name&quot;</code>. If no parameter is there, then a random string will be generated and the ensuing effects will remain the same. Thus, our service can be summarized by the function <code>f(string) = (string || &quot;T&quot;+random).upper.reverse</code>. In this example, we&rsquo;ll use the service&rsquo;s dependecy on toggling reversing capability, and string generation to highlight modules/component cohesion.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">package</span> example
 
-<span style="color:#66d9ef">import</span> com.google.inject.Provider
 <span style="color:#66d9ef">import</span> com.twitter.finagle.http.<span style="color:#f92672">{</span><span style="color:#a6e22e">Response</span><span style="color:#f92672">,</span> <span style="color:#a6e22e">Status</span><span style="color:#f92672">}</span>
 <span style="color:#66d9ef">import</span> com.twitter.finagle.<span style="color:#f92672">{</span><span style="color:#a6e22e">Service</span><span style="color:#f92672">,</span> http<span style="color:#f92672">}</span>
 <span style="color:#66d9ef">import</span> com.twitter.util.Future
 
-<span style="color:#75715e">// just a string provider with upper-casing and reversing
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SampleService</span><span style="color:#f92672">(</span><span style="color:#66d9ef">val</span> reverse<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Boolean</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">val</span> shortStrings<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Provider</span><span style="color:#f92672">[</span><span style="color:#66d9ef">String</span><span style="color:#f92672">])</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Service</span><span style="color:#f92672">[</span><span style="color:#66d9ef">http.Request</span>, <span style="color:#66d9ef">http.Response</span><span style="color:#f92672">]</span> <span style="color:#f92672">{</span>
-
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SampleService</span><span style="color:#f92672">(</span>isReversing<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Boolean</span><span style="color:#f92672">,</span>
+                    stringMaker<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">StringMaker</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Service</span><span style="color:#f92672">[</span><span style="color:#66d9ef">http.Request</span>, <span style="color:#66d9ef">http.Response</span><span style="color:#f92672">]</span> <span style="color:#f92672">{</span>
   <span style="color:#66d9ef">def</span> apply<span style="color:#f92672">(</span>req<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">http.Request</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Future</span><span style="color:#f92672">[</span><span style="color:#66d9ef">http.Response</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#f92672">{</span>
     <span style="color:#66d9ef">val</span> response <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Response</span><span style="color:#f92672">(</span>req<span style="color:#f92672">.</span>version<span style="color:#f92672">,</span> <span style="color:#a6e22e">Status</span><span style="color:#f92672">.</span><span style="color:#a6e22e">Ok</span><span style="color:#f92672">)</span>
-    <span style="color:#66d9ef">val</span> sample <span style="color:#66d9ef">=</span> req<span style="color:#f92672">.</span>getParam<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;name&#34;</span><span style="color:#f92672">,</span> shortStrings<span style="color:#f92672">.</span>get<span style="color:#f92672">).</span>toUpperCase<span style="color:#f92672">()</span>
+    <span style="color:#66d9ef">val</span> sample <span style="color:#66d9ef">=</span> req<span style="color:#f92672">.</span>getParam<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;name&#34;</span><span style="color:#f92672">,</span> stringMaker<span style="color:#f92672">()).</span>toUpperCase<span style="color:#f92672">()</span>
 
-    response<span style="color:#f92672">.</span>setContentString<span style="color:#f92672">(</span><span style="color:#66d9ef">if</span> <span style="color:#f92672">(!</span>reverse<span style="color:#f92672">)</span> sample <span style="color:#66d9ef">else</span> sample<span style="color:#f92672">.</span>reverse<span style="color:#f92672">)</span>
+    response<span style="color:#f92672">.</span>setContentString<span style="color:#f92672">(</span><span style="color:#66d9ef">if</span> <span style="color:#f92672">(!</span>isReversing<span style="color:#f92672">)</span> sample <span style="color:#66d9ef">else</span> sample<span style="color:#f92672">.</span>reverse<span style="color:#f92672">)</span>
 
     <span style="color:#a6e22e">Future</span><span style="color:#f92672">.</span>value<span style="color:#f92672">(</span>
       response
     <span style="color:#f92672">)</span>
   <span style="color:#f92672">}</span>
 <span style="color:#f92672">}</span></code></pre></div>
-<p>Thus, we can simply bake in an instance of this service by declaring it with <code>new</code> keyword.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">val</span> service <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">SampleService</span><span style="color:#f92672">(</span><span style="color:#66d9ef">false</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;T&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">RandomStringUtils</span><span style="color:#f92672">.</span>randomAlphabetic<span style="color:#f92672">(</span><span style="color:#ae81ff">8</span><span style="color:#f92672">))</span></code></pre></div>
-<p>But this will make testing harder, and locks our service into a specific behaviour.  Lets take a look at customizing the service instantiation with modules.</p>
+<p>This HTTP service needs to know if it will reverse string, and how to make new strings (when neecessary).
+Actually, a common Dependency Injection contrast scenario shows how we can simply bake in an instance of this service by declaring it with <code>new</code> keyword.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">val</span> service <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">SampleService</span><span style="color:#f92672">(</span><span style="color:#66d9ef">false</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">_</span> <span style="color:#66d9ef">=&gt;</span> <span style="color:#e6db74">&#34;T&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">RandomStringUtils</span><span style="color:#f92672">.</span>randomAlphabetic<span style="color:#f92672">(</span><span style="color:#ae81ff">8</span><span style="color:#f92672">))</span></code></pre></div>
+<p>But this will make testing harder, and locks our service into a specific behaviour among other side-effects.  Lets take a look at building the service instance with our own module instaed.</p>
 
 <h1 id="declaring-a-module">Declaring a Module</h1>
 
-<p>Modules can use <a href="https://github.com/google/guice/wiki/JSR330">JSR-330 annotations</a> as a way of declaring dependency metadata. We simply provide the implementation and instance scope we will need for our specific services. Additionally, this module bundles it&rsquo;s own flag. Its a scoping mechanism we can use to isolate specific feature flags per module.</p>
+<p>Similar to popular DI frameworks like Spring and Dagger, Guice resources may be declared with <a href="https://github.com/google/guice/wiki/JSR330">JSR-330 annotations</a> annotation metadata. Guice modules go a step further by packaging specific resources together. This way, we can create the right resources when we need them. For example, a Production-module vs Stage-module.</p>
 
-<p>In order to take full advantage of scala/guice, you must extend the base class <a href="https://github.com/twitter/finatra/blob/develop/inject/inject-core/src/main/scala/com/twitter/inject/TwitterModule.scala">com.twitter.inject.TwitterModule</a>. This enables us to compose additioanl modules into our custom module. The canonical way to install modules with Finagle apps is to use the <code>override modules: Seq[Module]</code> construct to tell Guice which modules we will expect to have loaded. We will use this convention when we get to our app.</p>
+<p>In order to take full advantage of Guice, you must extend the base class <a href="https://github.com/twitter/finatra/blob/develop/inject/inject-core/src/main/scala/com/twitter/inject/TwitterModule.scala">com.twitter.inject.TwitterModule</a>. This enables us to compose additional modules into our custom module. The canonical way to install modules with Finagle apps (and other modules) is to use the <code>override modules: Seq[Module]</code> construct to tell Guice which modules we will expect to have loaded. We will use this convention when we get to our app.</p>
 
 <p>SampleModule.scala:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">package</span> example
 
 <span style="color:#66d9ef">import</span> com.google.inject.<span style="color:#f92672">{</span><span style="color:#a6e22e">Provider</span><span style="color:#f92672">,</span> <span style="color:#a6e22e">Provides</span><span style="color:#f92672">,</span> <span style="color:#a6e22e">Singleton</span><span style="color:#f92672">}</span>
-<span style="color:#66d9ef">import</span> com.twitter.inject.TwitterModule
+<span style="color:#66d9ef">import</span> com.twitter.inject.<span style="color:#f92672">{</span><span style="color:#a6e22e">Logging</span><span style="color:#f92672">,</span> <span style="color:#a6e22e">TwitterModule</span><span style="color:#f92672">}</span>
 <span style="color:#66d9ef">import</span> org.apache.commons.lang.RandomStringUtils
 
-<span style="color:#66d9ef">object</span> <span style="color:#a6e22e">SampleModule</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">TwitterModule</span> <span style="color:#f92672">{</span>
+<span style="color:#66d9ef">trait</span> <span style="color:#a6e22e">StringMaker</span> <span style="color:#66d9ef">extends</span> <span style="color:#f92672">(</span><span style="color:#a6e22e">Unit</span> <span style="color:#66d9ef">=&gt;</span> <span style="color:#a6e22e">String</span><span style="color:#f92672">)</span>
+
+<span style="color:#66d9ef">object</span> <span style="color:#a6e22e">SampleModule</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">TwitterModule</span> <span style="color:#66d9ef">with</span> <span style="color:#a6e22e">Logging</span> <span style="color:#f92672">{</span>
   <span style="color:#66d9ef">val</span> flagReverse <span style="color:#66d9ef">=</span> flag<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;reverse&#34;</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;Reverses the string.&#34;</span><span style="color:#f92672">)</span>
 
   <span style="color:#a6e22e">@Provides</span>
-  <span style="color:#66d9ef">def</span> providesRandomString<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;T&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">RandomStringUtils</span><span style="color:#f92672">.</span>randomAlphabetic<span style="color:#f92672">(</span><span style="color:#ae81ff">8</span><span style="color:#f92672">)</span>
+  <span style="color:#66d9ef">def</span> providesRandomString<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">StringMaker</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">_</span> <span style="color:#66d9ef">=&gt;</span> <span style="color:#e6db74">&#34;T&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">RandomStringUtils</span><span style="color:#f92672">.</span>randomAlphabetic<span style="color:#f92672">(</span><span style="color:#ae81ff">8</span><span style="color:#f92672">)</span>
 
   <span style="color:#a6e22e">@Singleton</span>
   <span style="color:#a6e22e">@Provides</span>
-  <span style="color:#66d9ef">def</span> providesSampleService<span style="color:#f92672">(</span>prov<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Provider</span><span style="color:#f92672">[</span><span style="color:#66d9ef">String</span><span style="color:#f92672">])</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">SampleService</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">SampleService</span><span style="color:#f92672">(</span>flagReverse<span style="color:#f92672">.</span>apply<span style="color:#f92672">(),</span> prov<span style="color:#f92672">)</span>
+  <span style="color:#66d9ef">def</span> providesSampleService<span style="color:#f92672">(</span>prov<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Provider</span><span style="color:#f92672">[</span><span style="color:#66d9ef">StringMaker</span><span style="color:#f92672">])</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">SampleService</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">SampleService</span><span style="color:#f92672">(</span>flagReverse<span style="color:#f92672">.</span>apply<span style="color:#f92672">(),</span> prov<span style="color:#f92672">)</span>
 <span style="color:#f92672">}</span></code></pre></div>
-<p>This module simply exports a command-line flag, a random string generator, and finally exposes our Service as singleton dependencies for our app.</p>
+<p>In this example, note that that we used the <code>Provider</code> interface for accessing our random string maker. Guices use the <a href="https://github.com/google/guice/wiki/InjectingProviders">Provider</a> mechanism to instantiate and send resource instances. It also is what backs our <code>@Provider</code> annotated methods. This allows the developer to specify some additional creation logic that would ordinarily become a business detail. Alternatively, we could issue the direct type expected at constuction time, however that would have the effect of eliminating said lifecycle variability.</p>
+
+<p>Whats more, is the use of <code>@Singleton</code> scope. Basically, like other DI frameworks, this makes a single instance of our resource.</p>
 
 <h2 id="configuring-the-app-with-modules">Configuring the App with modules</h2>
 
@@ -396,6 +405,8 @@ article header img {
   <span style="color:#f92672">}</span>
 <span style="color:#f92672">}</span></code></pre></div>
 <p>This app simply declares our single <code>SampleModule</code> dependency, which will provide all of the necessary injectable components needed to furnish our sample service. Because flags must be created in the constructor, and read after <code>main()</code>, we use the <code>postmain</code> lifecycle hook to do all our heavy service lifting.</p>
+
+<p>Obtaining an injected instance of any bean from our App main is simple using the provided [injector]() instance given in <code>com.twitter.inject.app.App</code>. Our sample makes use of it to fetch the Service resource that we bundled in the <code>SampleModule</code>.</p>
 
 <h1 id="build-and-execute-with-sbt">Build and Execute with SBT</h1>
 
@@ -449,7 +460,7 @@ TOFNDSRTE
       by <span itemprop="author">Mario Gray</span>
     
   
-  <time itemprop="datePublished" datetime="2018-09-07T00:00:00-07:00">
+  <time itemprop="datePublished" datetime="2018-09-07T00:00:00&#43;03:00">
     7 Sep, 2018
   </time>
   
@@ -458,7 +469,7 @@ TOFNDSRTE
   
     and tagged <a href="/tags/dependency-injection/">dependency-injection</a>, <a href="/tags/di/">di</a>, <a href="/tags/filter/">filter</a>, <a href="/tags/functional/">functional</a>, <a href="/tags/guice/">guice</a>, <a href="/tags/modules/">modules</a>, <a href="/tags/scala/">scala</a> and <a href="/tags/services/">services</a>
   
-  using <span itemprop="wordCount">724</span> words.
+  using <span itemprop="wordCount">952</span> words.
 </p>
 
       

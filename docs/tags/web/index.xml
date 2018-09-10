@@ -6,7 +6,7 @@
     <description>Recent content in Web on # sudo init 5 - A Developer&#39;s web log</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Sat, 21 Jul 2018 00:00:00 -0700</lastBuildDate>
+    <lastBuildDate>Sat, 21 Jul 2018 00:00:00 +0300</lastBuildDate>
     
 	<atom:link href="https://www.sudoinit5.com/tags/web/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Setup and Customize a Login Page With Reactive Spring Security.</title>
       <link>https://www.sudoinit5.com/post/spring-reactive-auth-forms/</link>
-      <pubDate>Sat, 21 Jul 2018 00:00:00 -0700</pubDate>
+      <pubDate>Sat, 21 Jul 2018 00:00:00 +0300</pubDate>
       
       <guid>https://www.sudoinit5.com/post/spring-reactive-auth-forms/</guid>
       <description>Customized WebFlux Form Authentication This demonstration examines Spring Security WebFlux&amp;rsquo;s Authentication mechanisms. We will look at authentication with HTML forms using Mustache, User Authentication, and customized form-based login / logout configurations.
@@ -26,7 +26,7 @@ SecurityConfiguration.java:
     <item>
       <title>Setup and customize Authentication against a WebFlux Application</title>
       <link>https://www.sudoinit5.com/post/spring-reactive-auth-basic/</link>
-      <pubDate>Sat, 14 Jul 2018 00:00:00 -0700</pubDate>
+      <pubDate>Sat, 14 Jul 2018 00:00:00 +0300</pubDate>
       
       <guid>https://www.sudoinit5.com/post/spring-reactive-auth-basic/</guid>
       <description>Configuring Authentication against a WebFlux app This demonstration examines Spring Security WebFlux&amp;rsquo;s Authentication mechanisms. We will look at Authentication request escalation, as well as user-domain customizations.
@@ -37,7 +37,7 @@ Configure ServerHttpSecurity to use HTTP-BASIC by calling it&amp;rsquo;s httpBas
     <item>
       <title>Sending and consuming messages with Spring and KafKa</title>
       <link>https://www.sudoinit5.com/post/spring-kafka/</link>
-      <pubDate>Fri, 13 Apr 2018 00:00:00 -0700</pubDate>
+      <pubDate>Fri, 13 Apr 2018 00:00:00 +0300</pubDate>
       
       <guid>https://www.sudoinit5.com/post/spring-kafka/</guid>
       <description>Spring Kafka Writer and Readers What is Kafka Apache Kafka is an open-source stream-processing software platform developed by the Apache Software Foundation written in Scala and Java. You&amp;rsquo;ll find more information about Kafka at it&amp;rsquo;s Homepage.
