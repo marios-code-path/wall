@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Modules on # sudo init 5 - A Developer&#39;s web log</title>
+    <title>Modules on # sudo init 5 - beta</title>
     <link>https://www.sudoinit5.com/categories/modules/</link>
-    <description>Recent content in Modules on # sudo init 5 - A Developer&#39;s web log</description>
+    <description>Recent content in Modules on # sudo init 5 - beta</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Fri, 07 Sep 2018 00:00:00 +0300</lastBuildDate>
+    <lastBuildDate>Fri, 07 Sep 2018 00:00:00 -0700</lastBuildDate>
     
 	<atom:link href="https://www.sudoinit5.com/categories/modules/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Service Modularity in the Finagle Framework</title>
       <link>https://www.sudoinit5.com/post/finagle-modules/</link>
-      <pubDate>Fri, 07 Sep 2018 00:00:00 +0300</pubDate>
+      <pubDate>Fri, 07 Sep 2018 00:00:00 -0700</pubDate>
       
       <guid>https://www.sudoinit5.com/post/finagle-modules/</guid>
       <description>Motivation Typical examples of dependency Injection DI show that the decoupling gained from removing glue code provides better testability, separation of concerns, and readability. Building applications by glueing resources together the manual way is OK, but not preferred when services need to be adapted in many ways. Dependency Injection (DI) can make your application more resilient to changes, and bring additional configurability to your project.

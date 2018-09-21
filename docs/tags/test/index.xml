@@ -1,20 +1,31 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Test on # sudo init 5 - A Developer&#39;s web log</title>
+    <title>Test on # sudo init 5 - beta</title>
     <link>https://www.sudoinit5.com/tags/test/</link>
-    <description>Recent content in Test on # sudo init 5 - A Developer&#39;s web log</description>
+    <description>Recent content in Test on # sudo init 5 - beta</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Tue, 13 Mar 2018 00:00:00 +0300</lastBuildDate>
+    <lastBuildDate>Thu, 13 Sep 2018 00:00:00 -0700</lastBuildDate>
     
 	<atom:link href="https://www.sudoinit5.com/tags/test/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Testing Reactive Cloud Apps with SpringBoot</title>
+      <link>https://www.sudoinit5.com/post/spring-boot-testing-producer/</link>
+      <pubDate>Thu, 13 Sep 2018 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/post/spring-boot-testing-producer/</guid>
+      <description>The Producer Environment Lets setup our domain, and provide tests. Because who doesnt like fdata tests?
+In order to make this work, we will need the following Team data class.
+@Document @Data @AllArgsConstructor @NoArgsConstructor public class Team { @Id private String id; private String name; } Its not a lot, but this should let us get started with the application and techniques at hand. What we&amp;rsquo;re interested next is testing this repository and data.</description>
+    </item>
+    
+    <item>
       <title>Spring Test Slices</title>
       <link>https://www.sudoinit5.com/post/spring-test-slices/</link>
-      <pubDate>Tue, 13 Mar 2018 00:00:00 +0300</pubDate>
+      <pubDate>Tue, 13 Mar 2018 00:00:00 -0700</pubDate>
       
       <guid>https://www.sudoinit5.com/post/spring-test-slices/</guid>
       <description>Spring Test Slices Simplify testing by isolating the logical layers above and below that thing under test. These are the invariants. In a Spring Boot application, autoconfiguration produces a large monolithic application context.

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Hot Publisher on # sudo init 5 - A Developer&#39;s web log</title>
+    <title>Hot Publisher on # sudo init 5 - beta</title>
     <link>https://www.sudoinit5.com/tags/hot-publisher/</link>
-    <description>Recent content in Hot Publisher on # sudo init 5 - A Developer&#39;s web log</description>
+    <description>Recent content in Hot Publisher on # sudo init 5 - beta</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Wed, 09 May 2018 00:00:00 +0300</lastBuildDate>
+    <lastBuildDate>Wed, 09 May 2018 00:00:00 -0700</lastBuildDate>
     
 	<atom:link href="https://www.sudoinit5.com/tags/hot-publisher/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Spring Reactive WebSocket Hot Publisher</title>
       <link>https://www.sudoinit5.com/post/spring-reactive-ws-hot-server/</link>
-      <pubDate>Wed, 09 May 2018 00:00:00 +0300</pubDate>
+      <pubDate>Wed, 09 May 2018 00:00:00 -0700</pubDate>
       
       <guid>https://www.sudoinit5.com/post/spring-reactive-ws-hot-server/</guid>
       <description>This Demo This is the multi-casting Flux variation of the standard WebSocket Service seen here

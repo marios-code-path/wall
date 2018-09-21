@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tdd on # sudo init 5 - A Developer&#39;s web log</title>
+    <title>Tdd on # sudo init 5 - beta</title>
     <link>https://www.sudoinit5.com/categories/tdd/</link>
-    <description>Recent content in Tdd on # sudo init 5 - A Developer&#39;s web log</description>
+    <description>Recent content in Tdd on # sudo init 5 - beta</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Tue, 13 Mar 2018 00:00:00 +0300</lastBuildDate>
+    <lastBuildDate>Tue, 13 Mar 2018 00:00:00 -0700</lastBuildDate>
     
 	<atom:link href="https://www.sudoinit5.com/categories/tdd/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Spring Test Slices</title>
       <link>https://www.sudoinit5.com/post/spring-test-slices/</link>
-      <pubDate>Tue, 13 Mar 2018 00:00:00 +0300</pubDate>
+      <pubDate>Tue, 13 Mar 2018 00:00:00 -0700</pubDate>
       
       <guid>https://www.sudoinit5.com/post/spring-test-slices/</guid>
       <description>Spring Test Slices Simplify testing by isolating the logical layers above and below that thing under test. These are the invariants. In a Spring Boot application, autoconfiguration produces a large monolithic application context.
