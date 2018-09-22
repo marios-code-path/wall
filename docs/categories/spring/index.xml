@@ -17,9 +17,7 @@
       <pubDate>Thu, 13 Sep 2018 00:00:00 -0700</pubDate>
       
       <guid>https://www.sudoinit5.com/post/spring-boot-testing-producer/</guid>
-      <description>The Producer Environment Lets setup our domain, and provide tests. Because who doesnt like fdata tests?
-In order to make this work, we will need the following Team data class.
-@Document @Data @AllArgsConstructor @NoArgsConstructor public class Team { @Id private String id; private String name; } Its not a lot, but this should let us get started with the application and techniques at hand. What we&amp;rsquo;re interested next is testing this repository and data.</description>
+      <description>The Producer Environment In the world of testing, we dont need much inspiration to get the job done. However, when it comes to what to use, you may be left wandering whether you&amp;rsquo;ll hit all of the right frameworks and tools to validate your business code. Also likely, you&amp;rsquo;ll also need to figure out how to cross validate a producer app with a consumer app(s) that you may not even own!</description>
     </item>
     
     <item>

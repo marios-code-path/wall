@@ -236,7 +236,7 @@ article header img {
 
 <meta itemprop="datePublished" content="2018-09-19T00:00:00-07:00" />
 <meta itemprop="dateModified" content="2018-09-13T00:00:00-07:00" />
-<meta itemprop="wordCount" content="2159">
+<meta itemprop="wordCount" content="2634">
 
 
 
@@ -249,7 +249,7 @@ article header img {
   <circle cx="16" cy="16" r="14" />
   <path d="M16 8 L16 16 20 20" />
 </svg>
-<span>11 minute read</span>
+<span>13 minute read</span>
 <svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
   <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
 </svg>
@@ -268,12 +268,16 @@ article header img {
     <summary>Table of Contents</summary>
     <nav id="TableOfContents">
 <ul>
-<li><a href="#the-producer-environment">The Producer Environment</a></li>
-<li><a href="#reactive-stream-stepverifier">Reactive Stream StepVerifier</a></li>
-<li><a href="#adding-a-persistence-layer-to-test">Adding a Persistence Layer (to Test)</a>
+<li><a href="#the-producer-environment">The Producer Environment</a>
+<ul>
+<li><a href="#the-data-domain">The Data Domain</a></li>
+<li><a href="#imperative-test-assertions">Imperative Test Assertions</a></li>
+<li><a href="#the-reactive-stepverifier">The Reactive StepVerifier</a></li>
+</ul></li>
+<li><a href="#adding-a-persistence-layer-prod">Adding a Persistence Layer (Prod)</a>
 <ul>
 <li><a href="#sliced-framework-tests">Sliced Framework Tests</a></li>
-<li><a href="#talking-to-mongodb-during-test">Talking to MongoDB during test</a></li>
+<li><a href="#embedding-mongodb-during-test">Embedding MongoDB During Test</a></li>
 <li><a href="#our-tests">Our tests</a></li>
 </ul></li>
 <li><a href="#the-webfluxtest">The WebFluxTest</a>
@@ -313,9 +317,17 @@ article header img {
 
 <h1 id="the-producer-environment">The Producer Environment</h1>
 
-<p>Lets setup our domain, and provide tests. Because who doesnt like fdata tests?</p>
+<p>In the world of testing, we dont need much inspiration to get the job  done. However, when it comes to <em>what</em> to use, you may be left wandering whether you&rsquo;ll hit all of the right frameworks and tools to validate your business code. Also likely, you&rsquo;ll also need to figure out how to cross validate a producer app with a consumer app(s) that you may not even own!</p>
 
-<p>In order to make this work, we will need the following Team data class.</p>
+<p>This article will go into detail to show tools and techniques you&rsquo;ll likely need during your journey to satisfactory test coverage. Well written tests and coverage, means giving other developers the opportunity to make good decisions about what happens in later iterations.</p>
+
+<p>Lets start with a simple app: we want to store and query sports teams into MongoDB. Furthermore, this needs to be exposed with RESTful API. So specifically we want to leverage JSON object mapping, HTTP services, Data Repositories, etc.. We&rsquo;ll tackle the producer side here which is fancy for <code>&quot;The server side&quot;</code> usually.</p>
+
+<h2 id="the-data-domain">The Data Domain</h2>
+
+<p>To start, we&rsquo;ll need a model or domain., The following Team data class describes our data succinctly.</p>
+
+<p>Team.java:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Document</span>
 <span style="color:#a6e22e">@Data</span>
 <span style="color:#a6e22e">@AllArgsConstructor</span>
@@ -325,9 +337,9 @@ article header img {
     <span style="color:#66d9ef">private</span> String id<span style="color:#f92672">;</span>
     <span style="color:#66d9ef">private</span> String name<span style="color:#f92672">;</span>
 <span style="color:#f92672">}</span></code></pre></div>
-<p>Its not a lot, but this should let us get started with the application and techniques at hand. What we&rsquo;re interested next is testing this repository and data. We will need to answer questions such as: Will our data get saved as it should (i.e not consistent state), and will our repository find the right collection items? How should one verify that? Lets take a look at a reactive testing componnet that makes doing this expectation-oriented work easier.</p>
+<p>Its not a lot, but this should let us get started with the application and techniques at hand. What we&rsquo;re interested next is testing data, and whether it can handle being composed or altered with consistency. We will need to answer questions such as: Will our data get saved as it should (i.e not consistent state), and will our repository find the right collection items? How should one verify that? Lets take a look at a reactive testing componnet that makes doing this expectation-oriented work easier.</p>
 
-<h1 id="reactive-stream-stepverifier">Reactive Stream StepVerifier</h1>
+<h2 id="imperative-test-assertions">Imperative Test Assertions</h2>
 
 <p>The following two tests take care of the question whether our data classes can be properly handled without side-effects. To do this, we can test both cases - imperative access, and reactive access.</p>
 
@@ -343,11 +355,13 @@ article header img {
         Assertions<span style="color:#f92672">.</span><span style="color:#a6e22e">assertThat</span><span style="color:#f92672">(</span>myTeam<span style="color:#f92672">.</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()).</span><span style="color:#a6e22e">isEqualToIgnoringWhitespace</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Beşiktaş&#34;</span><span style="color:#f92672">);</span>
     <span style="color:#f92672">}</span>
 <span style="color:#f92672">//...</span></code></pre></div>
-<p>Then we can verify that our objects can be accessed through reactive methods. And this is where we take extra steps in describing the reactive StepVerifier. The StepVerifier will help us understand how our
+<h2 id="the-reactive-stepverifier">The Reactive StepVerifier</h2>
+
+<p>Then we can verify that our objects are accessible through reactive methods. And this is where we take extra steps in describing the reactive StepVerifier. The StepVerifier will help us understand how our
 data gets processed in each step of an reactive stream. We really have 2 options in creating the first step of the verification process. In this example, we use <code>create(Flux[N])</code> method to push our one data element
 into a stream with expectations that our one element is observed before a completion signal gets sent to downstream subscribers.</p>
 
-<p>It should be noted that calling of <code>verify()</code>, <code>verifyThenAssertThat()</code>, <code>verify(Duration)</code> triggers the verification of all expectations above it. Additionally we put <code>expectComplete()</code> above verify to denote that we expect the subscription to be closed. Note that we could easily replace these 2 functions with <code>verifyComplete()</code> and is trivial to change unless you have additional concerns in mind between completion and verification.</p>
+<p>It should be noted that calling of <code>verify()</code>, <code>verifyThenAssertThat()</code>, <code>verify(Duration)</code> triggers the verification of all expectations above it. Additionally we put <code>expectComplete()</code> above verify to denote that we expect the subscription to be closed. Note that we could easily replace these 2 functions with <code>verifyComplete()</code> and is trivial to change, but this is good to know in case you have additional concerns in mind between stream completion and verification.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//...
 </span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@Test</span>
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">testShouldStepVerifyTeams</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> Exception <span style="color:#f92672">{</span>
@@ -357,9 +371,9 @@ into a stream with expectations that our one element is observed before a comple
                 <span style="color:#f92672">.</span><span style="color:#a6e22e">verify</span><span style="color:#f92672">();</span>
     <span style="color:#f92672">}</span>
 <span style="color:#f92672">}</span></code></pre></div>
-<h1 id="adding-a-persistence-layer-to-test">Adding a Persistence Layer (to Test)</h1>
+<h1 id="adding-a-persistence-layer-prod">Adding a Persistence Layer (Prod)</h1>
 
-<p>Lets move from ordinary state tests to the world of data persistence testing. Firstly, our repo will use MongoDB. We can interact with our data by specifying the data and ID types to the <a href="https://docs.spring.io/spring-data/mongodb/docs/current/api/org/springframework/data/mongodb/repository/ReactiveMongoRepository.html">RectiveMongoRepository</a> interface. This interface lets us compose mongodb queries similar to ordinary <a href="https://docs.spring.io/spring-data/data-jpa/docs/current/api/org/springframework/data/jpa/repository/JpaRepository.html">JPARepository</a> style repositories.</p>
+<p>Lets move from ordinary state and imperative knowledge, to the world of data persistence. Our repository will be constructed from the reactive MongoDB variety. We can interact with our data by specifying the data and ID types to the <a href="https://docs.spring.io/spring-data/mongodb/docs/current/api/org/springframework/data/mongodb/repository/ReactiveMongoRepository.html">RectiveMongoRepository</a> interface. This interface also lets us compose mongodb queries to fetch and extract our data.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">TeamRepository</span> <span style="color:#66d9ef">extends</span> ReactiveMongoRepository<span style="color:#f92672">&lt;</span>Team<span style="color:#f92672">,</span> String<span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
     <span style="color:#a6e22e">@Query</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;{$or: [{name: \\/REDS|BLUES\\/}]}&#34;</span><span style="color:#f92672">)</span>
     Flux<span style="color:#f92672">&lt;</span>Team<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">getMyFavorites</span><span style="color:#f92672">();</span>
@@ -367,13 +381,13 @@ into a stream with expectations that our one element is observed before a comple
     Mono<span style="color:#f92672">&lt;</span>Team<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">getTeamByName</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">);</span>
 <span style="color:#f92672">}</span></code></pre></div>
 <p>In addition to the above mentioned query, we also get the complete host of Spring Data Repository operations.
-adding our <code>getMyFavorites()</code> query is contributing variance which we will need to test. In contrast, our <code>getTeamByName</code> method consumes the invariant query pattern supported by Spring Data Repositories; testing it is redundant (given Repository test coverage at Spring is up to snuff).</p>
+adding our <code>getMyFavorites()</code> query is contributing variance which we will need to test. In contrast, our <code>getTeamByName</code> method consumes the invariant query pattern supported by Spring Data Repositories; testing it is redundant - given this functionaly is already well tested.</p>
 
 <h2 id="sliced-framework-tests">Sliced Framework Tests</h2>
 
-<p>Make your data tests run quickly by slicing up the Spring Context at startup time. This can be done using [Spring Test Slices]() and extending your slice (framework test dependency exclusions were introduced in Spring Boot 1.4) to meet your needs during that phase of the test. We can objserve this  with [DataMongoTest]() which provided just the mongodb testing supports used in the next few units. It requires a very simple test context bootstrap, followed by specific exclusions that are selective eliminations of our full path-scaning behaviour. Finally, it adds just <code>spring-mongo</code> framework resources to component scan.</p>
+<p>Make your data tests run quickly by slicing up the Spring Context at startup time. This can be done using <a href="https://spring.io/blog/2016/08/30/custom-test-slice-with-spring-boot-1-4">Spring Test Slices</a> and extending your slice (framework test dependency exclusions were introduced in Spring Boot 1.4) to meet your needs during that phase of the test. We can objserve this  with <a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/test/autoconfigure/data/mongo/DataMongoTest.html">DataMongoTest</a> which provided just the mongodb testing supports used in the next few units. It requires a very simple test context bootstrap, followed by specific exclusions that are selective eliminations of our full path-scaning behaviour. Finally, it adds just <code>spring-mongo</code> framework resources to component scan.</p>
 
-<p>We can explore this [DataMongoTest]() further, by examining inside the DataMongoTest declaration:</p>
+<p>We can explore this <code>DataMongoTest</code> annotation further, by examining it&rsquo;s declaration.</p>
 
 <p>DataMongotest.java:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Target</span><span style="color:#f92672">(</span>ElementType<span style="color:#f92672">.</span><span style="color:#a6e22e">TYPE</span><span style="color:#f92672">)</span>
@@ -388,17 +402,28 @@ adding our <code>getMyFavorites()</code> query is contributing variance which we
 <span style="color:#a6e22e">@ImportAutoConfiguration</span>
 <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">@interface</span> DataMongoTest <span style="color:#f92672">{</span>
     <span style="color:#f92672">//...</span></code></pre></div>
-<p>As in many test slices, the use of the provided <a href="https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-autoconfigured-tests">Auto Configured Tests</a> helps specify specific feature &ldquo;slices&rdquo; we want to re-use. Thusly the <code>@DataMongoTest</code> is limited to just Cache ( in which NONE is default ), and Mongo-related data ( E.G. <code>@Document</code>, <code>DataMongoRepository</code> ) resources.</p>
+<p>This test slice is a composition of: a standard bootstrap context (the <code>@BootstrapWith(SpringBootTestContextBootstrapper.class)</code>), an <a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/context/TypeExcludeFilter.html">TypeExclusionFilter</a> to inhibit autoscanning of any non Data/Mongo configurations. And Finally several &ldquo;slices&rdquo; (like modules in Guice) - autoconfigurations for Cache, and MongoDB.</p>
 
-<h2 id="talking-to-mongodb-during-test">Talking to MongoDB during test</h2>
+<p>The use of the provided <a href="https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-autoconfigured-tests">Auto Configured Tests</a> helps specify specific feature &ldquo;slices&rdquo; we want to re-use. Thusly the <code>@DataMongoTest</code> is limited to just Cache ( in which NONE is default ), and Mongo-related data ( E.G. <code>@Document</code>, <code>DataMongoRepository</code> ) resources.</p>
 
-<p>Lets look at the what data tests will look like. The <code>@DataMongoTest</code> class shows us we can expect any mongo based framework components and resources - network resources - to get configured. An embedded instance can be setup with the <a href="https://flapdoodle-oss.github.io/de.flapdoodle.embed.mongo/">Embedmongo.flapdoodle.de</a> plugin, if any are on the classpath. Otherwise, expect to stand up a single mongodb instance for local connections.</p>
+<pre><code>NOTE: Test slices like `@DataMongoTest` can be tweaked/extended, or you can work your own conveinient slice for the resources that make most sense to your application.
+</code></pre>
 
+<p>The end result is always that our application context will contain only components needed to execute a certain test or test suite. This is like enforcing separation of concerns ( dont test data when testing web) and allows developers to concentrate on the layer of our app in which test test must validate.</p>
+
+<h2 id="embedding-mongodb-during-test">Embedding MongoDB During Test</h2>
+
+<p>Lets look at the what our persistence tests will look like. The <code>@DataMongoTest</code> class shows us we can expect any mongo based framework components and resources - network resources - to get configured. An embedded instance can be setup with the <a href="https://flapdoodle-oss.github.io/de.flapdoodle.embed.mongo/">Embedmongo.flapdoodle.de</a> plugin, if any are on the classpath. Otherwise, expect to stand up a single mongodb instance for local connections to test with.</p>
+
+<p>Installing Mongodb locallay with Homebrew:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ brew install mongodb
+$ brew services start mongodb
+<span style="color:#f92672">==</span>&gt; Successfully started <span style="color:#e6db74">`</span>mongodb<span style="color:#e6db74">`</span> <span style="color:#f92672">(</span>label: homebrew.mxcl.mongodb<span style="color:#f92672">)</span>
+$ # ahhh</code></pre></div>
 <p>Lets consider the following maven build (pom.xml) dependency needed to get the <code>Embedmongo</code> plugin working:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;dependency&gt;</span>
  <span style="color:#f92672">&lt;groupId&gt;</span>de.flapdoodle.embed<span style="color:#f92672">&lt;/groupId&gt;</span>
  <span style="color:#f92672">&lt;artifactId&gt;</span>de.flapdoodle.embed.mongo<span style="color:#f92672">&lt;/artifactId&gt;</span>
- <span style="color:#f92672">&lt;version&gt;</span>2.0.3-SNAPSHOT<span style="color:#f92672">&lt;/version&gt;</span>
  <span style="color:#f92672">&lt;scope&gt;</span>test<span style="color:#f92672">&lt;/scope&gt;</span>
 <span style="color:#f92672">&lt;/dependency&gt;</span></code></pre></div>
 <p>Now, we can expect the embedded mongo instance to stand in place of our locally deployed mongo instance.</p>
@@ -437,26 +462,33 @@ issuing commands for populating our mongo collection, then finding the data usin
                 <span style="color:#f92672">.</span><span style="color:#a6e22e">verifyComplete</span><span style="color:#f92672">();</span>
     <span style="color:#f92672">}</span>
 <span style="color:#f92672">}</span></code></pre></div>
+<p>This <code>testShouldFetchFavorites</code> unit simply interacts with mongo to store state, and retrieve it. We are able to compose a relatively simple reactive stream, and verify that our data made it into mongo, and back without side-effects.</p>
+
+<p>The <a href="http://junit.sourceforge.net/javadoc/org/junit/runner/RunWith.html">RunWith(SpringRunner.class)</a> annotation tells JUnit to start spring-dependency injection and auto-scanning for our test. It is a convienence of manually configuring the <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/test/context/junit4/SpringJUnit4ClassRunner.html">SpringJUnit4ClassRunner</a> done in prior versions of Spring.</p>
+
 <p>This <code>@DataMongoTest</code> will get executed against the in-memory mongo instance we configured earlier. Thus no actual state is kept. On the other hand, if you&rsquo;re using real instances, you&rsquo;ll need to ensure that this data gets deleted each time.</p>
 
 <h1 id="the-webfluxtest">The WebFluxTest</h1>
 
-<p>Now to the RESTful HTTP services. We want to ultimately expose our data to web clients. We can acheive this in the reactive world with <code>WebFlux</code>. Lets put together a single endpoint to use as our entry point.</p>
+<p>Now to the RESTful HTTP services. We want to ultimately expose our data to web clients. We can acheive this in the reactive world with <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html">WebFlux</a>. Lets put together a couple of endpoints to access our app in test (and prod).</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Configuration</span>
 <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SportsNetWebConfig</span> <span style="color:#f92672">{</span>
 
     <span style="color:#a6e22e">@Bean</span>
     RouterFunction<span style="color:#f92672">&lt;</span>ServerResponse<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">routes</span><span style="color:#f92672">(</span>TeamRepository cr<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-        <span style="color:#66d9ef">return</span> route<span style="color:#f92672">(</span>GET<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/teams/all&#34;</span><span style="color:#f92672">),</span> r <span style="color:#f92672">-&gt;</span> ServerResponse<span style="color:#f92672">.</span><span style="color:#a6e22e">ok</span><span style="color:#f92672">().</span><span style="color:#a6e22e">body</span><span style="color:#f92672">(</span>cr<span style="color:#f92672">.</span><span style="color:#a6e22e">findAll</span><span style="color:#f92672">(),</span> Team<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">));</span>
+        <span style="color:#66d9ef">return</span>
+                route<span style="color:#f92672">(</span>GET<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/teams/all&#34;</span><span style="color:#f92672">),</span> r <span style="color:#f92672">-&gt;</span> ServerResponse<span style="color:#f92672">.</span><span style="color:#a6e22e">ok</span><span style="color:#f92672">().</span><span style="color:#a6e22e">body</span><span style="color:#f92672">(</span>cr<span style="color:#f92672">.</span><span style="color:#a6e22e">findAll</span><span style="color:#f92672">(),</span> Team<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">))</span>
+                <span style="color:#f92672">.</span><span style="color:#a6e22e">and</span><span style="color:#f92672">(</span>route<span style="color:#f92672">(</span>GET<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/teams/favorite&#34;</span><span style="color:#f92672">),</span> r <span style="color:#f92672">-&gt;</span> ServerResponse<span style="color:#f92672">.</span><span style="color:#a6e22e">ok</span><span style="color:#f92672">().</span><span style="color:#a6e22e">body</span><span style="color:#f92672">(</span>cr<span style="color:#f92672">.</span><span style="color:#a6e22e">getMyFavorites</span><span style="color:#f92672">(),</span> Team<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">)));</span>
+
     <span style="color:#f92672">}</span>
 <span style="color:#f92672">}</span></code></pre></div>
-<p>In this service, we use programmatic functional interfaces to delcare our HTTP endpoints. Here we simply route <code>&quot;teams/all&quot;</code> to an OK response with a body continaing the JSON output of our <code>findAll()</code> repository method.</p>
+<p>In this service, we use programmatic functional interfaces to declare our HTTP endpoints. Here we simply route <code>&quot;teams/all&quot;</code> to an OK response with a body continaing the JSON output of our <code>findAll()</code> repository method. Similarly, the <code>&quot;/teams/favorite&quot;</code> will route to the JSON output of our <code>getMyFavorites()</code> repository method.</p>
 
 <h2 id="the-webflux-test-slice">The WebFlux Test Slice</h2>
 
-<p>Similar to <code>@DataMongoTest</code> slice in which the DATA stack is sliced out and exposed exclusively, we have a test slice that exhibits similar behaviour for the Web stack. Lets look into this annotation to see what it gives us.</p>
+<p>Similar to <code>@DataMongoTest</code> slice in which the data stack is sliced out and exposed exclusively, we have a test slice that exhibits similar behaviour for the Web stack. Lets look into this annotation to see what it gives us.</p>
 
-<p>Using the <a href="https://docs.spring.io/autorepo/docs/spring-boot/current/api/org/springframework/boot/test/autoconfigure/web/reactive/WebFluxTest.html">@WebFluxTest</a> meta annotation gives us our WebFlux HTTP service capability, a Json Object Mapper and a client among other web related components. To see what this looks like, we&rsquo;ll check into the <code>@WebFluxTest</code> code for clues.</p>
+<p>Using the <a href="https://docs.spring.io/autorepo/docs/spring-boot/current/api/org/springframework/boot/test/autoconfigure/web/reactive/WebFluxTest.html">@WebFluxTest</a> meta annotation gives us our WebFlux HTTP service capability, a Json Object Mapper and a client among other web related components. To see what this looks like, we&rsquo;ll check into the <code>@WebFluxTest</code> code.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Target</span><span style="color:#f92672">(</span>ElementType<span style="color:#f92672">.</span><span style="color:#a6e22e">TYPE</span><span style="color:#f92672">)</span>
 <span style="color:#a6e22e">@Retention</span><span style="color:#f92672">(</span>RetentionPolicy<span style="color:#f92672">.</span><span style="color:#a6e22e">RUNTIME</span><span style="color:#f92672">)</span>
 <span style="color:#a6e22e">@Documented</span>
@@ -469,10 +501,15 @@ issuing commands for populating our mongo collection, then finding the data usin
 <span style="color:#a6e22e">@AutoConfigureWebTestClient</span>
 <span style="color:#a6e22e">@ImportAutoConfiguration</span>
 <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">@interface</span> WebFluxTest <span style="color:#f92672">{</span></code></pre></div>
-<p>Without going into too much detail, we can describe this class as a slice which gives us our standard bootstrap context, in addition to autoscanned WebFlux-friendly components ( @Controller&rsquo;s , @Converter&rsquo;s, WebfluxConfigurer ) we get test WebFlux support through <a href="https://docs.spring.io/autorepo/docs/spring-boot/current/api/org/springframework/boot/test/autoconfigure/web/reactive/AutoConfigureWebFlux.html">@AutoConfigureWebFlux</a> and the <a href="https://docs.spring.io/autorepo/docs/spring-boot/current/api/org/springframework/boot/test/autoconfigure/web/reactive/AutoConfigureWebTestClient.html">@AutoConfigureWebTestClient</a> provides a configured <a href="https://docs.spring.io/spring-framework/docs/5.0.2.BUILD-SNAPSHOT/javadoc-api/org/springframework/test/web/reactive/server/WebTestClient.html">WebTestClient</a> which if used as is, connects to a standard running &lsquo;LIVE&rsquo; server.</p>
+<p>Without going into too much detail, we can describe this class as a slice which gives us our bootstrapped <code>WebFluxTestContextBootstrapper</code> context, in addition to autoscanned WebFlux-friendly components ( @Controller&rsquo;s , @Converter&rsquo;s, WebfluxConfigurer ) through it&rsquo;s <code>ExclusionFilter</code> [WebFluxTypeExcludeFilter]() we get test WebFlux support through <a href="https://docs.spring.io/autorepo/docs/spring-boot/current/api/org/springframework/boot/test/autoconfigure/web/reactive/AutoConfigureWebFlux.html">@AutoConfigureWebFlux</a> and the <a href="https://docs.spring.io/autorepo/docs/spring-boot/current/api/org/springframework/boot/test/autoconfigure/web/reactive/AutoConfigureWebTestClient.html">@AutoConfigureWebTestClient</a> provides a configured <a href="https://docs.spring.io/spring-framework/docs/5.0.2.BUILD-SNAPSHOT/javadoc-api/org/springframework/test/web/reactive/server/WebTestClient.html">WebTestClient</a> which if used as is, connects to a standard running &lsquo;LIVE&rsquo; server.</p>
 
 <h2 id="our-webflux-test">Our WebFlux Test</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#a6e22e">@Autowired</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@WebFluxTest</span>
+<span style="color:#a6e22e">@Import</span><span style="color:#f92672">(</span>SportsNetWebConfig<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">)</span>
+<span style="color:#a6e22e">@RunWith</span><span style="color:#f92672">(</span>SpringRunner<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SportsNetWebTest</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#a6e22e">@Autowired</span>
     <span style="color:#66d9ef">private</span> SportsNetWebConfig webConfig<span style="color:#f92672">;</span>
 
     <span style="color:#a6e22e">@MockBean</span>
@@ -496,11 +533,11 @@ issuing commands for populating our mongo collection, then finding the data usin
 
 <span style="color:#75715e">// Test... to follow
 </span><span style="color:#75715e"></span><span style="color:#f92672">}</span></code></pre></div>
-<p>The major difference being a lack of backing data layer, and to get around this we must mock our repository beans with [@MockBean]() annotation. Then setup our mock stubs inside a <code>@before</code> clause or even on top of the unit itself. This setup simply interacts with [Mockito]() directly and lets us define the mock behavior of our repository.</p>
+<p>Due to exluion filters - neither did we didnt add any test data layer slice - there is no backing data layer for real per-se, a lack of persistence. To aleiviate this we can use <a href="https://site.mockito.org/">Mockito</a> to mock and stub our data repositories. Here, we&rsquo;ll mock our team <code>TeamRepository</code> beans using the <a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/test/mock/mockito/MockBean.html">@MockBean</a> annotation. Then setup our mock stubs inside a <code>@before</code> clause or even on top of the unit itself. This setup simply interacts with <code>Mockito</code> directly and lets us define the behavior of our repository.</p>
 
 <h2 id="the-webtestclient">The WebTestClient</h2>
 
-<p>In this example, we want to test our HTTP controller (routes) but not connect to a live server. The <code>WebTestClient</code> allows mocked <code>exchange</code> request/respondses by exposing multiple [bindToXxx]() methods. How this works is outlined in the <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/pdf/testing.pdf#mock-objects-web-reactive">Spring Framework Reference</a>:</p>
+<p>In this example, we want to test our HTTP controller (routes) but not connect to a live server. The <code>WebTestClient</code> allows mocked <code>exchange</code> request/respondses by exposing multiple <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/test/web/reactive/server/WebTestClient.html#bindToApplicationContext-org.springframework.context.ApplicationContext-">bindToXxx</a> methods. This lets us bind our client to specific points in our web application for example ; <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/test/web/reactive/server/WebTestClient.html#bindToController-java.lang.Object...-">Controllers</a>, <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/test/web/reactive/server/WebTestClient.html#bindToRouterFunction-org.springframework.web.reactive.function.server.RouterFunction-">RouterFunctions</a>, etc&hellip; Our Sample will bind to the RouterFunction we defined in our REST service earlier. For more information on <code>WebTestClient</code> binding options, see  the <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/pdf/testing.pdf#mock-objects-web-reactive">Spring Framework Reference</a>:</p>
 
 <pre><code>The package `org.springframework.mock.http.server.reactive` contains mock implementations of
 `ServerHttpRequest` and `ServerHttpResponse` for use in WebFlux applications. The package
@@ -508,7 +545,7 @@ issuing commands for populating our mongo collection, then finding the data usin
 mock request and response objects.
 </code></pre>
 
-<p>The big win here, is we get to talk to our web services without holding ip a TCP connection, while in the process making our tests faster to execute.</p>
+<p>By exposing the underpinnnings of our service application, we get to talk to our RESTful endpoints without spinning up any additional resources, while in the process making our tests faster to execute, this adds to make our tests less complicated.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#a6e22e">@Test</span>
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">testShouldGetAll</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
 
@@ -525,7 +562,7 @@ mock request and response objects.
                 <span style="color:#f92672">.</span><span style="color:#a6e22e">jsonPath</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;$.[1].id&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">isEqualTo</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;2&#34;</span><span style="color:#f92672">)</span>
                 <span style="color:#f92672">.</span><span style="color:#a6e22e">jsonPath</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;$.[1].name&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">isEqualTo</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;BLUES&#34;</span><span style="color:#f92672">);</span>
     <span style="color:#f92672">}</span></code></pre></div>
-<p>Running the <code>bindToRouterFunction()</code> requires our injection instance of WebConfig.java.  Once <code>built()</code>, we are able to specify METHOD and URI. Upon <code>Exchange</code>, you will find that we can begin issuing our test expectations. In this case, a Fluent API is returned in the form of a <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/test/web/reactive/server/WebTestClient.ResponseSpec.html">ResponseSpec</a> that we then use to plug in our expectations.  Specifically, if not especially worth noting with JSON response, we can use the <code>jsonPath</code> queries to identify body characteristics. This feature stems from the re-use of <a href="https://github.com/json-path/JsonPath">com.jayway</a> <a href="http://goessner.net/articles/JsonPath/">JSONPath</a> evaluator.</p>
+<p>Our client is ready after calling <code>build()</code>. We can then specify the request/response expections that will get invocated to our <code>RouterFunction</code>. Calling <code>Exchange</code> with the <code>WebTestClient</code>, will allow us to assemble the assertion path. This <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/test/web/reactive/server/WebTestClient.ResponseSpec.html">WebTestClient.ResponseSpec</a> provides a fluent API that we then use to plug in our expectations.  Specially worth mentioning is th use of JSON-specific expressions using via <code>jsonPath</code> queries to identify body characteristics. This feature stems from the re-use of <a href="https://github.com/json-path/JsonPath">com.jayway</a> <a href="http://goessner.net/articles/JsonPath/">JSONPath</a> evaluator.</p>
 
 <h2 id="testing-web-with-stepverifier">Testing Web with StepVerifier</h2>
 
@@ -548,7 +585,8 @@ mock request and response objects.
                 <span style="color:#f92672">.</span><span style="color:#a6e22e">verifyComplete</span><span style="color:#f92672">();</span>
 
     <span style="color:#f92672">}</span></code></pre></div>
-<p>If re-using verification logic is your strategy - instances with many mutations - then it can free up time delivering new permutations and endpoints.</p>
+<p>We lose the ability to introspect HTTP conditions, but we gain the ability to use a common reactive test
+approach to our service.</p>
 
 <h1 id="the-need-for-contracts">The need for Contracts</h1>
 
@@ -693,7 +731,7 @@ Contract<span style="color:#f92672">.</span><span style="color:#a6e22e">make</sp
   
     and tagged <a href="/tags/cdct/">cdct</a>, <a href="/tags/demo/">demo</a>, <a href="/tags/java/">java</a>, <a href="/tags/producer/">producer</a>, <a href="/tags/reactive/">reactive</a>, <a href="/tags/spring/">spring</a>, <a href="/tags/test/">test</a> and <a href="/tags/web/">web</a>
   
-  using <span itemprop="wordCount">2159</span> words.
+  using <span itemprop="wordCount">2634</span> words.
 </p>
 
       
