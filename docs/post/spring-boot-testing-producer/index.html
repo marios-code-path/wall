@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Testing Reactive Cloud Apps with SpringBoot | # sudo init 5 - beta</title>
     <meta name="description" content="Use Spring-boot 2.x to verify test stages of your WebFlux and Reactive Data Apps">
-    <meta name="keywords" content="reactive, test, java, spring, web, demo, producer, cdct">
+    <meta name="keywords" content="reactive, web, webflux, test, java, spring, demo, producer, cdct">
     
     
     
@@ -236,11 +236,11 @@ article header img {
 
 <meta itemprop="datePublished" content="2018-09-19T00:00:00-07:00" />
 <meta itemprop="dateModified" content="2018-09-13T00:00:00-07:00" />
-<meta itemprop="wordCount" content="2634">
+<meta itemprop="wordCount" content="2684">
 
 
 
-<meta itemprop="keywords" content="reactive,test,java,spring,web,demo,producer,cdct," />
+<meta itemprop="keywords" content="reactive,web,webflux,test,java,spring,demo,producer,cdct," />
 
     <header>
       <h1 itemprop="headline">Testing Reactive Cloud Apps with SpringBoot</h1>
@@ -292,7 +292,7 @@ article header img {
 <li><a href="#spring-cloud-contract-maven-plugin">Spring Cloud Contract Maven Plugin</a></li>
 <li><a href="#the-contract-definition">The contract definition</a></li>
 </ul></li>
-<li><a href="#know-what">Know What?</a></li>
+<li><a href="#knowledge-for-this-example">Knowledge for This example</a></li>
 </ul>
 </nav>
   </details>
@@ -317,7 +317,7 @@ article header img {
 
 <h1 id="the-producer-environment">The Producer Environment</h1>
 
-<p>In the world of testing, we dont need much inspiration to get the job  done. However, when it comes to <em>what</em> to use, you may be left wandering whether you&rsquo;ll hit all of the right frameworks and tools to validate your business code. Also likely, you&rsquo;ll also need to figure out how to cross validate a producer app with a consumer app(s) that you may not even own!</p>
+<p>In the world of testing critical business funcationality, we dont need much inspiration to get the job  done. However, when it comes to <em>what</em> to use, you may be left wandering whether you&rsquo;ll hit all of the right frameworks and tools to validate your business code. Also likely, you&rsquo;ll also need to figure out how to cross validate a producer app with a consumer app(s) that you may not even own!</p>
 
 <p>This article will go into detail to show tools and techniques you&rsquo;ll likely need during your journey to satisfactory test coverage. Well written tests and coverage, means giving other developers the opportunity to make good decisions about what happens in later iterations.</p>
 
@@ -590,11 +590,13 @@ approach to our service.</p>
 
 <h1 id="the-need-for-contracts">The need for Contracts</h1>
 
-<p>while verification of our web endpoints on the service is alone neccessary and substantially beneficial to the code base. It&rsquo;s no better visibile to the client as to how this service behaves. What does the client developer expect to do in place? It&rsquo;s usually something like deploy the trunk or tag of this service and test against it. Which means deploying additional resources like databases, and before we know it, theres several servers running to support this ephemeral test.
+<p>While verification of our web endpoints on the service is alone neccessary and substantially beneficial to the code base. It&rsquo;s no better visibile to the client as to how this service behaves. What does the client developer expect to do in place? It&rsquo;s usually something like deploy the trunk or tag of this service and test against it. Which means deploying additional resources like databases, and before we know it, theres several servers running to support this ephemeral test.
 <!-- Insert a pic --></p>
 
-<p>Consumer Driven Contract Testing means we can share contracts (of service behavior) between both sides of the communication chain. Thus this example will verify the <code>producer</code> side of this HTTP request / response exchange.
+<p>Consumer Driven Contract Testing means we can share contracts (of service behavior) between both sides of the communication chain. This example will verify the <code>producer</code> side of this HTTP request / response exchange.
 <!-- Insert a pic --></p>
+
+<p><a href="https://cloud.spring.io/spring-cloud-contract/">Spring Cloud Contract</a> allows us to engage this method of development with ease. The next couple of sections explores this.</p>
 
 <h2 id="spring-cloud-contract-maven-plugin">Spring Cloud Contract Maven Plugin</h2>
 
@@ -619,7 +621,7 @@ approach to our service.</p>
             <span style="color:#f92672">&lt;/plugin&gt;</span>
         <span style="color:#f92672">&lt;/plugins&gt;</span>
     <span style="color:#f92672">&lt;/build&gt;</span></code></pre></div>
-<p>This base class will have to allow access to a running or mock HTTP service. The easiest way to do this is to use [RestAssured]() API to expose your routeFunctions, since it&rsquo;s used as a default client/server. Alternately you can set <code>&quot;spring.main.web-application-type=reactive&quot;</code> in properties to enable the Reactive WebFlux servers. The clients may still use restassured, unless it&rsquo;s been disabled through dependency exlusion in your build tool, however.</p>
+<p>This base class will have to allow access to a running or mock HTTP service. The easiest way to do this is to use <a href="http://rest-assured.io/">RestAssured</a> API to expose your routeFunctions, since it&rsquo;s used as a default client/server. Alternately you can set <code>&quot;spring.main.web-application-type=reactive&quot;</code> in properties to enable the Reactive WebFlux servers. The clients may still use restassured, unless it&rsquo;s been disabled through dependency exlusion in your build tool, however.</p>
 
 <p>Here is our verificaion test BaseClass. It will setup a RestAssured MVC server containing our RouterFunction definition, while mocking out our repository for data queries.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RunWith</span><span style="color:#f92672">(</span>SpringRunner<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">)</span>
@@ -700,15 +702,20 @@ Contract<span style="color:#f92672">.</span><span style="color:#a6e22e">make</sp
     <span style="color:#f92672">}</span>
 
 <span style="color:#f92672">}</span></code></pre></div>
-<p>Running <code>mvn clean install</code> with a passing verification will also publish an artifact to archive or local dependency repository.
-]</p>
+<p>Running <code>mvn clean install</code> with a passing verification will also publish an artifact to archive or local dependency repository. We can now wrap up the Producer side of our tests, and begin focusing on the <a href="https://www.sudoinit5.com/post/spring-boot-testing-consumer/">Consumer side</a>.</p>
 
-<h1 id="know-what">Know What?</h1>
+<h1 id="knowledge-for-this-example">Knowledge for This example</h1>
 
 <ul>
+<li><p><a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/pdf/testing-webtestclient.pdf">WebTestClient Documentation</a></p></li>
+
+<li><p><a href="https://cloud.spring.io/spring-cloud-contract/multi/multi__contract_dsl.html">Spring Cloud Contract DSL</a></p></li>
+
+<li><p><a href="https://martinfowler.com/articles/consumerDrivenContracts.html">Fowler on CDC</a></p></li>
+
 <li><p>Maps are <a href="https://en.wikipedia.org/wiki/Injective_function">Injective Functions</a> f(x) -&gt; y for any value of x and y</p></li>
 
-<li><p><a href="http://www.cut-the-knot.org/arithmetic/constructibleExamples.shtml">Constructable numbers</a> Are pretty interesting</p></li>
+<li><p>Are pretty <a href="http://www.cut-the-knot.org/arithmetic/constructibleExamples.shtml">Constructable numbers</a> interesting</p></li>
 </ul>
 
     </div>
@@ -726,12 +733,12 @@ Contract<span style="color:#f92672">.</span><span style="color:#a6e22e">make</sp
     19 Sep, 2018
   </time>
   
-    in <span itemprop="articleSection"><a href="/categories/bootifultest/">bootifultest</a>, <a href="/categories/reactive/">reactive</a>, <a href="/categories/spring/">spring</a>, <a href="/categories/testing/">testing</a> and <a href="/categories/webflux/">webflux</a></span>
+    in <span itemprop="articleSection"><a href="/categories/bootifultest/">bootifultest</a>, <a href="/categories/cdc/">cdc</a>, <a href="/categories/cdct/">cdct</a>, <a href="/categories/reactive/">reactive</a>, <a href="/categories/spring/">spring</a>, <a href="/categories/test/">test</a>, <a href="/categories/test-frameworks/">test-frameworks</a> and <a href="/categories/webflux/">webflux</a></span>
   
   
-    and tagged <a href="/tags/cdct/">cdct</a>, <a href="/tags/demo/">demo</a>, <a href="/tags/java/">java</a>, <a href="/tags/producer/">producer</a>, <a href="/tags/reactive/">reactive</a>, <a href="/tags/spring/">spring</a>, <a href="/tags/test/">test</a> and <a href="/tags/web/">web</a>
+    and tagged <a href="/tags/cdct/">cdct</a>, <a href="/tags/demo/">demo</a>, <a href="/tags/java/">java</a>, <a href="/tags/producer/">producer</a>, <a href="/tags/reactive/">reactive</a>, <a href="/tags/spring/">spring</a>, <a href="/tags/test/">test</a>, <a href="/tags/web/">web</a> and <a href="/tags/webflux/">webflux</a>
   
-  using <span itemprop="wordCount">2634</span> words.
+  using <span itemprop="wordCount">2684</span> words.
 </p>
 
       
@@ -747,20 +754,20 @@ Contract<span style="color:#f92672">.</span><span style="color:#a6e22e">make</sp
         <li><a href="/post/spring-reactive-auth-basic/">Setup and customize Authentication against a WebFlux Application</a>
         <time datetime="4M">4 minutes</time>
       
-        <li><a href="/post/spring-kafka/">Sending and consuming messages with Spring and KafKa</a>
-        <time datetime="5M">5 minutes</time>
-      
         <li><a href="/post/spring-reactive-ws-hot-server/">Spring Reactive WebSocket Hot Publisher</a>
         <time datetime="2M">2 minutes</time>
       
         <li><a href="/post/spring-reactive-ws-cold-server/">Spring Reactive WebSocket Cold Publisher</a>
         <time datetime="3M">3 minutes</time>
       
-        <li><a href="/post/spring-reactive-ws-client/">Reactive Websocket Client with Spring</a>
+        <li><a href="/post/spring-kafka/">Sending and consuming messages with Spring and KafKa</a>
+        <time datetime="5M">5 minutes</time>
+      
+        <li><a href="/post/spring-reactive-authorization/">Configuring Authorization with Reactive Spring Security 5</a>
         <time datetime="3M">3 minutes</time>
       
-        <li><a href="/post/spring-test-slices/">Spring Test Slices</a>
-        <time datetime="5M">5 minutes</time>
+        <li><a href="/post/spring-reactive-ws-client/">Reactive Websocket Client with Spring</a>
+        <time datetime="3M">3 minutes</time>
       
     </ul>
   </aside>
