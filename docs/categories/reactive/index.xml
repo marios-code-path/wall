@@ -6,15 +6,25 @@
     <description>Recent content in Reactive on # sudo init 5 - beta</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Thu, 13 Sep 2018 00:00:00 -0700</lastBuildDate>
+    <lastBuildDate>Thu, 13 Sep 2018 00:00:00 -0400</lastBuildDate>
     
 	<atom:link href="https://www.sudoinit5.com/categories/reactive/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Testing Reactive Apps with SpringBoot - The Consumer</title>
+      <link>https://www.sudoinit5.com/post/spring-boot-testing-consumer/</link>
+      <pubDate>Thu, 13 Sep 2018 00:00:00 -0400</pubDate>
+      
+      <guid>https://www.sudoinit5.com/post/spring-boot-testing-consumer/</guid>
+      <description>The Producer/Consumer Duality (their exchange) In the producer side, we setup a service that will let us query a database of teams. This article will focus on the consumer side of the communication chain - namely how to extract tests out of situations where the comunication chain is asymetrical. We will then dive into Spring Cloud Contract to aleviate this issue and produce a working producer/consumer contract.
+To start, we&amp;rsquo;ll need a data object for client state.</description>
+    </item>
+    
+    <item>
       <title>Testing Reactive Cloud Apps with SpringBoot</title>
       <link>https://www.sudoinit5.com/post/spring-boot-testing-producer/</link>
-      <pubDate>Thu, 13 Sep 2018 00:00:00 -0700</pubDate>
+      <pubDate>Thu, 13 Sep 2018 00:00:00 -0400</pubDate>
       
       <guid>https://www.sudoinit5.com/post/spring-boot-testing-producer/</guid>
       <description>The Producer Environment In the world of testing critical business funcationality, we dont need much inspiration to get the job done. However, when it comes to what to use, you may be left wandering whether you&amp;rsquo;ll hit all of the right frameworks and tools to validate your business code. Also likely, you&amp;rsquo;ll also need to figure out how to cross validate a producer app with a consumer app(s) that you may not even own!</description>
@@ -23,7 +33,7 @@
     <item>
       <title>Setup and Customize a Login Page With Reactive Spring Security.</title>
       <link>https://www.sudoinit5.com/post/spring-reactive-auth-forms/</link>
-      <pubDate>Sat, 21 Jul 2018 00:00:00 -0700</pubDate>
+      <pubDate>Sat, 21 Jul 2018 00:00:00 -0400</pubDate>
       
       <guid>https://www.sudoinit5.com/post/spring-reactive-auth-forms/</guid>
       <description>Customized WebFlux Form Authentication This demonstration examines Spring Security WebFlux&amp;rsquo;s Authentication mechanisms. We will look at authentication with HTML forms using Mustache, User Authentication, and customized form-based login / logout configurations.
@@ -35,7 +45,7 @@ SecurityConfiguration.java:
     <item>
       <title>Setup and customize Authentication against a WebFlux Application</title>
       <link>https://www.sudoinit5.com/post/spring-reactive-auth-basic/</link>
-      <pubDate>Sat, 14 Jul 2018 00:00:00 -0700</pubDate>
+      <pubDate>Sat, 14 Jul 2018 00:00:00 -0400</pubDate>
       
       <guid>https://www.sudoinit5.com/post/spring-reactive-auth-basic/</guid>
       <description>Configuring Authentication against a WebFlux app This demonstration examines Spring Security WebFlux&amp;rsquo;s Authentication mechanisms. We will look at Authentication request escalation, as well as user-domain customizations.
@@ -46,7 +56,7 @@ Configure ServerHttpSecurity to use HTTP-BASIC by calling it&amp;rsquo;s httpBas
     <item>
       <title>Configuring Authorization with Reactive Spring Security 5</title>
       <link>https://www.sudoinit5.com/post/spring-reactive-authorization/</link>
-      <pubDate>Thu, 05 Jul 2018 00:00:00 -0700</pubDate>
+      <pubDate>Thu, 05 Jul 2018 00:00:00 -0400</pubDate>
       
       <guid>https://www.sudoinit5.com/post/spring-reactive-authorization/</guid>
       <description>Configuring Authorization against a Webflux App Effective security can insulate our applications from ill effects of malicious, and accidental intent in many aspects of programming. Things like network security can only go so far in isolating harm to distributed computing applications. Prevent malicious hackers from gaining access to your systems by ensuring the tools meet the standards for your appcation.
@@ -56,7 +66,7 @@ Spring Security WebFlux is the framework that lets us declare security construct
     <item>
       <title>Spring Reactive WebSocket Hot Publisher</title>
       <link>https://www.sudoinit5.com/post/spring-reactive-ws-hot-server/</link>
-      <pubDate>Wed, 09 May 2018 00:00:00 -0700</pubDate>
+      <pubDate>Wed, 09 May 2018 00:00:00 -0400</pubDate>
       
       <guid>https://www.sudoinit5.com/post/spring-reactive-ws-hot-server/</guid>
       <description>This Demo This is the multi-casting Flux variation of the standard WebSocket Service seen here
@@ -67,7 +77,7 @@ You’ll want to start a new Spring project using start.spring.io[this link] to 
     <item>
       <title>Spring Reactive WebSocket Cold Publisher</title>
       <link>https://www.sudoinit5.com/post/spring-reactive-ws-cold-server/</link>
-      <pubDate>Tue, 08 May 2018 00:00:00 -0700</pubDate>
+      <pubDate>Tue, 08 May 2018 00:00:00 -0400</pubDate>
       
       <guid>https://www.sudoinit5.com/post/spring-reactive-ws-cold-server/</guid>
       <description>This Demo This demo will stand up Spring application service that exposes a WebSocket service through the Spring 5’s reactive WebSockets API. Typically, for inter-service comms, use a more traditional messaging system to deliver and expect events between services for example - messaging brokers such as Kafka, RabbitMq, etc.. WebSockets is an IETF standard and W3C API that provides a convenient way to issue and consume data streams across the Internet.</description>
