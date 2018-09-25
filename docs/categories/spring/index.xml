@@ -26,7 +26,7 @@
       <pubDate>Thu, 13 Sep 2018 00:00:00 -0400</pubDate>
       
       <guid>https://www.sudoinit5.com/post/spring-boot-testing-consumer/</guid>
-      <description>The Producer/Consumer Duality (their exchange) In the producer side, we setup a service that will let us query a database of teams. This article will focus on the consumer side of the communication chain - namely how to extract tests out of situations where the comunication chain is asymetrical. We will then dive into Spring Cloud Contract to aleviate this issue and produce a working producer/consumer contract.
+      <description>The Producer/Consumer exchange In the producer side, we setup a service that will let us query a database of teams. This article will focus on the consumer side of the communication chain - namely how to extract tests out of situations where the comunication chain is asymetrical. We will then dive into Spring Cloud Contract to aleviate this issue and produce a working producer/consumer contract.
 To start, we&amp;rsquo;ll need a data object for client state.</description>
     </item>
     
