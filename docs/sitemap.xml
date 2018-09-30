@@ -89,14 +89,14 @@
   </url>
   
   <url>
-    <loc>https://www.sudoinit5.com/tags/appsec/</loc>
-    <lastmod>2018-07-05T00:00:00-04:00</lastmod>
+    <loc>https://www.sudoinit5.com/categories/appsec/</loc>
+    <lastmod>2018-07-21T00:00:00-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://www.sudoinit5.com/categories/appsec/</loc>
-    <lastmod>2018-07-21T00:00:00-04:00</lastmod>
+    <loc>https://www.sudoinit5.com/tags/appsec/</loc>
+    <lastmod>2018-07-05T00:00:00-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -125,13 +125,13 @@
   </url>
   
   <url>
-    <loc>https://www.sudoinit5.com/tags/cdct/</loc>
+    <loc>https://www.sudoinit5.com/categories/cdct/</loc>
     <lastmod>2018-09-13T00:00:00-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://www.sudoinit5.com/categories/cdct/</loc>
+    <loc>https://www.sudoinit5.com/tags/cdct/</loc>
     <lastmod>2018-09-13T00:00:00-04:00</lastmod>
     <priority>0</priority>
   </url>
@@ -143,13 +143,13 @@
   </url>
   
   <url>
-    <loc>https://www.sudoinit5.com/tags/client/</loc>
+    <loc>https://www.sudoinit5.com/categories/client/</loc>
     <lastmod>2018-05-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://www.sudoinit5.com/categories/client/</loc>
+    <loc>https://www.sudoinit5.com/tags/client/</loc>
     <lastmod>2018-05-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -203,13 +203,13 @@
   </url>
   
   <url>
-    <loc>https://www.sudoinit5.com/tags/faas/</loc>
+    <loc>https://www.sudoinit5.com/categories/faas/</loc>
     <lastmod>2018-02-12T00:00:00-05:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://www.sudoinit5.com/categories/faas/</loc>
+    <loc>https://www.sudoinit5.com/tags/faas/</loc>
     <lastmod>2018-02-12T00:00:00-05:00</lastmod>
     <priority>0</priority>
   </url>
@@ -227,13 +227,13 @@
   </url>
   
   <url>
-    <loc>https://www.sudoinit5.com/tags/flags/</loc>
+    <loc>https://www.sudoinit5.com/categories/flags/</loc>
     <lastmod>2018-08-27T00:00:00-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://www.sudoinit5.com/categories/flags/</loc>
+    <loc>https://www.sudoinit5.com/tags/flags/</loc>
     <lastmod>2018-08-27T00:00:00-04:00</lastmod>
     <priority>0</priority>
   </url>
@@ -263,14 +263,14 @@
   </url>
   
   <url>
-    <loc>https://www.sudoinit5.com/tags/java/</loc>
-    <lastmod>2018-09-13T00:00:00-04:00</lastmod>
+    <loc>https://www.sudoinit5.com/categories/java/</loc>
+    <lastmod>2018-04-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://www.sudoinit5.com/categories/java/</loc>
-    <lastmod>2018-04-16T00:00:00+00:00</lastmod>
+    <loc>https://www.sudoinit5.com/tags/java/</loc>
+    <lastmod>2018-09-13T00:00:00-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -299,13 +299,13 @@
   </url>
   
   <url>
-    <loc>https://www.sudoinit5.com/tags/modules/</loc>
+    <loc>https://www.sudoinit5.com/categories/modules/</loc>
     <lastmod>2018-09-07T00:00:00-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://www.sudoinit5.com/categories/modules/</loc>
+    <loc>https://www.sudoinit5.com/tags/modules/</loc>
     <lastmod>2018-09-07T00:00:00-04:00</lastmod>
     <priority>0</priority>
   </url>
@@ -329,13 +329,13 @@
   </url>
   
   <url>
-    <loc>https://www.sudoinit5.com/tags/reactive/</loc>
+    <loc>https://www.sudoinit5.com/categories/reactive/</loc>
     <lastmod>2018-09-13T00:00:00-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://www.sudoinit5.com/categories/reactive/</loc>
+    <loc>https://www.sudoinit5.com/tags/reactive/</loc>
     <lastmod>2018-09-13T00:00:00-04:00</lastmod>
     <priority>0</priority>
   </url>
@@ -347,13 +347,13 @@
   </url>
   
   <url>
-    <loc>https://www.sudoinit5.com/tags/scala/</loc>
+    <loc>https://www.sudoinit5.com/categories/scala/</loc>
     <lastmod>2018-09-07T00:00:00-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://www.sudoinit5.com/categories/scala/</loc>
+    <loc>https://www.sudoinit5.com/tags/scala/</loc>
     <lastmod>2018-09-07T00:00:00-04:00</lastmod>
     <priority>0</priority>
   </url>
@@ -371,13 +371,13 @@
   </url>
   
   <url>
-    <loc>https://www.sudoinit5.com/tags/spring/</loc>
+    <loc>https://www.sudoinit5.com/categories/spring/</loc>
     <lastmod>2018-09-13T00:00:00-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://www.sudoinit5.com/categories/spring/</loc>
+    <loc>https://www.sudoinit5.com/tags/spring/</loc>
     <lastmod>2018-09-13T00:00:00-04:00</lastmod>
     <priority>0</priority>
   </url>
@@ -395,13 +395,13 @@
   </url>
   
   <url>
-    <loc>https://www.sudoinit5.com/tags/test/</loc>
+    <loc>https://www.sudoinit5.com/categories/test/</loc>
     <lastmod>2018-09-13T00:00:00-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://www.sudoinit5.com/categories/test/</loc>
+    <loc>https://www.sudoinit5.com/tags/test/</loc>
     <lastmod>2018-09-13T00:00:00-04:00</lastmod>
     <priority>0</priority>
   </url>
@@ -425,13 +425,13 @@
   </url>
   
   <url>
-    <loc>https://www.sudoinit5.com/tags/tracing/</loc>
+    <loc>https://www.sudoinit5.com/categories/tracing/</loc>
     <lastmod>2018-04-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://www.sudoinit5.com/categories/tracing/</loc>
+    <loc>https://www.sudoinit5.com/tags/tracing/</loc>
     <lastmod>2018-04-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -443,19 +443,13 @@
   </url>
   
   <url>
-    <loc>https://www.sudoinit5.com/tags/web/</loc>
-    <lastmod>2018-09-13T00:00:00-04:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://www.sudoinit5.com/categories/web/</loc>
     <lastmod>2018-05-09T00:00:00-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://www.sudoinit5.com/tags/webflux/</loc>
+    <loc>https://www.sudoinit5.com/tags/web/</loc>
     <lastmod>2018-09-13T00:00:00-04:00</lastmod>
     <priority>0</priority>
   </url>
@@ -467,13 +461,19 @@
   </url>
   
   <url>
-    <loc>https://www.sudoinit5.com/tags/websocket/</loc>
-    <lastmod>2018-05-09T00:00:00-04:00</lastmod>
+    <loc>https://www.sudoinit5.com/tags/webflux/</loc>
+    <lastmod>2018-09-13T00:00:00-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://www.sudoinit5.com/categories/websocket/</loc>
+    <lastmod>2018-05-09T00:00:00-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.sudoinit5.com/tags/websocket/</loc>
     <lastmod>2018-05-09T00:00:00-04:00</lastmod>
     <priority>0</priority>
   </url>
@@ -491,13 +491,13 @@
   </url>
   
   <url>
-    <loc>https://www.sudoinit5.com/tags/zipkin/</loc>
+    <loc>https://www.sudoinit5.com/categories/zipkin/</loc>
     <lastmod>2018-04-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://www.sudoinit5.com/categories/zipkin/</loc>
+    <loc>https://www.sudoinit5.com/tags/zipkin/</loc>
     <lastmod>2018-04-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
