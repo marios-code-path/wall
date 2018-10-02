@@ -6,7 +6,7 @@
     <description>Recent content in Container on # sudo init 5 - beta</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Mon, 12 Feb 2018 00:00:00 -0500</lastBuildDate>
+    <lastBuildDate>Mon, 12 Feb 2018 00:00:00 -0800</lastBuildDate>
     
 	<atom:link href="https://www.sudoinit5.com/categories/container/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Intro to RIFF Is For Functions</title>
       <link>https://www.sudoinit5.com/post/riff-intro/</link>
-      <pubDate>Mon, 12 Feb 2018 00:00:00 -0500</pubDate>
+      <pubDate>Mon, 12 Feb 2018 00:00:00 -0800</pubDate>
       
       <guid>https://www.sudoinit5.com/post/riff-intro/</guid>
       <description>Motivation of Functions Functions as a Service are a new paradigm for application composition and deployment. Functions are a smaller deployable unit than microservices and especially traditional monoliths. Project Riff is a new Pivotal project that runs functions in a cloud environment like Pivotal Container Services (Kubernetes). Lets get started by setting up a new Riff environment and then creating some functions.
