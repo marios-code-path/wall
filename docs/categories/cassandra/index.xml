@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cassandra on # sudo init 5 - beta</title>
+    <link>https://www.sudoinit5.com/categories/cassandra/</link>
+    <description>Recent content in Cassandra on # sudo init 5 - beta</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Tue, 18 Jun 2019 00:00:00 -0700</lastBuildDate>
+    
+	<atom:link href="https://www.sudoinit5.com/categories/cassandra/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Modeling a chat application message structure with Kotlin and Cassandra</title>
+      <link>https://www.sudoinit5.com/post/spring-data-cassandra-data-modeling/</link>
+      <pubDate>Tue, 18 Jun 2019 00:00:00 -0700</pubDate>
+      
+      <guid>https://www.sudoinit5.com/post/spring-data-cassandra-data-modeling/</guid>
+      <description>This Application Needs Data This sort of application will provide data seek and storage access by implementing the chat messages and chat services interfaces in order to compoase a Cassandra-based data-backend to our application. We will use Reactive extensions to make maximum flexability of program flow-control and threading behaviour among other concerns..
+That Data Model Over There (TDMMOT) This part of the tutorial will focus on chat topicMessage data modeling, and access/retrieve operations that espouse the Cassandra design techniques.</description>
+    </item>
+    
+  </channel>
+</rss>
