@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://www.sudoinit5.com/post/spring-data-cassandra-data-modeling/</loc>
+    <lastmod>2019-06-18T00:00:00-07:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://www.sudoinit5.com/post/spring-boot-testing-producer/</loc>
     <lastmod>2018-09-13T00:00:00-07:00</lastmod>
   </url>
@@ -84,7 +89,7 @@
   
   <url>
     <loc>https://www.sudoinit5.com/</loc>
-    <lastmod>2018-09-13T00:00:00-07:00</lastmod>
+    <lastmod>2019-06-18T00:00:00-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -109,6 +114,18 @@
   <url>
     <loc>https://www.sudoinit5.com/categories/bootifultest/</loc>
     <lastmod>2018-09-13T00:00:00-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.sudoinit5.com/tags/cassandra/</loc>
+    <lastmod>2019-06-18T00:00:00-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.sudoinit5.com/categories/cassandra/</loc>
+    <lastmod>2019-06-18T00:00:00-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -185,8 +202,20 @@
   </url>
   
   <url>
+    <loc>https://www.sudoinit5.com/tags/data/</loc>
+    <lastmod>2019-06-18T00:00:00-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.sudoinit5.com/categories/data/</loc>
+    <lastmod>2019-06-18T00:00:00-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://www.sudoinit5.com/tags/demo/</loc>
-    <lastmod>2018-09-13T00:00:00-07:00</lastmod>
+    <lastmod>2019-06-18T00:00:00-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -281,6 +310,18 @@
   </url>
   
   <url>
+    <loc>https://www.sudoinit5.com/tags/kotlin/</loc>
+    <lastmod>2019-06-18T00:00:00-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.sudoinit5.com/categories/kotlin/</loc>
+    <lastmod>2019-06-18T00:00:00-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://www.sudoinit5.com/categories/kubernetes/</loc>
     <lastmod>2018-02-12T00:00:00-08:00</lastmod>
     <priority>0</priority>
@@ -318,7 +359,7 @@
   
   <url>
     <loc>https://www.sudoinit5.com/post/</loc>
-    <lastmod>2018-09-13T00:00:00-07:00</lastmod>
+    <lastmod>2019-06-18T00:00:00-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -372,13 +413,19 @@
   
   <url>
     <loc>https://www.sudoinit5.com/tags/spring/</loc>
-    <lastmod>2018-09-13T00:00:00-07:00</lastmod>
+    <lastmod>2019-06-18T00:00:00-07:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://www.sudoinit5.com/categories/spring/</loc>
-    <lastmod>2018-09-13T00:00:00-07:00</lastmod>
+    <lastmod>2019-06-18T00:00:00-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.sudoinit5.com/categories/spring-data/</loc>
+    <lastmod>2019-06-18T00:00:00-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -456,7 +503,7 @@
   
   <url>
     <loc>https://www.sudoinit5.com/tags/webflux/</loc>
-    <lastmod>2018-09-13T00:00:00-07:00</lastmod>
+    <lastmod>2019-06-18T00:00:00-07:00</lastmod>
     <priority>0</priority>
   </url>
   
