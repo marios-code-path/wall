@@ -6,7 +6,7 @@
     <description>Recent content in Kotlin on # sudo init 5 - beta</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Tue, 18 Jun 2019 00:00:00 -0700</lastBuildDate>
+    <lastBuildDate>Tue, 18 Jun 2019 00:00:00 -0500</lastBuildDate>
     
 	<atom:link href="https://www.sudoinit5.com/tags/kotlin/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Modeling a chat application message structure with Kotlin and Cassandra</title>
       <link>https://www.sudoinit5.com/post/spring-data-cassandra-data-modeling/</link>
-      <pubDate>Tue, 18 Jun 2019 00:00:00 -0700</pubDate>
+      <pubDate>Tue, 18 Jun 2019 00:00:00 -0500</pubDate>
       
       <guid>https://www.sudoinit5.com/post/spring-data-cassandra-data-modeling/</guid>
       <description>This Application Needs Data This sort of application will provide data seek and storage access by implementing the chat messages and chat services interfaces in order to compoase a Cassandra-based data-backend to our application. We will use Reactive extensions to make maximum flexability of program flow-control and threading behaviour among other concerns..
