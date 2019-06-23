@@ -6,7 +6,7 @@
     <description>Recent content in Cdc on # sudo init 5 - beta</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Thu, 13 Sep 2018 00:00:00 -0500</lastBuildDate>
+    <lastBuildDate>Thu, 13 Sep 2018 00:00:00 -0700</lastBuildDate>
     
 	<atom:link href="https://www.sudoinit5.com/categories/cdc/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Testing Reactive Apps with SpringBoot</title>
       <link>https://www.sudoinit5.com/post/spring-boot-testing-producer/</link>
-      <pubDate>Thu, 13 Sep 2018 00:00:00 -0500</pubDate>
+      <pubDate>Thu, 13 Sep 2018 00:00:00 -0700</pubDate>
       
       <guid>https://www.sudoinit5.com/post/spring-boot-testing-producer/</guid>
       <description>The Producer Environment In the world of testing critical business funcationality, we dont need much inspiration to get the job done. However, when it comes to what to use, you may be left wandering whether you&amp;rsquo;ll hit all of the right frameworks and tools to validate your business code. Also likely, you&amp;rsquo;ll also need to figure out how to cross validate a producer app with a consumer app(s) that you may not even own!</description>
@@ -23,7 +23,7 @@
     <item>
       <title>Testing Reactive Apps with SpringBoot - The Consumer</title>
       <link>https://www.sudoinit5.com/post/spring-boot-testing-consumer/</link>
-      <pubDate>Thu, 13 Sep 2018 00:00:00 -0500</pubDate>
+      <pubDate>Thu, 13 Sep 2018 00:00:00 -0700</pubDate>
       
       <guid>https://www.sudoinit5.com/post/spring-boot-testing-consumer/</guid>
       <description>The Producer/Consumer exchange In the producer side, we setup a service that will let us query a database of teams. This article will focus on the consumer side of the communication chain - namely how to extract tests out of situations where the comunication chain is asymetrical. We will then dive into Spring Cloud Contract to aleviate this issue and produce a working producer/consumer contract.

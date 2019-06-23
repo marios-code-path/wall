@@ -23,9 +23,9 @@
 
 
 
-<meta property="article:published_time" content="2019-06-18T00:00:00-05:00"/>
+<meta property="article:published_time" content="2019-06-18T00:00:00-07:00"/>
 
-<meta property="article:modified_time" content="2019-06-18T00:00:00-05:00"/>
+<meta property="article:modified_time" content="2019-06-18T00:00:00-07:00"/>
 
 
 
@@ -234,9 +234,9 @@ article header img {
 <meta itemprop="description" content="A little implementation for cassandra backed messages, users, and app metadata">
 
 
-<meta itemprop="datePublished" content="2019-06-18T00:00:00-05:00" />
-<meta itemprop="dateModified" content="2019-06-18T00:00:00-05:00" />
-<meta itemprop="wordCount" content="1415">
+<meta itemprop="datePublished" content="2019-06-18T00:00:00-07:00" />
+<meta itemprop="dateModified" content="2019-06-18T00:00:00-07:00" />
+<meta itemprop="wordCount" content="1412">
 
 
 
@@ -254,7 +254,7 @@ article header img {
   <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
 </svg>
 
-  Published: <time datetime="2019-06-18T00:00:00-05:00">18 Jun, 2019</time>
+  Published: <time datetime="2019-06-18T00:00:00-07:00">18 Jun, 2019</time>
 
 
       </p>
@@ -269,16 +269,17 @@ article header img {
     <nav id="TableOfContents">
 <ul>
 <li><a href="#this-application-needs-data">This Application Needs Data</a></li>
-<li><a href="#that-data-model-over-there-tdmmot">That Data Model Over There (TDMMOT)</a></li>
+<li><a href="#thinking-of-data-shape">Thinking of Data Shape</a></li>
 <li><a href="#data-modeling-with-kotlin-co-variant-types">Data Modeling with Kotlin - Co-variant Types</a>
 <ul>
-<li><a href="#complex-composite">Complex Composite</a></li>
+<li><a href="#complex-composite-keys">Complex Composite Keys</a></li>
 <li><a href="#quick-crash-course">QUICK Crash Course</a></li>
 <li><a href="#dude-wheres-my-keys">Dude Wheres My Keys?</a></li>
 <li><a href="#referencing-composite-primary-key-properties">Referencing Composite Primary Key Properties</a></li>
 <li><a href="#binding-pojo-to-tables">Binding POJO to tables</a></li>
 <li><a href="#how-about-the-ddl">How about the DDL?</a></li>
 </ul></li>
+<li><a href="#conclusions">Conclusions</a></li>
 </ul>
 </nav>
   </details>
@@ -305,11 +306,11 @@ article header img {
 
 <p>This sort of application will provide data seek and storage access by implementing the <a href="https://github.com/marios-code-path/demo-chat/blob/master/chat-service/src/main/kotlin/com/demo/chat/domain/Message.kt">chat messages</a> and <a href="https://github.com/marios-code-path/demo-chat/blob/master/chat-service/src/main/kotlin/com/demo/chat/service/ChatService.kt">chat services</a> interfaces in order to compoase a Cassandra-based data-backend to our application. We will use Reactive extensions to make maximum flexability of program flow-control and threading behaviour among <a href="http://www.sudoinit5.com/service-fluxes">other concerns.</a>.</p>
 
-<h1 id="that-data-model-over-there-tdmmot">That Data Model Over There (TDMMOT)</h1>
+<h1 id="thinking-of-data-shape">Thinking of Data Shape</h1>
 
-<p>This part of the tutorial will focus on chat topicMessage data modeling, and access/retrieve operations that espouse the Cassandra design techniques. You can find out more about these methodologies at the datastax website <a href="https://academy.datastax.com/resources/ds220-data-modeling?dxt=blogposting">free video</a>.</p>
+<p>This part of the tutorial will focus on chat topicMessage data shaping, and access/retrieve operations that espouse the Cassandra design techniques. You can find out more about these methodologies at the datastax website <a href="https://academy.datastax.com/resources/ds220-data-modeling?dxt=blogposting">free video</a>.</p>
 
-<p>The first course of action here is to identify the access methods we will need across our data type - in this case, a topicMessage - and how to issue a reliable key across partition nodes.  In this demo, have selected to use <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier">UUID</a> as our ID type. The main reason is it&rsquo; s flexability when used with distributed, multi-server nodes that do not share a counter per data model. UUID&rsquo;s advantage as a consistent and unique key can be summarized <a href="https://docs.datastax.com/en/archived/cql/3.3/cql/cql_reference/timeuuid_functions_r.html">in Datastax Docs</a> and <a href="https://stackoverflow.com/questions/17945677/cassandra-uuid-vs-timeuuid-benefits-and-disadvantages">as discussed in this post on StackOverflow</a>.</p>
+<p>The first course of action here is to identify the access methods we will need across our data type - in this case, a topicMessage - and how to issue a reliable key across partition nodes.  In this demo, have selected to use <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier">UUID</a> as our ID type. The main reason is it&rsquo; s flexibility when used with distributed, multi-server nodes that do not share a counter (such as SQL&rsquo;s auto-increment). UUID&rsquo;s advantage as a consistent and unique key can be summarized <a href="https://docs.datastax.com/en/archived/cql/3.3/cql/cql_reference/timeuuid_functions_r.html">in Datastax Docs</a> and <a href="https://stackoverflow.com/questions/17945677/cassandra-uuid-vs-timeuuid-benefits-and-disadvantages">as discussed in this post on StackOverflow</a>.</p>
 
 <h1 id="data-modeling-with-kotlin-co-variant-types">Data Modeling with Kotlin - Co-variant Types</h1>
 
@@ -326,15 +327,15 @@ which properties were needed.  In order to facilitate this, I created a <code>Me
 </code></pre>
 
 <p>The <code>out</code> keyword tells the JVM that any type of K or V will be a subtype of the specified generic parameter. This gives some sub-type flexibility
-when implementing downstream components that make use of the same Super-types. See Kotlin&rsquo;s <a href="https://kotlinlang.org/docs/reference/generics.html">co-variant/invariante</a> discussions for
+when implementing downstream components that make use of the same Super-types. See Kotlin&rsquo;s <a href="https://kotlinlang.org/docs/reference/generics.html">Generics and Variance documentation</a> discussions for
 more information on this topic.</p>
 
-<h2 id="complex-composite">Complex Composite</h2>
+<h2 id="complex-composite-keys">Complex Composite Keys</h2>
 
-<p>Furthermore, because early on I knew there would be multiple Keying strategies, I created a separate Key support interface that
-allowed the inclusion of various key data such as Message ID, Topic ID, User ID, etc&hellip; The form of keys used in our Cassandra data implementations
+<p>Furthermore, because there would be multiple Keying strategies, there is a separate Key support interface that
+allowed inclusion of data such as Message ID, Topic ID, User ID, etc&hellip; The form of keys used in our Cassandra data implementations
 will make use of each of these Key ID&rsquo;s by giving them specific Key Column annotation ( cluster vs partition ). As the basic message
-will include just it&rsquo;s ID and a timestamp. Lets review the super-type key.</p>
+will include just it&rsquo;s ID and a timestamp. Lets review the supertype key.</p>
 
 <p>MessageKey.kt:</p>
 
@@ -344,7 +345,7 @@ will include just it&rsquo;s ID and a timestamp. Lets review the super-type key.
 }
 </code></pre>
 
-<p>I created the following base type to cover a topic-level message key..</p>
+<p>I created the following subtype to cover a application &lsquo;topic&rsquo; message key..</p>
 
 <p>TopicMessageKey.kt:</p>
 
@@ -355,7 +356,7 @@ will include just it&rsquo;s ID and a timestamp. Lets review the super-type key.
 }
 </code></pre>
 
-<p>Finally, a key sub-type that included the userId - since most messages will be sourced by actual users.</p>
+<p>Finally, a key subtype that included the userId - since most messages will be sourced by actual users.</p>
 
 <p>TextMessageKey.kt:</p>
 
@@ -364,7 +365,7 @@ will include just it&rsquo;s ID and a timestamp. Lets review the super-type key.
 }
 </code></pre>
 
-<p>Any particular message will have it&rsquo;s Key, some kind of Value <generic V parameter> and a visibility flag to indicate whether clients should display whats in the value.</p>
+<p>For the message data, we can include 2 generics - Key type and Value type. I added the visibility flag to indicate whether clients should display whats in the value.</p>
 
 <p>Message.kt:</p>
 
@@ -393,13 +394,13 @@ will include just it&rsquo;s ID and a timestamp. Lets review the super-type key.
 
 <h2 id="dude-wheres-my-keys">Dude Wheres My Keys?</h2>
 
-<p>With the above mental-model in mind, lets discuss key&rsquo;ing characteristics for accessing messages. We find 3 descreet scenarios we will want to flesh out in our Key data models.</p>
+<p>With the above mental-model in mind, lets discuss keying characteristics for accessing messages. We find 3 scenarios to work out in our Keys.</p>
 
 <table>
 <thead>
 <tr>
-<th>Key Property</th>
-<th>Sort Key</th>
+<th>Partition Key</th>
+<th>Cluster Key</th>
 <th>Sort Order</th>
 </tr>
 </thead>
@@ -425,7 +426,7 @@ will include just it&rsquo;s ID and a timestamp. Lets review the super-type key.
 </tbody>
 </table>
 
-<p>Thus, for the first strategy, we only need a partition key on the Message-Id. Nothing real fancy here, just simple old distribution across nodes - handy heavy-read intensity of random-keys.</p>
+<p>Thus, for the first strategy, we only need a partition key on the Message-Id. Nothing real fancy here, just simple old distribution across nodes - handy for heavy-read intensity of random-keys.</p>
 
 <p>ChatMessageKey.kt:</p>
 
@@ -489,7 +490,7 @@ data class ChatMessageByTopicKey(
 ) : Message&lt;T, String&gt;
 </code></pre>
 
-<p>This simple base-class contains the necessary metadata for each decendant class - thus we have a single key property, annotated with &lsquo;@PrimaryKey&rsquo; annotation. I&rsquo;ll let the Java-Doc describe it&rsquo;s behaviour.</p>
+<p>This simple base-class contains the necessary metadata for each descendant class - thus we have a single key property, annotated with &lsquo;@PrimaryKey&rsquo; annotation. I&rsquo;ll let the Java-Doc describe it&rsquo;s behaviour.</p>
 
 <p>PrimaryKey.java:
     * Identifies the primary key field of the entity, which may be of a basic type or of a type that represents a composite
@@ -523,7 +524,7 @@ class ChatMessageByTopic(key: ChatMessageByTopicKey,
                          visible: Boolean) : ChatMessage&lt;ChatMessageByTopicKey&gt;(key, value, visible)
 </code></pre>
 
-<p>I feel this gives maxiumum flexability when creating or extending any additional access concerns.</p>
+<p>I feel this gives maximum flexibility when creating or extending any additional access concerns.</p>
 
 <h2 id="how-about-the-ddl">How about the DDL?</h2>
 
@@ -562,7 +563,9 @@ WITH CLUSTERING ORDER BY (msg_time DESC, msg_id DESC);
 
 <p>If you noticed, I created a compound Key using <code>topic_id</code> and <code>msg_id</code> that enforces order in cluster and allows us to find all messages for a specific topic in the order it was given.</p>
 
-<p>This wraps it up for DDL. We can now concentrate on query operations in the next article - [Cassandra Repositories, or how not to do them]()</p>
+<h1 id="conclusions">Conclusions</h1>
+
+<p>This wraps it up for DDL. We can now concentrate on query operations in the next article - TBA-<a href="http://www.sudoinit5.com/post/spring-data-cassandra-data-query/">Cassandra Repositories, or how not to do them</a></p>
 
     </div>
     
@@ -575,7 +578,7 @@ WITH CLUSTERING ORDER BY (msg_time DESC, msg_id DESC);
       by <span itemprop="author">Mario Gray</span>
     
   
-  <time itemprop="datePublished" datetime="2019-06-18T00:00:00-05:00">
+  <time itemprop="datePublished" datetime="2019-06-18T00:00:00-07:00">
     18 Jun, 2019
   </time>
   
@@ -584,7 +587,7 @@ WITH CLUSTERING ORDER BY (msg_time DESC, msg_id DESC);
   
     and tagged <a href="/tags/cassandra/">cassandra</a>, <a href="/tags/data/">data</a>, <a href="/tags/demo/">demo</a>, <a href="/tags/kotlin/">kotlin</a>, <a href="/tags/spring/">spring</a> and <a href="/tags/webflux/">webflux</a>
   
-  using <span itemprop="wordCount">1415</span> words.
+  using <span itemprop="wordCount">1412</span> words.
 </p>
 
       
@@ -594,11 +597,11 @@ WITH CLUSTERING ORDER BY (msg_time DESC, msg_id DESC);
     <header>Related Content</header>
     <ul>
       
-        <li><a href="/post/spring-boot-testing-producer/">Testing Reactive Apps with SpringBoot</a>
-        <time datetime="13M">13 minutes</time>
-      
         <li><a href="/post/spring-boot-testing-consumer/">Testing Reactive Apps with SpringBoot - The Consumer</a>
         <time datetime="7M">7 minutes</time>
+      
+        <li><a href="/post/spring-boot-testing-producer/">Testing Reactive Apps with SpringBoot</a>
+        <time datetime="13M">13 minutes</time>
       
         <li><a href="/post/spring-reactive-authorization/">Configuring Authorization with Reactive Spring Security 5</a>
         <time datetime="3M">3 minutes</time>

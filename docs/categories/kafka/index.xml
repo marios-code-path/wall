@@ -6,7 +6,7 @@
     <description>Recent content in Kafka on # sudo init 5 - beta</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Fri, 13 Apr 2018 00:00:00 -0500</lastBuildDate>
+    <lastBuildDate>Fri, 13 Apr 2018 00:00:00 -0700</lastBuildDate>
     
 	<atom:link href="https://www.sudoinit5.com/categories/kafka/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Sending and consuming messages with Spring and KafKa</title>
       <link>https://www.sudoinit5.com/post/spring-kafka/</link>
-      <pubDate>Fri, 13 Apr 2018 00:00:00 -0500</pubDate>
+      <pubDate>Fri, 13 Apr 2018 00:00:00 -0700</pubDate>
       
       <guid>https://www.sudoinit5.com/post/spring-kafka/</guid>
       <description>Spring Kafka Writer and Readers What is Kafka Apache Kafka is an open-source stream-processing software platform developed by the Apache Software Foundation written in Scala and Java. You&amp;rsquo;ll find more information about Kafka at it&amp;rsquo;s Homepage.
